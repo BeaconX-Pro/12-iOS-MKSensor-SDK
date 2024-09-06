@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '10.0'
+
+target 'MKBXPSeriesSlathf_Example' do
+  pod 'MKBXPSeriesSlathf', :path => '../'
+
+  target 'MKBXPSeriesSlathf_Tests' do
+    inherit! :search_paths
+
+    pod 'FBSnapshotTestCase'
+  end
+end
