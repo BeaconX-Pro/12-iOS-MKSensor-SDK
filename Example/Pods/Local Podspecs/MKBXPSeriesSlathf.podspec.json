@@ -1,0 +1,681 @@
+{
+  "name": "MKBXPSeriesSlathf",
+  "version": "0.0.1",
+  "summary": "A short description of MKBXPSeriesSlathf.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/lovexiaoxia/MKBXPSeriesSlathf",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "lovexiaoxia": "aadyx2007@163.com"
+  },
+  "source": {
+    "git": "https://github.com/lovexiaoxia/MKBXPSeriesSlathf.git",
+    "tag": "0.0.1"
+  },
+  "platforms": {
+    "ios": "14.0"
+  },
+  "resource_bundles": {
+    "MKBXPSeriesSlathf": [
+      "MKBXPSeriesSlathf/Assets/*.png"
+    ]
+  },
+  "subspecs": [
+    {
+      "name": "ConnectManager",
+      "source_files": "MKBXPSeriesSlathf/Classes/ConnectManager/**",
+      "dependencies": {
+        "MKBaseModuleLibrary": [
+
+        ],
+        "MKBXPSeriesSlathf/SDK": [
+
+        ]
+      }
+    },
+    {
+      "name": "CTMediator",
+      "source_files": "MKBXPSeriesSlathf/Classes/CTMediator/**",
+      "dependencies": {
+        "CTMediator": [
+
+        ]
+      }
+    },
+    {
+      "name": "SDK",
+      "source_files": "MKBXPSeriesSlathf/Classes/SDK/**",
+      "dependencies": {
+        "MKBaseBleModule": [
+
+        ]
+      }
+    },
+    {
+      "name": "Target",
+      "source_files": "MKBXPSeriesSlathf/Classes/Target/**",
+      "dependencies": {
+        "MKBXPSeriesSlathf/Functions": [
+
+        ]
+      }
+    },
+    {
+      "name": "Expand",
+      "dependencies": {
+        "MKBaseModuleLibrary": [
+
+        ],
+        "MKCustomUIModule": [
+
+        ]
+      },
+      "subspecs": [
+        {
+          "name": "View",
+          "subspecs": [
+            {
+              "name": "ExportDataHeaderView",
+              "source_files": "MKBXPSeriesSlathf/Classes/Expand/View/ExportDataHeaderView/**"
+            },
+            {
+              "name": "FilterHistoryDataView",
+              "source_files": "MKBXPSeriesSlathf/Classes/Expand/View/FilterHistoryDataView/**",
+              "dependencies": {
+                "BRPickerView": [
+
+                ]
+              }
+            },
+            {
+              "name": "HistoryMaskView",
+              "source_files": "MKBXPSeriesSlathf/Classes/Expand/View/HistoryMaskView/**"
+            },
+            {
+              "name": "SyncTimeCell",
+              "source_files": "MKBXPSeriesSlathf/Classes/Expand/View/SyncTimeCell/**"
+            },
+            {
+              "name": "THCurveView",
+              "source_files": "MKBXPSeriesSlathf/Classes/Expand/View/THCurveView/**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Functions",
+      "dependencies": {
+        "MKBXPSeriesSlathf/ConnectManager": [
+
+        ],
+        "MKBXPSeriesSlathf/SDK": [
+
+        ],
+        "MKBXPSeriesSlathf/CTMediator": [
+
+        ],
+        "MKBaseModuleLibrary": [
+
+        ],
+        "MKCustomUIModule": [
+
+        ],
+        "MKBeaconXCustomUI": [
+
+        ],
+        "HHTransition": [
+
+        ],
+        "MLInputDodger": [
+
+        ]
+      },
+      "subspecs": [
+        {
+          "name": "AboutPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/AboutPage/Controller/**"
+            }
+          ]
+        },
+        {
+          "name": "AccelerationPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/AccelerationPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/AccelerationPage/Model": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/AccelerationPage/View": [
+
+                ]
+              }
+            },
+            {
+              "name": "Model",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/AccelerationPage/Model/**"
+            },
+            {
+              "name": "View",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/AccelerationPage/View/**"
+            }
+          ]
+        },
+        {
+          "name": "DeviceInfoPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/DeviceInfoPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/DeviceInfoPage/Model": [
+
+                ]
+              }
+            },
+            {
+              "name": "Model",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/DeviceInfoPage/Model/**"
+            }
+          ]
+        },
+        {
+          "name": "ExportHTDataPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/ExportHTDataPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/ExportHTDataPage/View": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/FilterHTHistoryPage/Controller": [
+
+                ]
+              }
+            },
+            {
+              "name": "View",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/ExportHTDataPage/View/**"
+            }
+          ]
+        },
+        {
+          "name": "ExportTempDataPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/ExportTempDataPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/ExportTempDataPage/View": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/FilterTempHistoryPage/Controller": [
+
+                ]
+              }
+            },
+            {
+              "name": "View",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/ExportTempDataPage/View/**"
+            }
+          ]
+        },
+        {
+          "name": "FilterHallHistoryPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/FilterHallHistoryPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/FilterHallHistoryPage/View": [
+
+                ]
+              }
+            },
+            {
+              "name": "View",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/FilterHallHistoryPage/View/**"
+            }
+          ]
+        },
+        {
+          "name": "FilterHTHistoryPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/FilterHTHistoryPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/FilterHTHistoryPage/View": [
+
+                ]
+              }
+            },
+            {
+              "name": "View",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/FilterHTHistoryPage/View/**"
+            }
+          ]
+        },
+        {
+          "name": "FilterTempHistoryPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/FilterTempHistoryPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/FilterTempHistoryPage/View": [
+
+                ]
+              }
+            },
+            {
+              "name": "View",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/FilterTempHistoryPage/View/**"
+            }
+          ]
+        },
+        {
+          "name": "HallSensorPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/HallSensorPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/HallSensorPage/Model": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/HallSensorPage/View": [
+
+                ]
+              }
+            },
+            {
+              "name": "Model",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/HallSensorPage/Model/**"
+            },
+            {
+              "name": "View",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/HallSensorPage/View/**"
+            }
+          ]
+        },
+        {
+          "name": "OptionsPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/OptionsPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/OptionsPage/View": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/ScanPage/Controller": [
+
+                ]
+              }
+            },
+            {
+              "name": "View",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/OptionsPage/View/**"
+            }
+          ]
+        },
+        {
+          "name": "QuickSwitchPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/QuickSwitchPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/QuickSwitchPage/Model": [
+
+                ]
+              }
+            },
+            {
+              "name": "Model",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/QuickSwitchPage/Model/**"
+            }
+          ]
+        },
+        {
+          "name": "RemoteReminderPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/RemoteReminderPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/RemoteReminderPage/Model": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/RemoteReminderPage/View": [
+
+                ]
+              }
+            },
+            {
+              "name": "Model",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/RemoteReminderPage/Model/**"
+            },
+            {
+              "name": "View",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/RemoteReminderPage/View/**"
+            }
+          ]
+        },
+        {
+          "name": "ScanPage",
+          "subspecs": [
+            {
+              "name": "Adopter",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/ScanPage/Adopter/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/ScanPage/Model": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/ScanPage/View": [
+
+                ]
+              }
+            },
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/ScanPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/ScanPage/Model": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/ScanPage/View": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/ScanPage/Adopter": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/TabBarPage/Controller": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/AboutPage/Controller": [
+
+                ]
+              }
+            },
+            {
+              "name": "Model",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/ScanPage/Model/**"
+            },
+            {
+              "name": "View",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/ScanPage/View/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/ScanPage/Model": [
+
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "SensorConfigPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/SensorConfigPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/SensorConfigPage/Model": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/AccelerationPage": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/HallSensorPage": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/THSensorPage": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/TempSensorPage": [
+
+                ]
+              }
+            },
+            {
+              "name": "Model",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/SensorConfigPage/Model/**"
+            }
+          ]
+        },
+        {
+          "name": "SettingPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/SettingPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/SettingPage/Model": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/SensorConfigPage/Controller": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/QuickSwitchPage/Controller": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/UpdatePage/Controller": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/RemoteReminderPage/Controller": [
+
+                ]
+              }
+            },
+            {
+              "name": "Model",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/SettingPage/Model/**"
+            }
+          ]
+        },
+        {
+          "name": "SlotPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/SlotPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/SlotPage/Model": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/TriggerPages": [
+
+                ]
+              }
+            },
+            {
+              "name": "Model",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/SlotPage/Model/**"
+            }
+          ]
+        },
+        {
+          "name": "TabBarPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/TabBarPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/SlotPage/Controller": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/SettingPage/Controller": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/DeviceInfoPage/Controller": [
+
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TempSensorPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/TempSensorPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/TempSensorPage/View": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/TempSensorPage/Model": [
+
+                ]
+              }
+            },
+            {
+              "name": "View",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/TempSensorPage/View/**"
+            },
+            {
+              "name": "Model",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/TempSensorPage/Model/**"
+            }
+          ]
+        },
+        {
+          "name": "THSensorPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/THSensorPage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/THSensorPage/View": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/THSensorPage/Model": [
+
+                ]
+              }
+            },
+            {
+              "name": "View",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/THSensorPage/View/**"
+            },
+            {
+              "name": "Model",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/THSensorPage/Model/**"
+            }
+          ]
+        },
+        {
+          "name": "TriggerPages",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/TriggerPages/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/TriggerPages/Defines": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/TriggerPages/Manager": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/TriggerPages/Model": [
+
+                ],
+                "MKBXPSeriesSlathf/Functions/TriggerPages/View": [
+
+                ]
+              }
+            },
+            {
+              "name": "Defines",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/TriggerPages/Defines/**"
+            },
+            {
+              "name": "Manager",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/TriggerPages/Manager/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/TriggerPages/Model": [
+
+                ]
+              }
+            },
+            {
+              "name": "Model",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/TriggerPages/Model/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/TriggerPages/Defines": [
+
+                ]
+              }
+            },
+            {
+              "name": "View",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/TriggerPages/Defines": [
+
+                ]
+              },
+              "subspecs": [
+                {
+                  "name": "SlotBeaconCell",
+                  "source_files": "MKBXPSeriesSlathf/Classes/Functions/TriggerPages/View/SlotBeaconCell/**"
+                },
+                {
+                  "name": "SlotFramePickView",
+                  "source_files": "MKBXPSeriesSlathf/Classes/Functions/TriggerPages/View/SlotFramePickView/**"
+                },
+                {
+                  "name": "SlotParamCell",
+                  "source_files": "MKBXPSeriesSlathf/Classes/Functions/TriggerPages/View/SlotParamCell/**"
+                },
+                {
+                  "name": "SlotSersorInfoCell",
+                  "source_files": "MKBXPSeriesSlathf/Classes/Functions/TriggerPages/View/SlotSersorInfoCell/**"
+                },
+                {
+                  "name": "SlotUIDCell",
+                  "source_files": "MKBXPSeriesSlathf/Classes/Functions/TriggerPages/View/SlotUIDCell/**"
+                },
+                {
+                  "name": "SlotURLCell",
+                  "source_files": "MKBXPSeriesSlathf/Classes/Functions/TriggerPages/View/SlotURLCell/**"
+                },
+                {
+                  "name": "TriggerSlotParamCell",
+                  "source_files": "MKBXPSeriesSlathf/Classes/Functions/TriggerPages/View/TriggerSlotParamCell/**"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "UpdatePage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/UpdatePage/Controller/**",
+              "dependencies": {
+                "MKBXPSeriesSlathf/Functions/UpdatePage/Model": [
+
+                ]
+              }
+            },
+            {
+              "name": "Model",
+              "source_files": "MKBXPSeriesSlathf/Classes/Functions/UpdatePage/Model/**"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
