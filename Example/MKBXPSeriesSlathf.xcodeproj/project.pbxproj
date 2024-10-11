@@ -55,6 +55,7 @@
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7B5D7954B5028FDFD87C86EB /* MKBXPSeriesSlathf.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = MKBXPSeriesSlathf.podspec; path = ../MKBXPSeriesSlathf.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		8241B2C548FD458C1EFE24F1 /* Pods_MKBXPSeriesSlathf_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MKBXPSeriesSlathf_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		89ECC5515D925BEE614A5222 /* Pods-MKBXPSeriesSlathf_Example.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MKBXPSeriesSlathf_Example.adhoc.xcconfig"; path = "Target Support Files/Pods-MKBXPSeriesSlathf_Example/Pods-MKBXPSeriesSlathf_Example.adhoc.xcconfig"; sourceTree = "<group>"; };
 		8C1AA25413228878B2B21D7A /* Pods-MKBXPSeriesSlathf_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MKBXPSeriesSlathf_Example.release.xcconfig"; path = "Target Support Files/Pods-MKBXPSeriesSlathf_Example/Pods-MKBXPSeriesSlathf_Example.release.xcconfig"; sourceTree = "<group>"; };
 		BA0CE17DAB33346FA9876060 /* Pods-MKBXPSeriesSlathf_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MKBXPSeriesSlathf_Example.debug.xcconfig"; path = "Target Support Files/Pods-MKBXPSeriesSlathf_Example/Pods-MKBXPSeriesSlathf_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		C918381A00E6643EBBA1E2C2 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -90,6 +91,7 @@
 			children = (
 				BA0CE17DAB33346FA9876060 /* Pods-MKBXPSeriesSlathf_Example.debug.xcconfig */,
 				8C1AA25413228878B2B21D7A /* Pods-MKBXPSeriesSlathf_Example.release.xcconfig */,
+				89ECC5515D925BEE614A5222 /* Pods-MKBXPSeriesSlathf_Example.adhoc.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -418,6 +420,89 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		00ACFFCD2CB8D38F008C079F /* adhoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = adhoc;
+		};
+		00ACFFCE2CB8D38F008C079F /* adhoc */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89ECC5515D925BEE614A5222 /* Pods-MKBXPSeriesSlathf_Example.adhoc.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CURRENT_PROJECT_VERSION = 2024090601;
+				DEVELOPMENT_TEAM = R558LEUW2T;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MKBXPSeriesSlathf/MKBXPSeriesSlathf-Prefix.pch";
+				INFOPLIST_FILE = "MKBXPSeriesSlathf/MKBXPSeriesSlathf-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MODULE_NAME = ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				WRAPPER_EXTENSION = app;
+			};
+			name = adhoc;
+		};
+		00ACFFCF2CB8D38F008C079F /* adhoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Tests/Tests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MKBXPSeriesSlathf_Example.app/MKBXPSeriesSlathf_Example";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = adhoc;
+		};
 		6003F5BD195388D20070C39A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -580,6 +665,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6003F5BD195388D20070C39A /* Debug */,
+				00ACFFCD2CB8D38F008C079F /* adhoc */,
 				6003F5BE195388D20070C39A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -589,6 +675,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6003F5C0195388D20070C39A /* Debug */,
+				00ACFFCE2CB8D38F008C079F /* adhoc */,
 				6003F5C1195388D20070C39A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -598,6 +685,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6003F5C3195388D20070C39A /* Debug */,
+				00ACFFCF2CB8D38F008C079F /* adhoc */,
 				6003F5C4195388D20070C39A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
