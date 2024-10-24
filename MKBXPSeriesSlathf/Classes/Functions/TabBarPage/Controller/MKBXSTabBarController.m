@@ -113,7 +113,7 @@
         return;
     }
     if ([type isEqualToString:@"03"]) {
-        [self showAlertWithMsg:@"Factory reset successfully!Please reconnect the device." title:@"Factory Reset"];
+        [self showAlertWithMsg:@"Beacon is disconnected." title:@"Reset success!"];
         return;
     }
     if ([type isEqualToString:@"04"]) {

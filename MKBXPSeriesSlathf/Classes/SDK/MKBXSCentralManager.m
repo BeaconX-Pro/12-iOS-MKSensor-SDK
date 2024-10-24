@@ -505,7 +505,7 @@ static dispatch_once_t onceToken;
         __strong typeof(self) sself = weakSelf;
         if (error || !MKValidDict(returnData) || ![returnData[@"success"] boolValue]) {
             //密码错误
-            [sself operationFailedBlockWithMsg:@"Password Error" failedBlock:sself.failedBlock];
+            [sself operationFailedBlockWithMsg:@"Incorrect password!" failedBlock:sself.failedBlock];
             return ;
         }
         //密码正确

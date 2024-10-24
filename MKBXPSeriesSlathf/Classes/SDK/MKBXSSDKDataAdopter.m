@@ -472,9 +472,9 @@
         case mk_bxs_urlHeaderType2:
             return @"01";
         case mk_bxs_urlHeaderType3:
-            return @"03";
+            return @"02";
         case mk_bxs_urlHeaderType4:
-            return @"04";
+            return @"03";
     }
 }
 

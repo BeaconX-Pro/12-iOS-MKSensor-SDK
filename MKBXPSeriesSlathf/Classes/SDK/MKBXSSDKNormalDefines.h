@@ -64,8 +64,8 @@ typedef NS_ENUM(NSInteger, mk_bxs_triggerType) {
 };
 
 typedef NS_ENUM(NSInteger, mk_bxs_batteryADVMode) {
-    mk_bxs_batteryADVMode_voltage,
     mk_bxs_batteryADVMode_percentage,
+    mk_bxs_batteryADVMode_voltage,
 };
 
 typedef NS_ENUM(NSInteger, mk_bxs_advChannel) {

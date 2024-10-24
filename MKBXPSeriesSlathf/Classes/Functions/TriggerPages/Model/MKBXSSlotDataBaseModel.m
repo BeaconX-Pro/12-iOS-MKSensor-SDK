@@ -157,13 +157,13 @@
         }
     }else if (self.slotType == bxs_slotType_beacon) {
         if (!ValidStr(self.major) || ![self.major integerValue] < 0 || [self.major integerValue] > 65535) {
-            NO;
+            return NO;
         }
         if (!ValidStr(self.minor) || ![self.minor integerValue] < 0 || [self.minor integerValue] > 65535) {
-            NO;
+            return NO;
         }
         if (!ValidStr(self.uuid) || self.uuid.length != 32) {
-            NO;
+            return NO;
         }
     }else if (self.slotType == bxs_slotType_sensorInfo) {
         if (!ValidStr(self.deviceName) || self.deviceName.length > 20) {

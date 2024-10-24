@@ -207,7 +207,16 @@ static CGFloat const batteryIconHeight = 25.f;
     self.timeLabel.text = _dataModel.displayTime;
     self.rssiLabel.text = [SafeStr(_dataModel.rssi) stringByAppendingString:@"dBm"];
     self.nameLabel.text = (ValidStr(_dataModel.deviceName) ? _dataModel.deviceName : @"N/A");
-    self.batteryLabel.text = (ValidStr(_dataModel.battery) ? [_dataModel.battery stringByAppendingString:@"mV"] : @"N/A");
+    if (!ValidStr(_dataModel.battery)) {
+        self.batteryLabel.text = @"N/A";
+    }else {
+        NSInteger battery = [_dataModel.battery integerValue];
+        if (battery <= 100) {
+            self.batteryLabel.text = [_dataModel.battery stringByAppendingString:@"%"];
+        }else {
+            self.batteryLabel.text = [_dataModel.battery stringByAppendingString:@"mV"];
+        }
+    }
     if (ValidStr(_dataModel.tagID)) {
         self.devieIDLabel.text = [NSString stringWithFormat:@"Tag ID:0x%@",_dataModel.tagID];
     }else {

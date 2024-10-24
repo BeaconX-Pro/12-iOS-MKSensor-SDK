@@ -226,25 +226,45 @@ MKBXSSlotParamCellDelegate>
 }
 
 #pragma mark - MKBXSSlotParamCellDelegate
-- (void)bxs_triggerSlotParam_advIntervalChanged:(NSString *)interval {
+- (void)bxs_slotParam_advIntervalChanged:(NSString *)interval {
     [MKBXSTriggerParamManager shared].stepThreeModel.advInterval = interval;
 }
 
-- (void)bxs_triggerSlotParam_advDurationChanged:(NSString *)duration {
+- (void)bxs_slotParam_advDurationChanged:(NSString *)duration {
     [MKBXSTriggerParamManager shared].stepThreeModel.advDuration = duration;
 }
 
-- (void)bxs_triggerSlotParam_rssiChanged:(NSInteger)rssi {
+- (void)bxs_slotParam_standbyDurationChanged:(NSString *)duration {
+    [MKBXSTriggerParamManager shared].stepThreeModel.standbyDuration = duration;
+}
+
+- (void)bxs_slotParam_rssiChanged:(NSInteger)rssi {
     [MKBXSTriggerParamManager shared].stepThreeModel.rssi = rssi;
 }
 
-- (void)bxs_triggerSlotParam_txPowerChanged:(NSInteger)txPower {
+- (void)bxs_slotParam_txPowerChanged:(NSInteger)txPower {
     [MKBXSTriggerParamManager shared].stepThreeModel.txPower = txPower;
+}
+
+- (void)bxs_slotParam_lowerPowerDetailPressed {
+    @weakify(self);
+    MKAlertViewAction *confirmAction = [[MKAlertViewAction alloc] initWithTitle:@"OK" handler:^{
+        @strongify(self);
+    }];
+    NSString *msg = @"If this function is enabled, the device will periodically sleeps for a period of time during broadcast.";
+    MKAlertView *alertView = [[MKAlertView alloc] init];
+    [alertView addAction:confirmAction];
+    [alertView showAlertWithTitle:@"Low-power mode" message:msg notificationName:@"mk_bxs_needDismissAlert"];
+}
+
+- (void)bxs_slotParam_lowerPowerModeChanged:(BOOL)isOn {
+    [MKBXSTriggerParamManager shared].stepThreeModel.powerModeIsOn = isOn;
+    [self loadSectionDatas];
 }
 
 #pragma mark - event method
 - (void)doneButtonPressed {
-    if (![[MKBXSTriggerParamManager shared].stepThreeModel validParams]) {
+    if ([MKBXSTriggerParamManager shared].stepThreeModel.trigger && ![[MKBXSTriggerParamManager shared].stepThreeModel validParams]) {
         [self.view showCentralToast:@"Params Error"];
         return;
     }

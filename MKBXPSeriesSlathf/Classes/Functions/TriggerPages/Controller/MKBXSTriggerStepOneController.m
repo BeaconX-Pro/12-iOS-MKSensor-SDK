@@ -425,7 +425,7 @@ MKNormalSliderCellDelegate>
         return @[@"Humidity above",@"Humidiby below"];
     }else if ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2) {
         //当前是移动触发
-        return @[@"Device start moving",@"Device remains stationary"];
+        return @[@"Device start moving",@"Device keep static"];
     }else if ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 3) {
         //当前是霍尔触发
         return @[@"Door open",@"Door close"];
@@ -528,7 +528,7 @@ MKNormalSliderCellDelegate>
     cellModel.unit = @"s";
     cellModel.maxLength = 5;
     cellModel.textFieldValue = [MKBXSTriggerParamManager shared].stepOneModel.motionVerificationPeriod;
-    cellModel.noteMsg = @"*Stationary verification period:  the parameter that determines when a stationary event occurs on the device";
+    cellModel.noteMsg = @"*Static verify period: the parameter that determines when a stationary event occurs on the device.";
     cellModel.noteMsgColor = RGBCOLOR(201, 90, 49);
     [self.section5List addObject:cellModel];
 }

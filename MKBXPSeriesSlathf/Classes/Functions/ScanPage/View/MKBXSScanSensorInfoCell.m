@@ -229,7 +229,7 @@
         make.height.mas_equalTo(MKFont(12.f).lineHeight);
     }];
     
-    self.mosValueLabel.text = (self.dataModel.motionStatus ? @"In progress" : @"No Movement");
+    self.mosValueLabel.text = (self.dataModel.motionStatus ? @"Moving" : @"Stationary");
     self.motcValueLabel.text = SafeStr(self.dataModel.motionCount);
     self.accValueLabel.text = [NSString stringWithFormat:@"X: %@mg;Y: %@mg;Z: %@mg",SafeStr(self.dataModel.xData),SafeStr(self.dataModel.yData),SafeStr(self.dataModel.zData)];
 }

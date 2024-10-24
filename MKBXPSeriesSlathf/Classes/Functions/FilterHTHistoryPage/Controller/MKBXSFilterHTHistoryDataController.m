@@ -110,7 +110,7 @@ MKBXSFilterHTHistoryHeaderViewDelegate>
         return;
     }
     NSData *emailData = [self.textView.text dataUsingEncoding:NSUTF8StringEncoding];
-    if (!ValidData(emailData)) {
+    if (!ValidData(emailData) || emailData.length == 0) {
         [self.view showCentralToast:@"Log file does not exist"];
         return;
     }

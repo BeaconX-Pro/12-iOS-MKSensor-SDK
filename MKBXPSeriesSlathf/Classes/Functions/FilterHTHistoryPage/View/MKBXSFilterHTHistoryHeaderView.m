@@ -97,7 +97,7 @@
 
 #pragma mark - public method
 - (void)updateSumRecord:(NSString *)record {
-    self.sumLabel.text = [NSString stringWithFormat:@"Records: %@",SafeStr(record)];
+    self.sumLabel.text = [NSString stringWithFormat:@"Filtered records: %@",SafeStr(record)];
 }
 
 #pragma mark - getter

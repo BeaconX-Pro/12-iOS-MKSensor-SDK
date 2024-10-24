@@ -29,6 +29,7 @@
 - (instancetype)initWithSlotIndex:(NSInteger)index {
     if (self = [self init]) {
         self.index = index;
+        
     }
     return self;
 }
@@ -142,6 +143,9 @@
     }
     self.trigger = ([returnData[@"result"][@"triggerType"] integerValue] > 0);
     if (!self.trigger) {
+        self.triggerType = 2;
+        self.motionEvent = 0;
+        self.motionVerificationPeriod = @"30";
         return;
     }
     self.triggerType = ([returnData[@"result"][@"triggerType"] integerValue] - 1);

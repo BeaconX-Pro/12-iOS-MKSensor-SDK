@@ -41,8 +41,20 @@
 
 - (void)configWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock {
     dispatch_async(self.readQueue, ^{
-        if (![self validParams]) {
+        if (self.trigger && ![self validParams]) {
             [self operationFailedBlockWithMsg:@"Params Error" block:failedBlock];
+            return;
+        }
+        if (!self.trigger) {
+            if (![self configNoData]) {
+                [self operationFailedBlockWithMsg:@"Config Slot Data Error" block:failedBlock];
+                return;
+            }
+            moko_dispatch_main_safe(^{
+                if (sucBlock) {
+                    sucBlock();
+                }
+            });
             return;
         }
         

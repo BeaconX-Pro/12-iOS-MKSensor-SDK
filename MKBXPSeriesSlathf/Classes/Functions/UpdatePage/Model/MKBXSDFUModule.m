@@ -65,7 +65,7 @@ typedef NS_ENUM(NSInteger, bxs_ota_process) {
         return;
     }
     NSData *zipData = [NSData dataWithContentsOfFile:url];
-    if (!ValidData(zipData)) {
+    if (!ValidData(zipData) || zipData.length == 0) {
         [self operationFailedBlockWithMsg:@"Dfu upgrade failure!" block:failedBlock];
         return;
     }

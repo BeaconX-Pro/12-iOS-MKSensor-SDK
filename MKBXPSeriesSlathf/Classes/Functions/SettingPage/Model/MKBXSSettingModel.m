@@ -81,7 +81,15 @@
     __block BOOL success = NO;
     [MKBXSInterface bxs_readBatteryADVModeWithSucBlock:^(id  _Nonnull returnData) {
         success = YES;
-        self.batteryAdvMode = [returnData[@"result"][@"mode"] integerValue];
+        NSInteger mode = [returnData[@"result"][@"mode"] integerValue];
+        if (mode == 0) {
+            //百分比
+            self.batteryAdvMode = 1;
+        }else {
+            //电池电压
+            self.batteryAdvMode = 0;
+        }
+        
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
         dispatch_semaphore_signal(self.semaphore);

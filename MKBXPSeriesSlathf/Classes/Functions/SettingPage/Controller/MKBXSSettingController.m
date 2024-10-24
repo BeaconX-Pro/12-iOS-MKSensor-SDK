@@ -69,19 +69,12 @@ MKTextButtonCellDelegate>
     if (self.dfuModule) {
         return;
     }
-//    [self readDatas];
+    [self readDatas];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
-    [self loadSection0Datas];
-    [self loadSection1Datas];
-    [self loadSection2Datas];
-    [self loadSection3Datas];
-    [self loadSection4Datas];
-    
-    [self.tableView reloadData];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(deviceStartDFUProcess)
                                                  name:@"mk_bxs_startDfuProcessNotification"
@@ -466,14 +459,14 @@ MKTextButtonCellDelegate>
     
     MKTextButtonCellModel *cellModel1 = [[MKTextButtonCellModel alloc] init];
     cellModel1.index = 0;
-    cellModel1.msg = @"ADV Channel";
+    cellModel1.msg = @"Battery ADV mode";
     cellModel1.dataList = @[@"Voltage",@"Percentage"];
     cellModel1.dataListIndex = self.dataModel.batteryAdvMode;
     [self.section4List addObject:cellModel1];
     
     MKTextButtonCellModel *cellModel2 = [[MKTextButtonCellModel alloc] init];
     cellModel2.index = 1;
-    cellModel2.msg = @"ADV mode";
+    cellModel2.msg = @"ADV Channel";
     cellModel2.dataList = @[@"CH37&38&39",@"CH37",@"CH38",@"CH39"];
     cellModel2.dataListIndex = self.dataModel.advChannel;
     [self.section4List addObject:cellModel2];
@@ -483,7 +476,12 @@ MKTextButtonCellDelegate>
     [[MKHudManager share] showHUDWithTitle:@"Setting..."
                                      inView:self.view
                               isPenetration:NO];
-    [MKBXSInterface bxs_configBatteryADVMode:mode sucBlock:^{
+    mk_bxs_batteryADVMode tempMode = mk_bxs_batteryADVMode_percentage;
+    if (mode == 0) {
+        //电池电压
+        tempMode = mk_bxs_batteryADVMode_voltage;
+    }
+    [MKBXSInterface bxs_configBatteryADVMode:tempMode sucBlock:^{
         [[MKHudManager share] hide];
         MKTextButtonCellModel *cellModel = self.section4List[0];
         cellModel.dataListIndex = mode;

@@ -114,7 +114,7 @@
         [self.dataList addObject:cellModel1];
     }
     
-    if (!self.dataModel.hallStatus) {
+    if (!self.dataModel.hallStatus && !self.dataModel.resetByButton) {
         MKNormalTextCellModel *cellModel2 = [[MKNormalTextCellModel alloc] init];
         cellModel2.leftMsg = @"Hall sensor";
         cellModel2.showRightIcon = YES;

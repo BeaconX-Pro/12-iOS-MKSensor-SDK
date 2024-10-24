@@ -197,7 +197,7 @@ MKBXSFilterHistoryDataViewDelegate>
         return;
     }
     NSData *emailData = [self.textView.text dataUsingEncoding:NSUTF8StringEncoding];
-    if (!ValidData(emailData)) {
+    if (!ValidData(emailData) || emailData.length == 0) {
         [self.view showCentralToast:@"Log file does not exist"];
         return;
     }
@@ -310,6 +310,14 @@ MKBXSFilterHistoryDataViewDelegate>
         [[MKHudManager share] hide];
         [self.maskView showWithView:self.view];
         [self.maskView updateTotalNumber:returnData[@"result"][@"count"]];
+        if ([returnData[@"result"][@"count"] integerValue] == 0) {
+            [self.topView resetAllStatus];
+            self.textView.text = @"";
+            self.textMsg = @"";
+            [self.maskView updateCurrentNumber:@"0"];
+            [self performSelector:@selector(dismissMaskView) withObject:nil afterDelay:2.f];
+            return;
+        }
         [[MKBXSCentralManager shared] notifyRecordTHData:YES];
         [self startparseTimer];
         [self startDisplayTimer];

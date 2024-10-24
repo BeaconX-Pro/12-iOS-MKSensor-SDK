@@ -592,7 +592,7 @@
         return;
     }
     NSString *indexValue = [MKBLEBaseSDKAdopter fetchHexValue:index byteLen:1];
-    //1Byte SlotIndex + 2Byte AdvInterval + 2Byte AdvDuration +
+    //1Byte SlotIndex + 2Byte AdvInterval + 2Byte AdvDuration +f
     //1Byte Rssi + 1Byte TxPower + 1Byte SlotType + 通道内容
     NSInteger len = 1 + (paramsCmd.length) / 2 + 1;
     NSString *lenString = [MKBLEBaseSDKAdopter fetchHexValue:len byteLen:1];

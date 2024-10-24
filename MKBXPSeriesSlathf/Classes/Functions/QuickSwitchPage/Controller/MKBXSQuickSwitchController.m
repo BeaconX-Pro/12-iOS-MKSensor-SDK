@@ -230,6 +230,28 @@ MKBXQuickSwitchCellDelegate>
 
 #pragma mark - Reset Beacon by button
 - (void)configResetByButton:(BOOL)isOn {
+    if (isOn) {
+        [self commandResetByButton:isOn];
+        return;
+    }
+    @weakify(self);
+    MKAlertViewAction *cancelAction = [[MKAlertViewAction alloc] initWithTitle:@"Cancel" handler:^{
+        @strongify(self);
+        [self.collectionView reloadData];
+    }];
+    
+    MKAlertViewAction *confirmAction = [[MKAlertViewAction alloc] initWithTitle:@"OK" handler:^{
+        @strongify(self);
+        [self commandResetByButton:isOn];
+    }];
+    NSString *msg = @"If Button reset is disabled, you cannot reset the Beacon by button operation.";
+    MKAlertView *alertView = [[MKAlertView alloc] init];
+    [alertView addAction:cancelAction];
+    [alertView addAction:confirmAction];
+    [alertView showAlertWithTitle:@"Warning!" message:msg notificationName:@"mk_bxs_needDismissAlert"];
+}
+
+- (void)commandResetByButton:(BOOL)isOn {
     [[MKHudManager share] showHUDWithTitle:@"Setting..."
                                      inView:self.view
                               isPenetration:NO];
@@ -247,7 +269,29 @@ MKBXQuickSwitchCellDelegate>
 }
 
 #pragma mark - Turn off Beacon by button
-- (void)configTurnOffByButton:(BOOL)isOn{
+- (void)configTurnOffByButton:(BOOL)isOn {
+    if (isOn) {
+        [self commandTurnOffByButton:isOn];
+        return;
+    }
+    @weakify(self);
+    MKAlertViewAction *cancelAction = [[MKAlertViewAction alloc] initWithTitle:@"Cancel" handler:^{
+        @strongify(self);
+        [self.collectionView reloadData];
+    }];
+    
+    MKAlertViewAction *confirmAction = [[MKAlertViewAction alloc] initWithTitle:@"OK" handler:^{
+        @strongify(self);
+        [self commandTurnOffByButton:isOn];
+    }];
+    NSString *msg = @"If this function is disabled, you cannot power off the Beacon by button.";
+    MKAlertView *alertView = [[MKAlertView alloc] init];
+    [alertView addAction:cancelAction];
+    [alertView addAction:confirmAction];
+    [alertView showAlertWithTitle:@"Warning!" message:msg notificationName:@"mk_bxs_needDismissAlert"];
+}
+
+- (void)commandTurnOffByButton:(BOOL)isOn{
     [[MKHudManager share] showHUDWithTitle:@"Setting..."
                                      inView:self.view
                               isPenetration:NO];
