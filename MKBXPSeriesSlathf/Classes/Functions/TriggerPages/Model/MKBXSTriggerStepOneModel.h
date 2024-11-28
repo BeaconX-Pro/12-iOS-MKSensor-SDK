@@ -58,9 +58,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign)BOOL lockedAdvIsOn;
 
-@property (nonatomic, copy)NSString *lockAdvDuration;
-
-
 - (instancetype)initWithSlotIndex:(NSInteger)index;
 
 

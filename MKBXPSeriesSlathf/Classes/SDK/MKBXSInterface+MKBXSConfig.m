@@ -176,7 +176,7 @@
         return;
     }
     NSString *indexValue = [MKBLEBaseSDKAdopter fetchHexValue:index byteLen:1];
-    NSString *commandString = [NSString stringWithFormat:@"%@%@%@",@"ea013109",indexValue,@"0000000000000000"];
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@",@"ea013108",indexValue,@"00000000000000"];
     [self configDataWithTaskID:mk_bxs_taskConfigSlotTriggerParamsOperation
                           data:commandString
                       sucBlock:sucBlock
@@ -186,10 +186,10 @@
 + (void)bxs_configTemperatureTriggerParams:(NSInteger)slotIndex
                               triggerEvent:(NSInteger)event
                                temperature:(NSInteger)temperature
-                         lockedADVDuration:(NSInteger)lockedADVDuration
+                                 lockedADV:(BOOL)lockedADV
                                   sucBlock:(void (^)(void))sucBlock
                                failedBlock:(void (^)(NSError *error))failedBlock {
-    if (slotIndex < 0 || slotIndex > 2 || temperature < -40 || temperature > 150 || event < 0 || event > 1 || lockedADVDuration < 0 || lockedADVDuration > 65535) {
+    if (slotIndex < 0 || slotIndex > 2 || temperature < -40 || temperature > 150 || event < 0 || event > 1) {
         [MKBLEBaseSDKAdopter operationParamsErrorBlock:failedBlock];
         return;
     }
@@ -199,9 +199,9 @@
     if (tempHex.length == 2) {
         tempHex = [@"00" stringByAppendingString:tempHex];
     }
-    NSString *lockDuration = [MKBLEBaseSDKAdopter fetchHexValue:lockedADVDuration byteLen:2];
+    NSString *lockState = (lockedADV ? @"01" : @"00");
     NSString *staticPeriod = [MKBLEBaseSDKAdopter fetchHexValue:0 byteLen:2];
-    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@%@%@%@",@"ea013109",indexValue,@"01",eventHex,tempHex,lockDuration,staticPeriod];
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@%@%@%@",@"ea013108",indexValue,@"01",eventHex,tempHex,lockState,staticPeriod];
     [self configDataWithTaskID:mk_bxs_taskConfigSlotTriggerParamsOperation
                           data:commandString
                       sucBlock:sucBlock
@@ -211,19 +211,19 @@
 + (void)bxs_configHumidityTriggerParams:(NSInteger)slotIndex
                            triggerEvent:(NSInteger)event
                                humidity:(NSInteger)humidity
-                      lockedADVDuration:(NSInteger)lockedADVDuration
+                              lockedADV:(BOOL)lockedADV
                                sucBlock:(void (^)(void))sucBlock
                             failedBlock:(void (^)(NSError *error))failedBlock {
-    if (slotIndex < 0 || slotIndex > 2 || humidity < 0 || humidity > 100 || event < 0 || event > 1 || lockedADVDuration < 0 || lockedADVDuration > 65535) {
+    if (slotIndex < 0 || slotIndex > 2 || humidity < 0 || humidity > 100 || event < 0 || event > 1) {
         [MKBLEBaseSDKAdopter operationParamsErrorBlock:failedBlock];
         return;
     }
     NSString *indexValue = [MKBLEBaseSDKAdopter fetchHexValue:slotIndex byteLen:1];
     NSString *eventHex = (event == 0 ? @"20" : @"21");
     NSString *humidityValue = [MKBLEBaseSDKAdopter fetchHexValue:humidity byteLen:2];
-    NSString *lockDuration = [MKBLEBaseSDKAdopter fetchHexValue:lockedADVDuration byteLen:2];
+    NSString *lockState = (lockedADV ? @"01" : @"00");
     NSString *staticPeriod = [MKBLEBaseSDKAdopter fetchHexValue:0 byteLen:2];
-    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@%@%@%@",@"ea013109",indexValue,@"02",eventHex,humidityValue,lockDuration,staticPeriod];
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@%@%@%@",@"ea013108",indexValue,@"02",eventHex,humidityValue,lockState,staticPeriod];
     [self configDataWithTaskID:mk_bxs_taskConfigSlotTriggerParamsOperation
                           data:commandString
                       sucBlock:sucBlock
@@ -233,18 +233,18 @@
 + (void)bxs_configMotionDetectionTriggerParams:(NSInteger)slotIndex
                                   triggerEvent:(NSInteger)event
                                         period:(NSInteger)period
-                             lockedADVDuration:(NSInteger)lockedADVDuration
+                                     lockedADV:(BOOL)lockedADV
                                       sucBlock:(void (^)(void))sucBlock
                                    failedBlock:(void (^)(NSError *error))failedBlock {
-    if (slotIndex < 0 || slotIndex > 2 || period < 1 || period > 65535 || event < 0 || event > 1 || lockedADVDuration < 0 || lockedADVDuration > 65535) {
+    if (slotIndex < 0 || slotIndex > 2 || period < 1 || period > 65535 || event < 0 || event > 1) {
         [MKBLEBaseSDKAdopter operationParamsErrorBlock:failedBlock];
         return;
     }
     NSString *indexValue = [MKBLEBaseSDKAdopter fetchHexValue:slotIndex byteLen:1];
     NSString *eventHex = (event == 0 ? @"30" : @"31");
-    NSString *lockDuration = [MKBLEBaseSDKAdopter fetchHexValue:lockedADVDuration byteLen:2];
+    NSString *lockState = (lockedADV ? @"01" : @"00");
     NSString *staticPeriod = [MKBLEBaseSDKAdopter fetchHexValue:period byteLen:2];
-    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@%@%@%@",@"ea013109",indexValue,@"03",eventHex,@"0000",lockDuration,staticPeriod];
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@%@%@%@",@"ea013108",indexValue,@"03",eventHex,@"0000",lockState,staticPeriod];
     [self configDataWithTaskID:mk_bxs_taskConfigSlotTriggerParamsOperation
                           data:commandString
                       sucBlock:sucBlock
@@ -253,18 +253,18 @@
 
 + (void)bxs_configHallTriggerParams:(NSInteger)slotIndex
                        triggerEvent:(NSInteger)event
-                  lockedADVDuration:(NSInteger)lockedADVDuration
+                          lockedADV:(BOOL)lockedADV
                            sucBlock:(void (^)(void))sucBlock
                         failedBlock:(void (^)(NSError *error))failedBlock {
-    if (slotIndex < 0 || slotIndex > 2 || event < 0 || event > 1 || lockedADVDuration < 0 || lockedADVDuration > 65535) {
+    if (slotIndex < 0 || slotIndex > 2 || event < 0 || event > 1) {
         [MKBLEBaseSDKAdopter operationParamsErrorBlock:failedBlock];
         return;
     }
     NSString *indexValue = [MKBLEBaseSDKAdopter fetchHexValue:slotIndex byteLen:1];
     NSString *eventHex = (event == 0 ? @"40" : @"41");
-    NSString *lockDuration = [MKBLEBaseSDKAdopter fetchHexValue:lockedADVDuration byteLen:2];
+    NSString *lockState = (lockedADV ? @"01" : @"00");
     NSString *staticPeriod = [MKBLEBaseSDKAdopter fetchHexValue:0 byteLen:2];
-    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@%@%@%@",@"ea013109",indexValue,@"04",eventHex,@"0000",lockDuration,staticPeriod];
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@%@%@%@",@"ea013108",indexValue,@"04",eventHex,@"0000",lockState,staticPeriod];
     [self configDataWithTaskID:mk_bxs_taskConfigSlotTriggerParamsOperation
                           data:commandString
                       sucBlock:sucBlock

@@ -149,8 +149,7 @@
         return;
     }
     self.triggerType = ([returnData[@"result"][@"triggerType"] integerValue] - 1);
-    self.lockedAdvIsOn = [returnData[@"result"][@"lockedAdvDuration"] integerValue] > 0;
-    self.lockAdvDuration = returnData[@"result"][@"lockedAdvDuration"];
+    self.lockedAdvIsOn = [returnData[@"result"][@"lockedAdv"] boolValue];
     if (self.triggerType == 0) {
         //温度触发
         self.temperature = [returnData[@"result"][@"temperature"] integerValue];
@@ -192,11 +191,7 @@
 #pragma mark - 温度参数
 - (BOOL)configTemperatureTriggerParams {
     __block BOOL success = NO;
-    NSInteger lockAdvDuration = 0;
-    if (self.lockedAdvIsOn) {
-        lockAdvDuration = [self.lockAdvDuration integerValue];
-    }
-    [MKBXSInterface bxs_configTemperatureTriggerParams:self.index triggerEvent:self.tempEvent temperature:self.temperature lockedADVDuration:lockAdvDuration sucBlock:^{
+    [MKBXSInterface bxs_configTemperatureTriggerParams:self.index triggerEvent:self.tempEvent temperature:self.temperature lockedADV:self.lockedAdvIsOn sucBlock:^{
         success = YES;
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
@@ -210,11 +205,7 @@
 #pragma mark - 湿度参数
 - (BOOL)configHumidityTriggerParams {
     __block BOOL success = NO;
-    NSInteger lockAdvDuration = 0;
-    if (self.lockedAdvIsOn) {
-        lockAdvDuration = [self.lockAdvDuration integerValue];
-    }
-    [MKBXSInterface bxs_configHumidityTriggerParams:self.index triggerEvent:self.humidityEvent humidity:self.humidity lockedADVDuration:lockAdvDuration sucBlock:^{
+    [MKBXSInterface bxs_configHumidityTriggerParams:self.index triggerEvent:self.humidityEvent humidity:self.humidity lockedADV:self.lockedAdvIsOn sucBlock:^{
         success = YES;
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
@@ -228,11 +219,7 @@
 #pragma mark - 移动参数
 - (BOOL)configMotionDetectionTriggerParams {
     __block BOOL success = NO;
-    NSInteger lockAdvDuration = 0;
-    if (self.lockedAdvIsOn) {
-        lockAdvDuration = [self.lockAdvDuration integerValue];
-    }
-    [MKBXSInterface bxs_configMotionDetectionTriggerParams:self.index triggerEvent:self.motionEvent period:[self.motionVerificationPeriod integerValue] lockedADVDuration:lockAdvDuration sucBlock:^{
+    [MKBXSInterface bxs_configMotionDetectionTriggerParams:self.index triggerEvent:self.motionEvent period:[self.motionVerificationPeriod integerValue] lockedADV:self.lockedAdvIsOn sucBlock:^{
         success = YES;
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
@@ -246,11 +233,7 @@
 #pragma mark - 霍尔参数
 - (BOOL)configHallTriggerParams {
     __block BOOL success = NO;
-    NSInteger lockAdvDuration = 0;
-    if (self.lockedAdvIsOn) {
-        lockAdvDuration = [self.lockAdvDuration integerValue];
-    }
-    [MKBXSInterface bxs_configHallTriggerParams:self.index triggerEvent:self.motionEvent lockedADVDuration:lockAdvDuration sucBlock:^{
+    [MKBXSInterface bxs_configHallTriggerParams:self.index triggerEvent:self.motionEvent lockedADV:self.lockedAdvIsOn sucBlock:^{
         success = YES;
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
@@ -264,9 +247,6 @@
 #pragma mark - private method
 
 - (BOOL)validParams {
-    if (self.lockedAdvIsOn && (!ValidStr(self.lockAdvDuration) || [self.lockAdvDuration integerValue] < 1 || [self.lockAdvDuration integerValue] > 65535)) {
-        return NO;
-    }
     
     if (self.triggerType == 2) {
         //移动触发

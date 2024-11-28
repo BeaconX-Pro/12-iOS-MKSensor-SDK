@@ -16,7 +16,9 @@
 
 #import "MKHudManager.h"
 #import "MKNormalTextCell.h"
+#import "MKCustomUIAdopter.h"
 
+#import "MKBXSCentralManager.h"
 #import "MKBXSInterface.h"
 
 #import "MKBXSSlotModel.h"
@@ -31,6 +33,8 @@
 @property (nonatomic, strong)NSMutableArray *dataList;
 
 @property (nonatomic, strong)MKBXSSlotModel *dataModel;
+
+@property (nonatomic, strong)UIButton *startButton;
 
 @end
 
@@ -91,6 +95,14 @@
     MKNormalTextCell *cell = [MKNormalTextCell initCellWithTableView:tableView];
     cell.dataModel = self.dataList[indexPath.row];
     return cell;
+}
+
+#pragma mark - event method
+- (void)startButtonPressed {
+    self.startButton.selected = !self.startButton.isSelected;
+    NSString *title = (self.startButton.isSelected ? @"Stop" : @"Start");
+    [self.startButton setTitle:title forState:UIControlStateNormal];
+    [[MKBXSCentralManager shared] notifyRecordTHData:self.startButton.isSelected];
 }
 
 #pragma mark - interface
@@ -159,6 +171,8 @@
         _tableView = [[MKBaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        
+        _tableView.tableFooterView = [self tableFooterView];
     }
     return _tableView;
 }
@@ -175,6 +189,25 @@
         _dataModel = [[MKBXSSlotModel alloc] init];
     }
     return _dataModel;
+}
+
+- (UIButton *)startButton {
+    if (!_startButton) {
+        _startButton = [MKCustomUIAdopter customButtonWithTitle:@"Start"
+                                                         target:self
+                                                         action:@selector(startButtonPressed)];
+    }
+    return _startButton;
+}
+
+- (UIView *)tableFooterView {
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kViewWidth, 80.f)];
+    footerView.backgroundColor = RGBCOLOR(242, 242, 242);
+    
+    self.startButton.frame = CGRectMake(30.f, 20.f, kViewWidth - 2 * 30.f, 40.f);
+    [footerView addSubview:self.startButton];
+    
+    return footerView;
 }
 
 @end

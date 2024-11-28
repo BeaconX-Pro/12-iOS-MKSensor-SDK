@@ -207,10 +207,10 @@ static dispatch_once_t onceToken;
         });
         return;
     }
-    if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"AA07"]]) {
+    if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"AA09"]]) {
         //监听的符合采样条件已储存的温湿度数据
         NSString *content = [MKBLEBaseSDKAdopter hexStringFromData:characteristic.value];
-        
+        NSLog(@"%@",content);
         MKBLEBase_main_safe(^{
             [[NSNotificationCenter defaultCenter] postNotificationName:mk_bxs_receiveRecordHTDataNotification
                                                                 object:nil

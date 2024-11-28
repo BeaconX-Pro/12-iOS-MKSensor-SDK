@@ -127,13 +127,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param slotIndex 0~2.Number of the channel.
 /// @param event 0:Temperature is more than or equal to the threshold.  1:Temperature is less than the threshold.
 /// @param temperature -40℃~150℃.
-/// @param lockedADVDuration 0s~65535s.Lock ADV duration: If the device quickly returns to a state that does not meet the trigger conditions after initially satisfying them, it may only broadcast for a short period. The lock broadcast duration feature ensures that, in such cases, the device broadcasts for the set lock broadcast duration. This feature's parameter must be set to a value less than the post-trigger broadcast duration.
+/// @param lockedADV Lock Event Occurs ADV Duration.
 /// @param sucBlock Success callback
 /// @param failedBlock Failure callback
 + (void)bxs_configTemperatureTriggerParams:(NSInteger)slotIndex
                               triggerEvent:(NSInteger)event
                                temperature:(NSInteger)temperature
-                         lockedADVDuration:(NSInteger)lockedADVDuration
+                                 lockedADV:(BOOL)lockedADV
                                   sucBlock:(void (^)(void))sucBlock
                                failedBlock:(void (^)(NSError *error))failedBlock;
 
@@ -141,13 +141,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param slotIndex 0~2.Number of the channel.
 /// @param event 0:Humidity is more than or equal to the threshold.  1:Humidity is less than the threshold.
 /// @param humidity 0 %RH~100 %RH.
-/// @param lockedADVDuration 0s~65535s.Lock ADV duration: If the device quickly returns to a state that does not meet the trigger conditions after initially satisfying them, it may only broadcast for a short period. The lock broadcast duration feature ensures that, in such cases, the device broadcasts for the set lock broadcast duration. This feature's parameter must be set to a value less than the post-trigger broadcast duration.
+/// @param lockedADV Lock Event Occurs ADV Duration.
 /// @param sucBlock Success callback
 /// @param failedBlock Failure callback
 + (void)bxs_configHumidityTriggerParams:(NSInteger)slotIndex
                            triggerEvent:(NSInteger)event
                                humidity:(NSInteger)humidity
-                      lockedADVDuration:(NSInteger)lockedADVDuration
+                              lockedADV:(BOOL)lockedADV
                                sucBlock:(void (^)(void))sucBlock
                             failedBlock:(void (^)(NSError *error))failedBlock;
 
@@ -155,25 +155,25 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param slotIndex 0~2.Number of the channel.
 /// @param event 0:Device start moving. 1:Device remains stationary.
 /// @param period 1s~65535s.
-/// @param lockedADVDuration 0s~65535s.Lock ADV duration: If the device quickly returns to a state that does not meet the trigger conditions after initially satisfying them, it may only broadcast for a short period. The lock broadcast duration feature ensures that, in such cases, the device broadcasts for the set lock broadcast duration. This feature's parameter must be set to a value less than the post-trigger broadcast duration.
+/// @param lockedADV Lock Event Occurs ADV Duration.
 /// @param sucBlock Success callback
 /// @param failedBlock Failure callback
 + (void)bxs_configMotionDetectionTriggerParams:(NSInteger)slotIndex
                                   triggerEvent:(NSInteger)event
                                         period:(NSInteger)period
-                             lockedADVDuration:(NSInteger)lockedADVDuration
+                                     lockedADV:(BOOL)lockedADV
                                       sucBlock:(void (^)(void))sucBlock
                                    failedBlock:(void (^)(NSError *error))failedBlock;
 
 /// Hall triggered parameters.
 /// @param slotIndex 0~2.Number of the channel.
 /// @param event 0:Door open. 1:Door close.
-/// @param lockedADVDuration 0s~65535s.Lock ADV duration: If the device quickly returns to a state that does not meet the trigger conditions after initially satisfying them, it may only broadcast for a short period. The lock broadcast duration feature ensures that, in such cases, the device broadcasts for the set lock broadcast duration. This feature's parameter must be set to a value less than the post-trigger broadcast duration.
+/// @param lockedADV Lock Event Occurs ADV Duration.
 /// @param sucBlock Success callback
 /// @param failedBlock Failure callback
 + (void)bxs_configHallTriggerParams:(NSInteger)slotIndex
                        triggerEvent:(NSInteger)event
-                  lockedADVDuration:(NSInteger)lockedADVDuration
+                          lockedADV:(BOOL)lockedADV
                            sucBlock:(void (^)(void))sucBlock
                         failedBlock:(void (^)(NSError *error))failedBlock;
 

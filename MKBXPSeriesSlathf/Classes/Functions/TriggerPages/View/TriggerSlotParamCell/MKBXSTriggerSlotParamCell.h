@@ -18,6 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy)NSString *interval;
 
+@property (nonatomic, assign)BOOL needChangeAdvDurationRange;
+
+@property (nonatomic, assign)NSInteger advDurationMaxValue;
+
 @property (nonatomic, copy)NSString *advDuration;
 
 @property (nonatomic, assign)NSInteger rssi;

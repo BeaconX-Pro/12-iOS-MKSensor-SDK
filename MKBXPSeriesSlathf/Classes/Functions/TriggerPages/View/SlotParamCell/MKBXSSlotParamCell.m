@@ -19,6 +19,14 @@
 #import "MKCustomUIAdopter.h"
 
 @implementation MKBXSSlotParamCellModel
+
+- (instancetype)init {
+    if (self = [super init]) {
+        self.powerModeButtonEnabled = YES;
+    }
+    return self;
+}
+
 @end
 
 @interface MKBXSSlotParamCell ()
@@ -134,6 +142,7 @@
         make.top.mas_equalTo(0);
         make.bottom.mas_equalTo(0);
     }];
+    self.powerButton.enabled = _dataModel.powerModeButtonEnabled;
     self.powerButton.selected = _dataModel.powerModeIsOn;
     UIImage *icon = (self.powerButton.selected ? LOADICON(@"MKBXPSeriesSlathf", @"MKBXSSlotParamCell", @"bxs_switchSelectedIcon.png") : LOADICON(@"MKBXPSeriesSlathf", @"MKBXSSlotParamCell", @"bxs_switchUnselectedIcon.png"));
     [self.powerButton setImage:icon forState:UIControlStateNormal];

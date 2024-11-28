@@ -44,7 +44,7 @@
             NSArray *characteristics = @[[CBUUID UUIDWithString:@"AA01"],[CBUUID UUIDWithString:@"AA02"],
                                          [CBUUID UUIDWithString:@"AA03"],[CBUUID UUIDWithString:@"AA04"],
                                          [CBUUID UUIDWithString:@"AA05"],[CBUUID UUIDWithString:@"AA06"],
-                                         [CBUUID UUIDWithString:@"AA07"],[CBUUID UUIDWithString:@"AA08"]];
+                                         [CBUUID UUIDWithString:@"AA09"],[CBUUID UUIDWithString:@"AA08"]];
             [self.peripheral discoverCharacteristics:characteristics forService:service];
         }else if ([service.UUID isEqual:[CBUUID UUIDWithString:kBXTOtaServerUUIDString]]) {
             NSArray *characteristics = @[[CBUUID UUIDWithString:kBXTOtaControlUUIDString],

@@ -222,25 +222,47 @@ static dispatch_once_t onceToken;
         if (!self.stepThreeModel.trigger) {
             //不开启触发前广播
             if ([self.stepTwoModel.advDuration integerValue] > 0) {
-                return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device temperature is more than or equal to %@℃, and stop advertising immediately after device temperature is less than %@℃",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),@(self.stepOneModel.temperature)];
+                if (!self.stepOneModel.lockedAdvIsOn) {
+                    return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device temperature is more than or equal to %@℃, and stop advertising immediately after device temperature is less than %@℃",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),@(self.stepOneModel.temperature)];
+                }
+                return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device temperature is more than or equal to %@℃.(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before stopping)",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature)];
             }
             if ([self.stepTwoModel.advDuration integerValue] == 0) {
-                return [NSString stringWithFormat:@"*The Beacon will keep advertising  at the interval of %@ms after device temperature is more than or equal to %@℃, and stop advertising immediately after device temperature is less than %@℃",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),@(self.stepOneModel.temperature)];
+                if (!self.stepOneModel.lockedAdvIsOn) {
+                    return [NSString stringWithFormat:@"*The Beacon will keep advertising  at the interval of %@ms after device temperature is more than or equal to %@℃, and stop advertising immediately after device temperature is less than %@℃",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),@(self.stepOneModel.temperature)];
+                }
+                return [NSString stringWithFormat:@"*The Beacon will keep advertising  at the interval of %@ms after device temperature is more than or equal to %@℃, and stop advertising after device temperature is less than %@℃.（If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the 5s post-trigger broadcast before stopping）",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),@(self.stepOneModel.temperature)];
             }
             return @"";
         }
         //开启触发前广播
         if ([self.stepThreeModel.standbyDuration integerValue] > 0 && [self.stepTwoModel.advDuration integerValue] > 0) {
-            return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms when device temperature is more than or equal to %@℃, and advertising for %@s every %@s at the interval of %@ms when device temperature is less than %@℃",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),self.stepTwoModel.advDuration,self.stepTwoModel.standbyDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature)];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms when device temperature is more than or equal to %@℃, and advertising for %@s every %@s at the interval of %@ms when device temperature is less than %@℃.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),self.stepTwoModel.advDuration,self.stepTwoModel.standbyDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature)];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         if ([self.stepTwoModel.standbyDuration integerValue] == 0 && [self.stepTwoModel.advDuration integerValue] > 0) {
-            return [NSString stringWithFormat:@" *The Beacon will advertising for %@s at the interval of %@ms when device temperature is more than or equal to %@℃, and  keep advertising at the interval of %@ms when device temperature is less than %@℃",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.stepOneModel.temperature)];
+            NSString *noteMsg = [NSString stringWithFormat:@" *The Beacon will advertising for %@s at the interval of %@ms when device temperature is more than or equal to %@℃, and  keep advertising at the interval of %@ms when device temperature is less than %@℃.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.stepOneModel.temperature)];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         if ([self.stepThreeModel.standbyDuration integerValue] > 0 && [self.stepTwoModel.advDuration integerValue] == 0) {
-            return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms when device temperature is more than or equal to %@℃, and advertising for %@s every %@s at the interval of %@ms when device temperature is less than %@℃",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.stepOneModel.temperature)];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms when device temperature is more than or equal to %@℃, and advertising for %@s every %@s at the interval of %@ms when device temperature is less than %@℃.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.stepOneModel.temperature)];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered,the beacon will be locked to complete the 5s post-trigger broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         if ([self.stepThreeModel.standbyDuration integerValue] == 0 && [self.stepTwoModel.advDuration integerValue] == 0) {
-            return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms when device temperature is more than or equal to %@℃, and  keep advertising at the interval of  %@ms when device temperature is less than %@℃",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.stepOneModel.temperature)];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms when device temperature is more than or equal to %@℃, and  keep advertising at the interval of  %@ms when device temperature is less than %@℃",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.stepOneModel.temperature)];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered,the beacon will be locked to complete the 5s post-trigger broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         
         return @"";
@@ -250,25 +272,47 @@ static dispatch_once_t onceToken;
         if (!self.stepThreeModel.trigger) {
             //不开启触发前广播
             if ([self.stepTwoModel.advDuration integerValue] > 0) {
-                return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device temperature is less than %@℃, and stop advertising immediately when device temperature is more than or equal to %@℃.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),@(self.stepOneModel.temperature)];
+                if (!self.stepOneModel.lockedAdvIsOn) {
+                    return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device temperature is less than or equal to %@℃, and stop advertising immediately after device temperature is more than %@℃.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),@(self.stepOneModel.temperature)];
+                }
+                return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device temperature is less than or equal to %@℃.(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before stopping)",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature)];
             }
             if ([self.stepTwoModel.advDuration integerValue] == 0) {
-                return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms after device temperature is less than %@℃, and stop advertising immediately when device temperature is more than or equal to %@℃. ",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),@(self.stepOneModel.temperature)];
+                if (!self.stepOneModel.lockedAdvIsOn) {
+                    return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms after device temperature is less than or equal to %@℃, and stop advertising immediately after device temperature is more than %@℃",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),@(self.stepOneModel.temperature)];
+                }
+                return [NSString stringWithFormat:@"*The Beacon will keep advertising  at the interval of %@ms after device temperature is less than or equal to %@℃, and stop advertising after device temperature is more than %@℃.(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the 5s post-trigger broadcast before stopping)",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),@(self.stepOneModel.temperature)];
             }
             return @"";
         }
         //开启触发前广播
         if ([self.stepThreeModel.standbyDuration integerValue] > 0 && [self.stepTwoModel.advDuration integerValue] > 0) {
-            return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms when device temperature is less than %@℃, and advertising for %@s every %@s at the interval of %@ms when device temperature is more than or equal to %@℃",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.stepOneModel.temperature)];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms when device temperature is less than or equal to %@℃, and advertising for %@s every %@s at the interval of %@ms when device temperature is more than %@℃.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.stepOneModel.temperature)];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         if ([self.stepThreeModel.standbyDuration integerValue] == 0 && [self.stepTwoModel.advDuration integerValue] > 0) {
-            return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms when device temperature is less than %@℃, and  keep advertising at the interval of  %@ms when device temperature is more than or equal to %@℃",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.stepOneModel.temperature)];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms when device temperature is less than or equal to %@℃, and  keep advertising at the interval of  %@ms when device temperature is more than %@℃.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.stepOneModel.temperature)];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         if ([self.stepThreeModel.standbyDuration integerValue] > 0 && [self.stepTwoModel.advDuration integerValue] == 0) {
-            return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms when device temperature is less than %@℃, and advertising for %@s every %@s at the interval of %@ms when device temperature is more than or equal to %@℃",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.stepOneModel.temperature)];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms when device temperature is less than or equal to %@℃, and advertising for %@s every %@s at the interval of %@ms when device temperature is more than %@℃.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.stepOneModel.temperature)];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered,the beacon will be locked to complete the 5s post-trigger broadcast before switching to the pre-trigger broadcast state）)"];
+            }
+            return noteMsg;
         }
         if ([self.stepThreeModel.standbyDuration integerValue] == 0 && [self.stepTwoModel.advDuration integerValue] == 0) {
-            return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms when device temperature is less than %@℃, and  keep advertising at the interval of  %@ms when device temperatureis more than or equal to %@℃",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.stepOneModel.temperature)];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms when device temperature is less than or equal to %@℃, and  keep advertising at the interval of  %@ms when device temperature is more than %@℃",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.temperature),[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.stepOneModel.temperature)];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered,the beacon will be locked to complete the 5s post-trigger broadcast before switching to the pre-trigger broadcast state）)"];
+            }
+            return noteMsg;
         }
         
         return @"";
@@ -282,26 +326,48 @@ static dispatch_once_t onceToken;
         if (!self.stepThreeModel.trigger) {
             //关闭触发前广播
             if ([self.stepTwoModel.advDuration integerValue] > 0) {
-                return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device humidity is more than or equal to  %@%%, and stop advertising immediately after device humidity is less than %@%%",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.humidity),@(self.stepOneModel.humidity)];
+                if (!self.stepOneModel.lockedAdvIsOn) {
+                    return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device Himidity is more than or equal to %@%, and stop advertising immediately after device Himidity is less than %@%.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.humidity),@(self.stepOneModel.humidity)];
+                }
+                return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device Himidity is more than or equal to %@%.(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before stopping)",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.humidity)];
             }
             if ([self.stepTwoModel.advDuration integerValue] == 0) {
-                return [NSString stringWithFormat:@"*The Beacon will keep advertising after at the interval of %@ms device humidity is more than or equal to  %@%%, and stop advertising immediately after device humidity is less than %@%%",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.humidity),@(self.stepOneModel.humidity)];
+                if (!self.stepOneModel.lockedAdvIsOn) {
+                    return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms after device Himidity is more than or equal to %@%, and stop advertising immediately after device Himidity is less than %@%.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.humidity),@(self.stepOneModel.humidity)];
+                }
+                return [NSString stringWithFormat:@"*The Beacon will keep advertising  at the interval of %@ms after device Himidity is more than or equal to %@%, and stop advertising after device Himidity is less than %@%.(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the 5s post-trigger broadcast before stopping)",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.humidity),@(self.stepOneModel.humidity)];
             }
             
             return @"";
         }
         //开启触发前广播
         if ([self.stepThreeModel.standbyDuration integerValue] > 0 && [self.stepTwoModel.advDuration integerValue] > 0) {
-            return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms when device humidity is more than or equal to  %@%%, and advertising for %@s every %@s at the interval of %@ms when device humidity is less than  %@%%",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.humidity),self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.stepOneModel.humidity)];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will advertising for%@s at the interval of %@ms when device Himidity is more than or equal to %@%, and advertising for %@s every %@s at the interval of %@ms when device Himidity is less than %@%.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.humidity),self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.stepOneModel.humidity)];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         if ([self.stepThreeModel.standbyDuration integerValue] == 0 && [self.stepTwoModel.advDuration integerValue] > 0) {
-            return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms when device humidity is more than or equal to  %@%%, and  keep advertising at the interval of  %@ms when device humidity is less than  %@%%",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.self.stepOneModel.humidity),[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.self.stepOneModel.humidity)];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms when device Himidity is more than or equal to %@%, and keep advertising at the interval of %@ms when device Himidity is less than %@%.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.self.stepOneModel.humidity),[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.self.stepOneModel.humidity)];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         if ([self.stepThreeModel.standbyDuration integerValue] > 0 && [self.stepTwoModel.advDuration integerValue] == 0) {
-            return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms when device humidity is more than or equal to  %@%%, and advertising for %@s every %@s at the interval of %@ms when device humidity is less than  %@%%",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.self.stepOneModel.humidity),self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.self.stepOneModel.humidity)];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms when device Himidity is more than or equal to %@%, and advertising for %@s every %@s at the interval of %@ms when device Himidity is less than %@%.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.self.stepOneModel.humidity),self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.self.stepOneModel.humidity)];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered,the beacon will be locked to complete the 5s post-trigger broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         if ([self.stepThreeModel.standbyDuration integerValue] == 0 && [self.stepTwoModel.advDuration integerValue] == 0) {
-            return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms when device humidity is more than or equal to  %@%%, and  keep advertising at the interval of  %@ms when device humidity is less than  %@%%",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.self.stepOneModel.humidity),[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.self.stepOneModel.humidity)];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms when device Himidity is more than or equal to %@%, and  keep advertising at the interval of %@ms when device Himidity is less than %@%.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.self.stepOneModel.humidity),[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.self.stepOneModel.humidity)];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered,the beacon will be locked to complete the 5s post-trigger broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         
         return @"";
@@ -311,26 +377,49 @@ static dispatch_once_t onceToken;
         if (!self.stepThreeModel.trigger) {
             //关闭触发前广播
             if ([self.stepTwoModel.advDuration integerValue] > 0) {
-                return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device humidity is less than  %@%%, and stop advertising immediately when device humidity is more than or equal to %@%%.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.humidity),@(self.self.stepOneModel.humidity)];
+                if (!self.stepOneModel.lockedAdvIsOn) {
+                    return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device Himidity is less than or equal to %@%, and stop advertising immediately after device Himidity is more than %@%.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.humidity),@(self.self.stepOneModel.humidity)];
+                }
+                
+                return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device Himidity is less than or equal to %@%.(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before stopping)",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.stepOneModel.humidity),@(self.self.stepOneModel.humidity)];
             }
             if ([self.stepTwoModel.advDuration integerValue] == 0) {
-                return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms after device humidity is less than  %@%%, and stop advertising immediately when device humidity is more than or equal to %@%%.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.self.stepOneModel.humidity),@(self.self.stepOneModel.humidity)];
+                if (!self.stepOneModel.lockedAdvIsOn) {
+                    return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms after device Himidity is less than or equal to %@%, and stop advertising immediately after device Himidity is more than %@%.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.self.stepOneModel.humidity),@(self.self.stepOneModel.humidity)];;
+                }
+                return [NSString stringWithFormat:@"*The Beacon will keep advertising  at the interval of %@ms after device Himidity is less than or equal to %@%, and stop advertising after device Himidity is more than %@%.(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the 5s post-trigger broadcast before stopping)",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.self.stepOneModel.humidity),@(self.self.stepOneModel.humidity)];
             }
             
             return @"";
         }
         //开启触发前广播
         if ([self.stepThreeModel.standbyDuration integerValue] > 0 && [self.stepTwoModel.advDuration integerValue] > 0) {
-            return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms when device humidity is less than  %@%%, and advertising for %@s every %@s at the interval of %@ms when device humidity is more than or equal to  %@%%",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.self.stepOneModel.humidity),self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.self.stepOneModel.humidity)];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms when device Himidity is less than or equal to %@%, and advertising for %@s every %@s at the interval of %@ms when device Himidity is more than %@%.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.self.stepOneModel.humidity),self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.self.stepOneModel.humidity)];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         if ([self.stepThreeModel.standbyDuration integerValue] == 0 && [self.stepTwoModel.advDuration integerValue] > 0) {
-            return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms when device humidity is less than  %@%%, and  keep advertising at the interval of  %@ms when device humidity is more than or equal to  %@%%",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.self.stepOneModel.humidity),[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.self.stepOneModel.humidity)];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms when device Himidity is less than or equal to %@%, and  keep advertising at the interval of %@ms when device Himidity is more than %@%.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.self.stepOneModel.humidity),[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.self.stepOneModel.humidity)];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         if ([self.stepThreeModel.standbyDuration integerValue] > 0 && [self.stepTwoModel.advDuration integerValue] == 0) {
-            return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms when device humidity is less than  %@%%, and advertising for %@s every %@s at the interval of %@ms when device humidity is more than or equal to  %@%%",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.self.stepOneModel.humidity),self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.self.stepOneModel.humidity)];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms when device Himidity is less than or equal to %@%, and advertising for %@s every %@s at the interval of %@ms when device Himidity is more than %@%.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.self.stepOneModel.humidity),self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.self.stepOneModel.humidity)];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         if ([self.stepThreeModel.standbyDuration integerValue] == 0 && [self.stepTwoModel.advDuration integerValue] == 0) {
-            return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms when device humidity is less than  %@%%, and  keep advertising at the interval of  %@ms when device humidity more than or equal to  %@%%",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.self.stepOneModel.humidity),[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.self.stepOneModel.humidity)];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms when device Himidity is less than or equal to %@%, and keep advertising at the interval of %@ms when device Himidity is more than %@%.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],@(self.self.stepOneModel.humidity),[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],@(self.self.stepOneModel.humidity)];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered,the beacon will be locked to complete the 5s post-trigger broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         
         return @"";
@@ -343,27 +432,14 @@ static dispatch_once_t onceToken;
         //Device start moving
         if (!self.stepThreeModel.trigger) {
             //关闭触发前广播
-            if ([self.stepTwoModel.advDuration integerValue] > 0) {
-                return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device moves, and stop advertising immediately after device keep stationary for %@s",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.self.stepOneModel.motionVerificationPeriod];
-            }
-            if ([self.stepTwoModel.advDuration integerValue] == 0) {
-                return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms after device moves, and stop advertising immediately after device keep stationary for %@s",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.self.stepOneModel.motionVerificationPeriod];
-            }
-            
-            return @"";
+            return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device moves, and stop advertising immediately after device keep stationary for %@s",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.self.stepOneModel.motionVerificationPeriod];
         }
         //打开触发前广播
-        if ([self.stepThreeModel.standbyDuration integerValue] > 0 && [self.stepTwoModel.advDuration integerValue] > 0) {
+        if ([self.stepThreeModel.standbyDuration integerValue] > 0) {
             return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms after device moves, and advertising for %@s every %@s at the interval of %@ms when device keep stationary for %@s",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],self.self.stepOneModel.motionVerificationPeriod];
         }
-        if ([self.stepThreeModel.standbyDuration integerValue] == 0 && [self.stepTwoModel.advDuration integerValue] > 0) {
+        if ([self.stepThreeModel.standbyDuration integerValue] == 0) {
             return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms after device moves, and  keep advertising at the interval of  %@ms when device keep stationary for %@s",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],self.self.stepOneModel.motionVerificationPeriod];
-        }
-        if ([self.stepThreeModel.standbyDuration integerValue] > 0 && [self.stepTwoModel.advDuration integerValue] == 0) {
-            return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms after device moves, and advertising for %@s every %@s at the interval of %@ms when device keep stationary for %@s",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],self.self.stepOneModel.motionVerificationPeriod];
-        }
-        if ([self.stepThreeModel.standbyDuration integerValue] == 0 && [self.stepTwoModel.advDuration integerValue] == 0) {
-            return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms after device moves, and  keep advertising at the interval of %@ms when device keep stationary for %@s",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],self.self.stepOneModel.motionVerificationPeriod];
         }
         
         return @"";
@@ -382,20 +458,7 @@ static dispatch_once_t onceToken;
             return @"";
         }
         //打开触发前广播
-        if ([self.stepThreeModel.standbyDuration integerValue] > 0 && [self.stepTwoModel.advDuration integerValue] > 0) {
-            return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms when device keep stationary for %@s, and advertising for %@s every %@s at the interval of %@ms after device moves",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.self.stepOneModel.motionVerificationPeriod,self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
-        }
-        if ([self.stepThreeModel.standbyDuration integerValue] == 0 && [self.stepTwoModel.advDuration integerValue] > 0) {
-            return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms when device keep stationary for %@s, and  keep advertising at the interval of  %@ms after device moves",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.self.stepOneModel.motionVerificationPeriod,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
-        }
-        if ([self.stepThreeModel.standbyDuration integerValue] > 0 && [self.stepTwoModel.advDuration integerValue] == 0) {
-            return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms when device keep stationary for %@s, and advertising for %@s every %@s at the interval of %@ms after device moves",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.self.stepOneModel.motionVerificationPeriod,self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
-        }
-        if ([self.stepThreeModel.standbyDuration integerValue] == 0 && [self.stepTwoModel.advDuration integerValue] == 0) {
-            return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms when device keep stationary for %@s, and  keep advertising at the interval of  %@ms after device moves",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.self.stepOneModel.motionVerificationPeriod,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
-        }
-        
-        return @"";
+        return [NSString stringWithFormat:@" *The Beacon will keep advertising at the interval of %@ms after device keep stationary for %@s, and advertising for %@s when device moves.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.self.stepOneModel.motionVerificationPeriod,self.self.stepOneModel.motionVerificationPeriod];
     }
     return @"";
 }
@@ -406,26 +469,48 @@ static dispatch_once_t onceToken;
         if (!self.stepThreeModel.trigger) {
             //关闭触发前广播
             if ([self.stepTwoModel.advDuration integerValue] > 0) {
-                return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after door open, and stop advertising immediately when door is closed.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval]];
+                if (!self.stepOneModel.lockedAdvIsOn) {
+                    return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after door open, and stop advertising immediately when door close.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval]];
+                }
+                return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms when door open.(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before stopping)",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval]];
             }
             if ([self.stepTwoModel.advDuration integerValue] == 0) {
-                return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms after device moves, and stop advertising immediately when door is closed.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval]];
+                if (!self.stepOneModel.lockedAdvIsOn) {
+                    return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms after door open, and stop advertising immediately when door close.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval]];
+                }
+                return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms after door open, and stop advertising when door close.(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the 5s post-trigger broadcast before stopping)",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval]];
             }
             
             return @"";
         }
         //打开触发前广播
         if ([self.stepThreeModel.standbyDuration integerValue] > 0 && [self.stepTwoModel.advDuration integerValue] > 0) {
-            return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms after door open, and advertising for %@s every %@s at the interval of %@ms when door is closed",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms after door open, and advertising for %@s every %@s at the interval of %@s when door close.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         if ([self.stepThreeModel.standbyDuration integerValue] == 0 && [self.stepTwoModel.advDuration integerValue] > 0) {
-            return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms after door open, and  keep advertising at the interval of  %@ms when door is closed",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
+            NSString *noteMsg = [NSString stringWithFormat:@" *The Beacon will advertising for %@s at the interval of %@ms after door open,and keep advertising at the interval of %@ms when door close.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         if ([self.stepThreeModel.standbyDuration integerValue] > 0 && [self.stepTwoModel.advDuration integerValue] == 0) {
-            return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms after door open, and advertising for %@s every %@s at the interval of %@ms when door is closed",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms after door open, and advertising for %@s every %@s at the interval of %@ms when door close.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered,the beacon will be locked to complete the 5s post-trigger broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         if ([self.stepThreeModel.standbyDuration integerValue] == 0 && [self.stepTwoModel.advDuration integerValue] == 0) {
-            return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms after door open, and  keep advertising at the interval of  %@ms when door is closed",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms after door open, and keep advertising at the interval of %@ms when door close.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered,the beacon will be locked to complete the 5s post-trigger broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         
         return @"";
@@ -435,26 +520,49 @@ static dispatch_once_t onceToken;
         if (!self.stepThreeModel.trigger) {
             //关闭触发前广播
             if ([self.stepTwoModel.advDuration integerValue] > 0) {
-                return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms  after door is closed, and stop advertising immediately when door is opened.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval]];
+                if (!self.stepOneModel.lockedAdvIsOn) {
+                    return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after door close, and stop advertising immediately when door open.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval]];
+                }
+                return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after door close.(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before stopping)",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval]];
             }
             if ([self.stepTwoModel.advDuration integerValue] == 0) {
-                return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms  after door is closed, and stop advertising immediately when door is opened. ",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval]];
+                if (!self.stepOneModel.lockedAdvIsOn) {
+                    return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms after door close, and stop advertising immediately when door open.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval]];
+                }
+                return [NSString stringWithFormat:@"*The Beacon will keep advertising  at the interval of %@ms after door close, and stop advertising when door open.(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the 5s post-trigger broadcast before stopping)",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval]];
             }
             
             return @"";
         }
         //打开触发前广播
         if ([self.stepThreeModel.standbyDuration integerValue] > 0 && [self.stepTwoModel.advDuration integerValue] > 0) {
-            return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms after door is closed, and advertising for %@s every %@s at the interval of %@ms when door is opened.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
+            
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms after door close, and advertising for %@s every %@s at the interval of %@ms when door open.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         if ([self.stepThreeModel.standbyDuration integerValue] == 0 && [self.stepTwoModel.advDuration integerValue] > 0) {
-            return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms after door is closed, and  keep advertising at the interval of  %@ms when door is opened. ",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms after door close, and keep advertising at the interval of %@ms when door open.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered, the beacon will be locked to complete the Total adv duration broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         if ([self.stepThreeModel.standbyDuration integerValue] > 0 && [self.stepTwoModel.advDuration integerValue] == 0) {
-            return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms after door is closed, and advertising for %@s every %@s at the interval of %@ms when door is opened. ",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms after door close, and advertising for %@s every %@s at the interval of %@ms when door open.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered,the beacon will be locked to complete the 5s post-trigger broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         if ([self.stepThreeModel.standbyDuration integerValue] == 0 && [self.stepTwoModel.advDuration integerValue] == 0) {
-            return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of  %@ms after door is closed, and  keep advertising at the interval of  %@ms when door is opened. ",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],[self fetchIntervalMsgValue:[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]]];
+            NSString *noteMsg = [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms after door close, and keep advertising at the interval of %@ms when door open.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],[self fetchIntervalMsgValue:[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]]];
+            if (self.stepOneModel.lockedAdvIsOn) {
+                noteMsg = [noteMsg stringByAppendingString:@"(If the beacon quickly returns to a state where the trigger condition is no longer met shortly after the event is triggered,the beacon will be locked to complete the 5s post-trigger broadcast before switching to the pre-trigger broadcast state)"];
+            }
+            return noteMsg;
         }
         
         return @"";

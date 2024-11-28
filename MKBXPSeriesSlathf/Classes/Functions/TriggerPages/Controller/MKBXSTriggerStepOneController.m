@@ -180,7 +180,8 @@ MKNormalSliderCellDelegate>
     }
     if (section == 7) {
         //Locked ADV duration
-        return ([MKBXSTriggerParamManager shared].stepOneModel.lockedAdvIsOn ? self.section7List.count : 0);
+//        return ([MKBXSTriggerParamManager shared].stepOneModel.lockedAdvIsOn ? self.section7List.count : 0);
+        return 0;
     }
     return 0;
 }
@@ -340,13 +341,13 @@ MKNormalSliderCellDelegate>
         cellModel.textFieldValue = value;
         return;
     }
-    if (index == 1) {
-        //Locked ADV duration
-        [MKBXSTriggerParamManager shared].stepOneModel.lockAdvDuration = value;
-        MKTextFieldCellModel *cellModel = self.section7List[0];
-        cellModel.textFieldValue = value;
-        return;
-    }
+//    if (index == 1) {
+//        //Locked ADV duration
+//        [MKBXSTriggerParamManager shared].stepOneModel.lockAdvDuration = value;
+//        MKTextFieldCellModel *cellModel = self.section7List[0];
+//        cellModel.textFieldValue = value;
+//        return;
+//    }
 }
 
 #pragma mark - event method
@@ -367,12 +368,12 @@ MKNormalSliderCellDelegate>
         }];
         return;
     }
-    if ([MKBXSTriggerParamManager shared].stepOneModel.lockedAdvIsOn) {
-        if (!ValidStr([MKBXSTriggerParamManager shared].stepOneModel.lockAdvDuration) || [[MKBXSTriggerParamManager shared].stepOneModel.lockAdvDuration integerValue] < 1 || [[MKBXSTriggerParamManager shared].stepOneModel.lockAdvDuration integerValue] > 65535) {
-            [self.view showCentralToast:@"Params Error"];
-            return;
-        }
-    }
+//    if ([MKBXSTriggerParamManager shared].stepOneModel.lockedAdvIsOn) {
+//        if (!ValidStr([MKBXSTriggerParamManager shared].stepOneModel.lockAdvDuration) || [[MKBXSTriggerParamManager shared].stepOneModel.lockAdvDuration integerValue] < 1 || [[MKBXSTriggerParamManager shared].stepOneModel.lockAdvDuration integerValue] > 65535) {
+//            [self.view showCentralToast:@"Params Error"];
+//            return;
+//        }
+//    }
     if ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2) {
         //移动触发
         if ([MKBXSTriggerParamManager shared].stepOneModel.motionEvent < 0 || [MKBXSTriggerParamManager shared].stepOneModel.motionEvent > 1 || !ValidStr([MKBXSTriggerParamManager shared].stepOneModel.motionVerificationPeriod) || [[MKBXSTriggerParamManager shared].stepOneModel.motionVerificationPeriod integerValue] < 1 || [[MKBXSTriggerParamManager shared].stepOneModel.motionVerificationPeriod integerValue] > 65535) {
@@ -549,7 +550,7 @@ MKNormalSliderCellDelegate>
     cellModel.textPlaceholder = @"1~65535";
     cellModel.unit = @"s";
     cellModel.maxLength = 5;
-    cellModel.textFieldValue = [MKBXSTriggerParamManager shared].stepOneModel.lockAdvDuration;
+//    cellModel.textFieldValue = [MKBXSTriggerParamManager shared].stepOneModel.lockAdvDuration;
     cellModel.noteMsg = @"*Lock ADV duration: If the device quickly returns to a state that does not meet the trigger conditions after initially satisfying them, it may only broadcast for a short period. The lock broadcast duration feature ensures that, in such cases, the device broadcasts for the set lock broadcast duration. This feature's parameter must be set to a value less than the post-trigger broadcast duration.";
     cellModel.noteMsgColor = RGBCOLOR(201, 90, 49);
     [self.section7List addObject:cellModel];

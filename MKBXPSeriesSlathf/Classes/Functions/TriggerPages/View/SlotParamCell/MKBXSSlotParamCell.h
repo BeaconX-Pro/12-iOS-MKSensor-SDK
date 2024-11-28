@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy)NSString *interval;
 
+@property (nonatomic, assign)BOOL powerModeButtonEnabled;
+
 /// YES表示standbyDuration=0
 @property (nonatomic, assign)BOOL powerModeIsOn;
 

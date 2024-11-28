@@ -264,6 +264,12 @@ MKBXSSlotParamCellDelegate>
 
 #pragma mark - event method
 - (void)doneButtonPressed {
+    if ([MKBXSTriggerParamManager shared].stepOneModel.trigger
+        && [MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2
+        && [MKBXSTriggerParamManager shared].stepOneModel.motionEvent == 1) {
+        //第一步移动触发，并且是Device remains stationary触发方式
+        [MKBXSTriggerParamManager shared].stepThreeModel.advDuration = [MKBXSTriggerParamManager shared].stepOneModel.motionVerificationPeriod;
+    }
     if ([MKBXSTriggerParamManager shared].stepThreeModel.trigger && ![[MKBXSTriggerParamManager shared].stepThreeModel validParams]) {
         [self.view showCentralToast:@"Params Error"];
         return;
@@ -437,6 +443,15 @@ MKBXSSlotParamCellDelegate>
     cellModel.rssi = [MKBXSTriggerParamManager shared].stepThreeModel.rssi;
     cellModel.txPower = [MKBXSTriggerParamManager shared].stepThreeModel.txPower;
     cellModel.powerModeIsOn = [MKBXSTriggerParamManager shared].stepThreeModel.powerModeIsOn;
+    
+    if ([MKBXSTriggerParamManager shared].stepOneModel.trigger
+        && [MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2
+        && [MKBXSTriggerParamManager shared].stepOneModel.motionEvent == 1) {
+        //第一步移动触发，并且是Device remains stationary触发方式
+        cellModel.powerModeButtonEnabled = NO;
+    }else {
+        cellModel.powerModeButtonEnabled = YES;
+    }
     
     [self.section3List addObject:cellModel];
 }

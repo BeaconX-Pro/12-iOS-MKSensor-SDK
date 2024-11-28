@@ -107,7 +107,23 @@
         make.top.mas_equalTo(0);
         make.bottom.mas_equalTo(0);
     }];
-    
+    if (_dataModel.needChangeAdvDurationRange) {
+        self.advDurationField.placeholder = [NSString stringWithFormat:@"0 ~ %@",@(_dataModel.advDurationMaxValue)];
+        if (_dataModel.advDurationMaxValue < 10) {
+            self.advDurationField.maxLength = 1;
+        }else if (_dataModel.advDurationMaxValue < 100) {
+            self.advDurationField.maxLength = 2;
+        }else if (_dataModel.advDurationMaxValue < 1000) {
+            self.advDurationField.maxLength = 3;
+        }else if (_dataModel.advDurationMaxValue < 10000) {
+            self.advDurationField.maxLength = 4;
+        }else {
+            self.advDurationField.maxLength = 5;
+        }
+    }else {
+        self.advDurationField.placeholder = @"0~65535";
+        self.advDurationField.maxLength = 5;
+    }
     [self setupTxPowerParams];
     if (_dataModel.cellType == bxs_slotType_tlm) {
         //TLM、Sensor Info

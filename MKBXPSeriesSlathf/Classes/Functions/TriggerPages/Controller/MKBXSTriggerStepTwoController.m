@@ -237,6 +237,15 @@ MKBXSTriggerSlotParamCellDelegate>
         [self.view showCentralToast:@"Params Error"];
         return;
     }
+    if ([MKBXSTriggerParamManager shared].stepOneModel.trigger
+        && [MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2
+        && [MKBXSTriggerParamManager shared].stepOneModel.motionEvent == 0) {
+        //第一步移动触发，并且是Device start moving触发方式
+        if ([[MKBXSTriggerParamManager shared].stepTwoModel.advDuration integerValue] > [[MKBXSTriggerParamManager shared].stepOneModel.motionVerificationPeriod integerValue]) {
+            [self.view showCentralToast:@"Params Error"];
+            return;
+        }
+    }
     [MKBXSTriggerParamManager shared].stepThreeModel.slotType = [MKBXSTriggerParamManager shared].stepTwoModel.slotType;
     
     MKBXSTriggerStepThreeController *vc = [[MKBXSTriggerStepThreeController alloc] init];
@@ -402,6 +411,16 @@ MKBXSTriggerSlotParamCellDelegate>
     cellModel.cellType = [MKBXSTriggerParamManager shared].stepTwoModel.slotType;
     cellModel.interval = [MKBXSTriggerParamManager shared].stepTwoModel.advInterval;
     cellModel.advDuration = [MKBXSTriggerParamManager shared].stepTwoModel.advDuration;
+    if ([MKBXSTriggerParamManager shared].stepOneModel.trigger
+        && [MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2
+        && [MKBXSTriggerParamManager shared].stepOneModel.motionEvent == 0) {
+        //第一步移动触发，并且是Device start moving触发方式
+        cellModel.needChangeAdvDurationRange = YES;
+        cellModel.advDurationMaxValue = [[MKBXSTriggerParamManager shared].stepOneModel.motionVerificationPeriod integerValue];
+    }else {
+        cellModel.needChangeAdvDurationRange = NO;
+        cellModel.advDurationMaxValue = 0;
+    }
     cellModel.rssi = [MKBXSTriggerParamManager shared].stepTwoModel.rssi;
     cellModel.txPower = [MKBXSTriggerParamManager shared].stepTwoModel.txPower;
     [self.section2List addObject:cellModel];

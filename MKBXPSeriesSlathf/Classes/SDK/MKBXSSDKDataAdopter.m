@@ -309,50 +309,50 @@
         //温度触发
         NSString *event = ([[content substringWithRange:NSMakeRange(4, 2)] isEqualToString:@"10"] ? @"0" : @"1");
         NSString *temperature = [NSString stringWithFormat:@"%@",[MKBLEBaseSDKAdopter signedHexTurnString:[content substringWithRange:NSMakeRange(6, 4)]]];
-        NSString *lockedAdvDuration = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(10, 4)];
+        BOOL lockedAdv = [[content substringWithRange:NSMakeRange(10, 2)] isEqualToString:@"01"];
         return @{
             @"slotIndex":slotIndex,
             @"triggerType":triggerType,
             @"event":event,
             @"temperature":temperature,
-            @"lockedAdvDuration":lockedAdvDuration
+            @"lockedAdv":@(lockedAdv)
         };
     }
     if ([triggerType isEqualToString:@"02"]) {
         //湿度触发
         NSString *event = ([[content substringWithRange:NSMakeRange(4, 2)] isEqualToString:@"20"] ? @"0" : @"1");
         NSString *humidity = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(6, 4)];
-        NSString *lockedAdvDuration = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(10, 4)];
+        BOOL lockedAdv = [[content substringWithRange:NSMakeRange(10, 2)] isEqualToString:@"01"];
         return @{
             @"slotIndex":slotIndex,
             @"triggerType":triggerType,
             @"event":event,
             @"humidity":humidity,
-            @"lockedAdvDuration":lockedAdvDuration
+            @"lockedAdv":@(lockedAdv)
         };
     }
     if ([triggerType isEqualToString:@"03"]) {
         //移动触发
         NSString *event = ([[content substringWithRange:NSMakeRange(4, 2)] isEqualToString:@"30"] ? @"0" : @"1");
-        NSString *lockedAdvDuration = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(10, 4)];
-        NSString *period = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(14, 4)];
+        BOOL lockedAdv = [[content substringWithRange:NSMakeRange(10, 2)] isEqualToString:@"01"];
+        NSString *period = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(12, 4)];
         return @{
             @"slotIndex":slotIndex,
             @"triggerType":triggerType,
             @"event":event,
-            @"lockedAdvDuration":lockedAdvDuration,
+            @"lockedAdv":@(lockedAdv),
             @"period":period,
         };
     }
     if ([triggerType isEqualToString:@"04"]) {
         //霍尔触发
         NSString *event = ([[content substringWithRange:NSMakeRange(4, 2)] isEqualToString:@"40"] ? @"0" : @"1");
-        NSString *lockedAdvDuration = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(10, 4)];
+        BOOL lockedAdv = [[content substringWithRange:NSMakeRange(10, 2)] isEqualToString:@"01"];
         return @{
             @"slotIndex":slotIndex,
             @"triggerType":triggerType,
             @"event":event,
-            @"lockedAdvDuration":lockedAdvDuration,
+            @"lockedAdv":@(lockedAdv),
         };
     }
     
