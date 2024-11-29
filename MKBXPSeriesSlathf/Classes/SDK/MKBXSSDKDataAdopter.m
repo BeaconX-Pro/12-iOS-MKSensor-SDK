@@ -159,7 +159,7 @@
     }
     NSMutableDictionary *resultDic = [NSMutableDictionary dictionary];
     NSInteger contentIndex = 0;
-    NSInteger dataIndex = 14;
+    NSInteger dataIndex = (hasStandbyDuration ? 14 : 12);
     NSString *slotIndex = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(contentIndex, 2)];
     [resultDic setObject:slotIndex forKey:@"slotIndex"];
     contentIndex += 2;

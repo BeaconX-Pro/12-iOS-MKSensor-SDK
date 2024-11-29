@@ -12,6 +12,7 @@
 
 #import "MKBXSInterface.h"
 #import "MKBXSInterface+MKBXSConfig.h"
+#import "MKBXSSDKDataAdopter.h"
 
 @interface MKBXSTriggerStepTwoModel ()
 
@@ -24,6 +25,60 @@
 @end
 
 @implementation MKBXSTriggerStepTwoModel
+
+#pragma mark - super method
+- (BOOL)validParams {
+    if (self.slotType == bxs_slotType_null) {
+        //No Data
+        return YES;
+    }
+    if (!ValidStr(self.advInterval) || [self.advInterval integerValue] < 1 || [self.advInterval integerValue] > 100) {
+        return NO;
+    }
+    if (!ValidStr(self.advDuration) || [self.advDuration integerValue] < 0 || [self.advDuration integerValue] > 65535) {
+        return NO;
+    }
+    if (self.powerModeIsOn) {
+        if (!ValidStr(self.standbyDuration) || [self.standbyDuration integerValue] < 1 || [self.standbyDuration integerValue] > 65535) {
+            return NO;
+        }
+    }
+    
+    if (self.slotType != bxs_slotType_tlm) {
+        if (self.rssi < -127 || self.rssi > 0) {
+            return NO;
+        }
+    }
+    if (self.slotType == bxs_slotType_uid) {
+        if (!ValidStr(self.namespaceID) || self.namespaceID.length != 20 || !ValidStr(self.instanceID) || self.instanceID.length != 12) {
+            return NO;
+        }
+    }else if (self.slotType == bxs_slotType_url) {
+        NSString *result = [MKBXSSDKDataAdopter fetchUrlString:self.urlType urlContent:self.urlContent];
+        if (!ValidStr(result)) {
+            return NO;
+        }
+    }else if (self.slotType == bxs_slotType_beacon) {
+        if (!ValidStr(self.major) || ![self.major integerValue] < 0 || [self.major integerValue] > 65535) {
+            return NO;
+        }
+        if (!ValidStr(self.minor) || ![self.minor integerValue] < 0 || [self.minor integerValue] > 65535) {
+            return NO;
+        }
+        if (!ValidStr(self.uuid) || self.uuid.length != 32) {
+            return NO;
+        }
+    }else if (self.slotType == bxs_slotType_sensorInfo) {
+        if (!ValidStr(self.deviceName) || self.deviceName.length > 20) {
+            return NO;
+        }
+        if (!ValidStr(self.tagID) || self.tagID.length > 12 || (self.tagID.length % 2 != 0)) {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
 
 #pragma mark - public method
 - (void)readWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock {
