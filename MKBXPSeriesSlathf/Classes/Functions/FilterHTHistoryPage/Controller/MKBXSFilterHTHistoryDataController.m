@@ -18,6 +18,8 @@
 
 #import "MKHudManager.h"
 
+#import "MKBXSExcelManager.h"
+
 #import "MKBXSFilterHTHistoryHeaderView.h"
 
 #import "MKBXSExportHTDataCurveView.h"
@@ -102,35 +104,14 @@ MKBXSFilterHTHistoryHeaderViewDelegate>
 }
 
 - (void)bxs_filterHTHistoryHeaderView_exportButtonPressed {
-    if (![MFMailComposeViewController canSendMail]) {
-        //如果是未绑定有效的邮箱，则跳转到系统自带的邮箱去处理
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"MESSAGE://"]
-                                           options:@{}
-                                 completionHandler:nil];
-        return;
-    }
-    NSData *emailData = [self.textView.text dataUsingEncoding:NSUTF8StringEncoding];
-    if (!ValidData(emailData) || emailData.length == 0) {
-        [self.view showCentralToast:@"Log file does not exist"];
-        return;
-    }
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    NSString *version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    NSString *bodyMsg = [NSString stringWithFormat:@"APP Version: %@ + + OS: %@",
-                         version,
-                         kSystemVersionString];
-    MFMailComposeViewController *mailComposer = [[MFMailComposeViewController alloc] init];
-    mailComposer.mailComposeDelegate = self;
-    
-    //收件人
-    [mailComposer setToRecipients:@[@"Development@mokotechnology.com"]];
-    //邮件主题
-    [mailComposer setSubject:@"Feedback of mail"];
-    [mailComposer addAttachmentData:emailData
-                           mimeType:@"application/txt"
-                           fileName:@"T&HDatas.txt"];
-    [mailComposer setMessageBody:bodyMsg isHTML:NO];
-    [self presentViewController:mailComposer animated:YES completion:nil];
+    [[MKHudManager share] showHUDWithTitle:@"Waiting..." inView:self.view isPenetration:NO];
+    [MKBXSExcelManager exportExcelWithTHDataList:self.dataList sucBlock:^{
+        [[MKHudManager share] hide];
+        [self sharedExcel];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [self.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 #pragma mark - private method
@@ -171,6 +152,44 @@ MKBXSFilterHTHistoryHeaderViewDelegate>
     self.textView.text = [self.textView.text stringByAppendingString:text];
     [self.textView scrollRangeToVisible:NSMakeRange(self.textView.text.length, 1)];
     [self.topView updateSumRecord:[NSString stringWithFormat:@"%ld",(long)self.dataList.count]];
+}
+
+- (void)sharedExcel {
+    if (![MFMailComposeViewController canSendMail]) {
+        //如果是未绑定有效的邮箱，则跳转到系统自带的邮箱去处理
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"MESSAGE://"]
+                                          options:@{}
+                                completionHandler:nil];
+        return;
+    }
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *path = [documentPath stringByAppendingPathComponent:@"Temperature&HumidityDatas.xlsx"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        [self.view showCentralToast:@"File not exist"];
+        return;
+    }
+    NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
+    if (!ValidData(data)) {
+        [self.view showCentralToast:@"Load file error"];
+        return;
+    }
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    NSString *bodyMsg = [NSString stringWithFormat:@"APP Version: %@ + + OS: %@",
+                         version,
+                         kSystemVersionString];
+    MFMailComposeViewController *mailComposer = [[MFMailComposeViewController alloc] init];
+    mailComposer.mailComposeDelegate = self;
+    
+    //收件人
+    [mailComposer setToRecipients:@[@"Development@mokotechnology.com"]];
+    //邮件主题
+    [mailComposer setSubject:@"Feedback of mail"];
+    [mailComposer addAttachmentData:data
+                           mimeType:@"application/xlsx"
+                           fileName:@"Temperature&HumidityDatas.xlsx"];
+    [mailComposer setMessageBody:bodyMsg isHTML:NO];
+    [self presentViewController:mailComposer animated:YES completion:nil];
 }
 
 #pragma mark - UI

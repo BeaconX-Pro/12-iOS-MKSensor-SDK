@@ -88,13 +88,13 @@
     
     MKBXSOptionsCellModel *cellModel2 = [[MKBXSOptionsCellModel alloc] init];
     cellModel2.msg = @"Temperature&Humidity Sensor";
-    cellModel2.noteMsg = @"(M4 Sensor | M2 Sensor | L01 | L01A | L02 | L02A)";
+    cellModel2.noteMsg = @"(M4 Sensor | M2 Sensor | L01S | L01AS| L02S)";
     cellModel2.iconName = @"bxs_options_temperatureHumiditySensor.png";
     [self.dataList addObject:cellModel2];
     
     MKBXSOptionsCellModel *cellModel3 = [[MKBXSOptionsCellModel alloc] init];
     cellModel3.msg = @"Temperature Sensor";
-    cellModel3.noteMsg = @"(M4 Sensor | M2 Sensor | L01 | L01A | L02 | L02A)";
+    cellModel3.noteMsg = @"(M4 Sensor | M2 Sensor | L01S | L01AS | L02S | S05T)";
     cellModel3.iconName = @"bxs_options_temperatureSensor.png";
     [self.dataList addObject:cellModel3];
     

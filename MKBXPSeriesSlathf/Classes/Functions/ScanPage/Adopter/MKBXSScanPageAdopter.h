@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  如果beacon是:
  MKBXSiBeacon:                   iBeacon广播帧(对应的dataModel是MKBXScanBeaconCellModel类型)
- MKBXSTLMBeacon:                 TLM广播帧(对应的dataModel是MKBXScanTLMCellModel类型)
+ MKBXSTLMBeacon:                 TLM广播帧(对应的dataModel是MKBXSScanTLMCellModel类型)
  MKBXSUIDBeacon:                 UID广播帧(对应的dataModel是MKBXScanUIDCellModel类型)
  MKBXSURLBeacon:                 URL广播帧(对应的dataModel是MKBXScanURLCellModel类型)
  MKBXSTagInfoBeacon:             Tag广播帧(对应的dataModel是MKBXSScanSensorInfoCellModel类型)
@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  目前支持
  MKBXScanBeaconCell:        iBeacon广播帧(对应的dataModel是MKBXScanBeaconCellModel类型)
- MKBXScanTLMCell:           TLM广播帧(对应的dataModel是MKBXScanTLMCellModel类型)
+ MKBXSScanTLMCell:           TLM广播帧(对应的dataModel是MKBXSScanTLMCellModel类型)
  MKBXScanUIDCell:           UID广播帧(对应的dataModel是MKBXScanUIDCellModel类型)
  MKBXScanURLCell:           URL广播帧(对应的dataModel是MKBXScanURLCellModel类型)
  MKBXSScanSensorInfoCell:      Tag信息帧(对应的dataModel是MKBXSScanSensorInfoCellModel类型)
@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
  目前支持
  根据UUID动态计算:        iBeacon广播帧(对应的dataModel是MKBXScanBeaconCellModel类型)
  140.f:                 Tag信息帧(对应的dataModel是MKBXSScanSensorInfoCellModel类型)
- 110.f:                 TLM广播帧(对应的dataModel是MKBXScanTLMCellModel类型)
+ 110.f:                 TLM广播帧(对应的dataModel是MKBXSScanTLMCellModel类型)
  85.f:                  UID广播帧(对应的dataModel是MKBXScanUIDCellModel类型)
  70.f:                  URL广播帧(对应的dataModel是MKBXScanURLCellModel类型)
  如果不是其中的一种，则返回0
@@ -71,7 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  0:         MKBXScanUIDCellModel
  1:         MKBXScanURLCellModel
- 2:         MKBXScanTLMCellModel
+ 2:         MKBXSScanTLMCellModel
  3:         MKBXScanBeaconCellModel
  4:         MKBXSScanSensorInfoCellModel
  否则返回6，排在最后面

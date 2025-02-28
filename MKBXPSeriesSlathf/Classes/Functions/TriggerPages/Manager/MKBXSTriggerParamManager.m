@@ -97,13 +97,9 @@ static dispatch_once_t onceToken;
         }
         
         if (!self.stepOneModel.trigger) {
-            //关闭触发
-            moko_dispatch_main_safe(^{
-                if (sucBlock) {
-                    sucBlock();
-                }
-            });
-            return;
+            //关闭触发，step2和step3需要发送No data
+            self.stepTwoModel.slotType = bxs_slotType_null;
+            self.stepThreeModel.slotType = bxs_slotType_null;
         }
         
         if (![self configStepTwoModel]) {
@@ -432,17 +428,23 @@ static dispatch_once_t onceToken;
         //Device start moving
         if (!self.stepThreeModel.trigger) {
             //关闭触发前广播
-            return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device moves, and stop advertising immediately after device keep stationary for %@s",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.self.stepOneModel.motionVerificationPeriod];
-        }
-        //打开触发前广播
-        if ([self.stepThreeModel.standbyDuration integerValue] > 0) {
-            return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms after device moves, and advertising for %@s every %@s at the interval of %@ms when device keep stationary for %@s",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],self.self.stepOneModel.motionVerificationPeriod];
-        }
-        if ([self.stepThreeModel.standbyDuration integerValue] == 0) {
-            return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms after device moves, and  keep advertising at the interval of  %@ms when device keep stationary for %@s",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],self.self.stepOneModel.motionVerificationPeriod];
+            if ([self.stepTwoModel.advInterval integerValue] > 0) {
+                return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device moves, and stop advertising immediately after device keep stationary for %@s",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.self.stepOneModel.motionVerificationPeriod];
+            }
+            return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device moves, and stop advertising immediately after device keep stationary for %@s",self.self.stepOneModel.motionVerificationPeriod,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.self.stepOneModel.motionVerificationPeriod];
         }
         
-        return @"";
+        //打开触发前广播
+        if ([self.stepThreeModel.standbyDuration integerValue] > 0) {
+            if ([self.stepTwoModel.advDuration integerValue] > 0) {
+                return [NSString stringWithFormat:@" *The Beacon will advertising for %@s at the interval of %@ms after device moves, and advertising for %@s every %@s at the interval of %@ms when device keep stationary for %@s",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],self.self.stepOneModel.motionVerificationPeriod];
+            }
+            return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms after device moves, and advertising for %@s every %@s at the interval of %@ms when device keep stationary for %@s",self.self.stepOneModel.motionVerificationPeriod,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.stepThreeModel.advDuration,self.stepThreeModel.standbyDuration,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],self.self.stepOneModel.motionVerificationPeriod];
+        }
+        if ([self.stepTwoModel.advDuration integerValue] > 0) {
+            return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms after device moves, and  keep advertising at the interval of %@ms when device keep stationary for %@s",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],self.stepOneModel.motionVerificationPeriod];
+        }
+        return [NSString stringWithFormat:@"*The Beacon will advertising for %@s at the interval of %@ms after device moves, and  keep advertising at the interval of %@ms when device keep stationary for %@s",self.stepOneModel.motionVerificationPeriod,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],[self fetchIntervalMsgValue:self.stepThreeModel.advInterval],self.stepOneModel.motionVerificationPeriod];
     }
     if (self.stepOneModel.motionEvent == 1) {
         //Device remains stationary
@@ -451,14 +453,13 @@ static dispatch_once_t onceToken;
             if ([self.stepTwoModel.advDuration integerValue] > 0) {
                 return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device keep stationary for %@s, and stop advertising immediately when device moves.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.self.stepOneModel.motionVerificationPeriod];
             }
-            if ([self.stepTwoModel.advDuration integerValue] == 0) {
-                return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms after device keep stationary for %@s, and stop advertising immediately when device moves. ",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.self.stepOneModel.motionVerificationPeriod];
-            }
-            
-            return @"";
+            return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms after device keep stationary for %@s, and stop advertising immediately when device moves.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.self.stepOneModel.motionVerificationPeriod];
         }
         //打开触发前广播
-        return [NSString stringWithFormat:@" *The Beacon will keep advertising at the interval of %@ms after device keep stationary for %@s, and advertising for %@s when device moves.",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.self.stepOneModel.motionVerificationPeriod,self.self.stepOneModel.motionVerificationPeriod];
+        if ([self.stepTwoModel.advDuration integerValue] > 0) {
+            return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device keep stationary for %@s, and advertising for %@s at the interval of %@ms when device moves.",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.self.stepOneModel.motionVerificationPeriod,self.self.stepOneModel.motionVerificationPeriod,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
+        }
+        return [NSString stringWithFormat:@"*The Beacon will keep advertising at the interval of %@ms after device keep stationary for %@s, and advertising for StaticVs at the interval of %@ms when device moves. ",[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.self.stepOneModel.motionVerificationPeriod,self.self.stepOneModel.motionVerificationPeriod,[self fetchIntervalMsgValue:self.stepThreeModel.advInterval]];
     }
     return @"";
 }

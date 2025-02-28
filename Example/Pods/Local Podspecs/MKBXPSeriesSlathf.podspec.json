@@ -75,6 +75,10 @@
       },
       "subspecs": [
         {
+          "name": "ExcelManager",
+          "source_files": "MKBXPSeriesSlathf/Classes/Expand/ExcelManager/**"
+        },
+        {
           "name": "View",
           "subspecs": [
             {

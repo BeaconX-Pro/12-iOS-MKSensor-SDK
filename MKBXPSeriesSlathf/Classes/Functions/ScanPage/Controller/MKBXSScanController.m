@@ -44,6 +44,7 @@
 
 #import "MKBXSTabBarController.h"
 #import "MKBXSAboutController.h"
+#import "MKBXSUpdateController.h"
 
 static NSString *const localPasswordKey = @"mk_bxs_passwordKey";
 
@@ -98,6 +99,10 @@ MKBXSScanDeviceInfoCellDelegate>
     [super viewDidLoad];
     [self loadSubViews];
     [self startRefresh];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(dfuUpdateComplete)
+                                                 name:@"mk_bxs_centralDeallocNotification"
+                                               object:nil];
 }
 
 #pragma mark - super method
@@ -191,6 +196,9 @@ MKBXSScanDeviceInfoCellDelegate>
                     //支持温湿度的
                     [self updateDataWithBeacon:beacon];
                 }
+            }else if ([beacon isKindOfClass:MKBXSOTABeacon.class]) {
+                //OTA
+                [self updateDataWithBeacon:beacon];
             }
         }
         return;
@@ -204,6 +212,9 @@ MKBXSScanDeviceInfoCellDelegate>
                     //支持温湿度的
                     [self updateDataWithBeacon:beacon];
                 }
+            }else if ([beacon isKindOfClass:MKBXSOTABeacon.class]) {
+                //OTA
+                [self updateDataWithBeacon:beacon];
             }
         }
         return;
@@ -219,8 +230,22 @@ MKBXSScanDeviceInfoCellDelegate>
 }
 
 #pragma mark - MKBXSScanDeviceInfoCellDelegate
-- (void)mk_bxs_connectPeripheral:(CBPeripheral *)peripheral {
-    [self connectPeripheral:peripheral];
+- (void)mk_bxs_connectPeripheral:(MKBXSScanInfoCellModel *)dataModel {
+    if (dataModel.otaMode) {
+        //当前设备处于OTA模式
+        [[MKHudManager share] showHUDWithTitle:@"Connecting..." inView:self.view isPenetration:NO];
+        [[MKBXSCentralManager shared] dfuconnectPeripheral:dataModel.peripheral sucBlock:^(CBPeripheral * _Nonnull peripheral) {
+            [[MKHudManager share] hide];
+            MKBXSUpdateController *vc = [[MKBXSUpdateController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        } failedBlock:^(NSError * _Nonnull error) {
+            [[MKHudManager share] hide];
+            [self.view showCentralToast:error.userInfo[@"errorInfo"]];
+            [self connectFailed];
+        }];
+        return;
+    }
+    [self connectPeripheral:dataModel.peripheral];
 }
 
 #pragma mark - MKBXSTabBarControllerDelegate
@@ -229,6 +254,11 @@ MKBXSScanDeviceInfoCellDelegate>
         [MKBXSCentralManager shared].delegate = self;
     }
     [self performSelector:@selector(startScanDevice) withObject:nil afterDelay:(need ? 1.f : 0.1f)];
+}
+
+#pragma mark - Note
+- (void)dfuUpdateComplete {
+    [self mk_bxs_needResetScanDelegate:YES];
 }
 
 #pragma mark - event method

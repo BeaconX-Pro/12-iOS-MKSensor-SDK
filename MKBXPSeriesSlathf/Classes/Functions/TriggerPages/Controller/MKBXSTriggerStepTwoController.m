@@ -512,7 +512,16 @@ MKBXSTriggerSlotParamCellDelegate>
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kViewWidth, 80.f)];
     footerView.backgroundColor = RGBCOLOR(242, 242, 242);
     
-    self.nextButton.frame = CGRectMake(30.f, 20.f, kViewWidth - 2 * 30.f, 40.f);
+    CGFloat btnWidth = (kViewWidth - 3 * 30.f) / 2;
+    
+    UIButton *backBtn = [MKCustomUIAdopter customButtonWithTitle:@"Back"
+                                                          target:self
+                                                          action:@selector(leftButtonMethod)];
+    backBtn.frame = CGRectMake(30.f, 20.f, btnWidth, 40.f);
+    [footerView addSubview:backBtn];
+    
+    
+    self.nextButton.frame = CGRectMake(2 * 30.f + btnWidth, 20.f, btnWidth, 40.f);
     [footerView addSubview:self.nextButton];
     
     return footerView;

@@ -417,6 +417,13 @@ NSString *const mk_bxs_contentKey = @"mk_bxs_contentKey";
                       @"pir":pir,
                       @"tof":tof,
                       };
+    }else if ([cmd isEqualToString:@"63"]) {
+        //读取蜂鸣器频率
+        operationID = mk_bxs_taskReadRemoteReminderBuzzerFrequencyOperation;
+        NSInteger frequency = [MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(0, content.length)];
+        resultDic = @{
+            @"frequency":(frequency == 4500 ? @"1" : @"0")
+        };
     }else if ([cmd isEqualToString:@"65"]) {
         //读取触发led提醒状态
         operationID = mk_bxs_taskReadTriggerLEDIndicatorStatusOperation;
@@ -548,6 +555,9 @@ NSString *const mk_bxs_contentKey = @"mk_bxs_contentKey";
     }else if ([cmd isEqualToString:@"62"]) {
         //配置远程蜂鸣器
         operationID = mk_bxs_taskConfigRemoteReminderBuzzerNotiParamsOperation;
+    }else if ([cmd isEqualToString:@"63"]) {
+        //配置蜂鸣器频率
+        operationID = mk_bxs_taskConfigRemoteReminderBuzzerFrequencyOperation;
     }else if ([cmd isEqualToString:@"65"]) {
         //配置触发led提醒状态
         operationID = mk_bxs_taskConfigTriggerLEDIndicatorStatusOperation;

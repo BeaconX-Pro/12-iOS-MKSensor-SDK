@@ -109,7 +109,7 @@
     [[MKHudManager share] hide];
     [MKBXSCentralManager sharedDealloc];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"mk_bxs_centralDeallocNotification" object:nil];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self popToViewControllerWithClassName:@"MKBXSScanController"];
 }
 
 #pragma mark - 监听文件

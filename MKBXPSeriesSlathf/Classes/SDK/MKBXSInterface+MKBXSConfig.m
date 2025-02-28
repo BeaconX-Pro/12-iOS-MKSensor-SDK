@@ -781,8 +781,18 @@
     }
     NSString *time = [MKBLEBaseSDKAdopter fetchHexValue:(ringTime * 10) byteLen:2];
     NSString *interval = [MKBLEBaseSDKAdopter fetchHexValue:(ringInterval * 100) byteLen:2];
-    NSString *commandString = [NSString stringWithFormat:@"%@%@%@",@"ea01620502",interval,time];
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@",@"ea0162050e",interval,time];
     [self configDataWithTaskID:mk_bxs_taskConfigRemoteReminderBuzzerNotiParamsOperation
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
++ (void)bxs_configRemoteReminderBuzzerFrequency:(mk_bxs_buzzerRingingFrequencyType)frequency
+                                       sucBlock:(void (^)(void))sucBlock
+                                    failedBlock:(void (^)(NSError *error))failedBlock {
+    NSString *commandString = (frequency == mk_bxs_buzzerRingingFrequencyType_higher ? @"ea0163021194" : @"ea0163020fa0");
+    [self configDataWithTaskID:mk_bxs_taskConfigRemoteReminderBuzzerFrequencyOperation
                           data:commandString
                       sucBlock:sucBlock
                    failedBlock:failedBlock];

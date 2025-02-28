@@ -18,7 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy)NSString *rssi;
 
-@property (nonatomic, assign) BOOL connectEnable;
+@property (nonatomic, assign)BOOL connectEnable;
+
+/// 设备是否处于ota模式
+@property (nonatomic, assign)BOOL otaMode;
 
 /**
  Scanned device identifier

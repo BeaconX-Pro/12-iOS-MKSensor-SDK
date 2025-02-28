@@ -247,7 +247,11 @@ PODS:
     - CTMediator
   - MKBXPSeriesSlathf/Expand (0.0.1):
     - MKBaseModuleLibrary
+    - MKBXPSeriesSlathf/Expand/ExcelManager (= 0.0.1)
     - MKBXPSeriesSlathf/Expand/View (= 0.0.1)
+    - MKCustomUIModule
+  - MKBXPSeriesSlathf/Expand/ExcelManager (0.0.1):
+    - MKBaseModuleLibrary
     - MKCustomUIModule
   - MKBXPSeriesSlathf/Expand/View (0.0.1):
     - MKBaseModuleLibrary
@@ -1586,7 +1590,7 @@ SPEC CHECKSUMS:
   MKBaseBleModule: 15aa067c4e408a473e025b1a768ebce00a7e5949
   MKBaseModuleLibrary: 2b79bcae588c755588413fbb643b510253271b23
   MKBeaconXCustomUI: 3cdea4a52442d432b2ebacd78460a890e7e644b6
-  MKBXPSeriesSlathf: e405dd5cc3bb710849a21b79f43d7fdf813e1f36
+  MKBXPSeriesSlathf: 7b0a87c54d4d2ca7033d2e16e604128fa3f06bb8
   MKCustomUIModule: bbc862397ad4ffad0a88de756265a29aad5ddaab
   MLInputDodger: 79a0e420a80d0d3bba122bf2639603cc76609ba8
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
@@ -1595,4 +1599,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 42a32c43d55cc639f35cf0c2dc74ba979dc2ee53
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.1

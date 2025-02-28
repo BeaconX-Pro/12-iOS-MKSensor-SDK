@@ -345,6 +345,14 @@
                  failedBlock:failedBlock];
 }
 
++ (void)bxs_readRemoteReminderBuzzerFrequencyWithSucBlock:(void (^)(id returnData))sucBlock
+                                              failedBlock:(void (^)(NSError *error))failedBlock {
+    [self readDataWithTaskID:mk_bxs_taskReadRemoteReminderBuzzerFrequencyOperation
+                     cmdFlag:@"63"
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
+}
+
 + (void)bxs_readTriggerLEDIndicatorStatusWithSucBlock:(void (^)(id returnData))sucBlock
                                           failedBlock:(void (^)(NSError *error))failedBlock {
     [self readDataWithTaskID:mk_bxs_taskReadTriggerLEDIndicatorStatusOperation

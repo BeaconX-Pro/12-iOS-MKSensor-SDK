@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
  - MKBXSSensorInfoFrameType: Sensor information
  - MKBXSBeaconFrameType: iBeacon
  - MKBXSProductionTestFrameType Production Test iBeacon
+ - MKBXSOTAFrameType: OTA Frame Type
  - MKBXSUnkonwFrameType: Unknown
  */
 typedef NS_ENUM(NSInteger, MKBXSDataFrameType) {
@@ -28,6 +29,7 @@ typedef NS_ENUM(NSInteger, MKBXSDataFrameType) {
     MKBXSSensorInfoFrameType,
     MKBXSBeaconFrameType,
     MKBXSProductionTestFrameType,
+    MKBXSOTAFrameType,
     MKBXSUnknownFrameType,
 };
 
@@ -173,6 +175,10 @@ typedef NS_ENUM(NSInteger, MKBXSDataFrameType) {
 @property (nonatomic, copy)NSString *macAddress;
 
 - (MKBXSProductionTestBeacon *)initWithAdvertiseData:(NSData *)advData;
+
+@end
+
+@interface MKBXSOTABeacon : MKBXSBaseBeacon
 
 @end
 

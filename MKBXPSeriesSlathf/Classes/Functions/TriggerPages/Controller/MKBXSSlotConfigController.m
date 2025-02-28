@@ -118,7 +118,7 @@ MKBXSSlotParamCellDelegate>
         return 0.f;
     }
     if (indexPath.section == 2 && indexPath.row == 0) {
-        if (self.dataModel.slotType == bxs_slotType_null) {
+        if (self.dataModel.th == 0 && self.dataModel.asix == 0 && (self.dataModel.hallStatus || self.dataModel.resetByButton)) {
             return 0.f;
         }
         return 44.f;
@@ -159,7 +159,10 @@ MKBXSSlotParamCellDelegate>
         return (self.dataModel.slotType == bxs_slotType_null ? 0 : self.section1List.count);
     }
     if (section == 2) {
-        return (self.dataModel.slotType == bxs_slotType_null ? 0 : self.section2List.count);
+        if (self.dataModel.th == 0 && self.dataModel.asix == 0 && (self.dataModel.hallStatus || self.dataModel.resetByButton)) {
+            return 0;
+        }
+        return self.section2List.count;
     }
     return 0;
 }

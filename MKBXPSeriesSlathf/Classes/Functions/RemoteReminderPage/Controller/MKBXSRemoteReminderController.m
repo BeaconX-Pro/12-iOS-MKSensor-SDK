@@ -19,6 +19,7 @@
 #import "MKHudManager.h"
 #import "MKTableSectionLineHeader.h"
 #import "MKTextFieldCell.h"
+#import "MKTextButtonCell.h"
 
 #import "MKBXSInterface+MKBXSConfig.h"
 
@@ -29,6 +30,7 @@
 @interface MKBXSRemoteReminderController ()<UITableViewDelegate,
 UITableViewDataSource,
 MKTextFieldCellDelegate,
+MKTextButtonCellDelegate,
 MKBXSRemoteReminderCellDelegate>
 
 @property (nonatomic, strong)MKBaseTableView *tableView;
@@ -40,6 +42,8 @@ MKBXSRemoteReminderCellDelegate>
 @property (nonatomic, strong)NSMutableArray *section2List;
 
 @property (nonatomic, strong)NSMutableArray *section3List;
+
+@property (nonatomic, strong)NSMutableArray *section4List;
 
 @property (nonatomic, strong)NSMutableArray *headerList;
 
@@ -62,7 +66,7 @@ MKBXSRemoteReminderCellDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
-    [self loadSectionDatas];
+    [self readDatasFromDevice];
 }
 
 #pragma mark - UITableViewDelegate
@@ -101,6 +105,9 @@ MKBXSRemoteReminderCellDelegate>
     if (section == 3) {
         return self.section3List.count;
     }
+    if (section == 4) {
+        return self.section4List.count;
+    }
     return 0;
 }
 
@@ -125,8 +132,14 @@ MKBXSRemoteReminderCellDelegate>
         cell.delegate = self;
         return cell;
     }
-    MKTextFieldCell *cell = [MKTextFieldCell initCellWithTableView:tableView];
-    cell.dataModel = self.section3List[indexPath.row];
+    if (indexPath.section == 3) {
+        MKTextFieldCell *cell = [MKTextFieldCell initCellWithTableView:tableView];
+        cell.dataModel = self.section3List[indexPath.row];
+        cell.delegate = self;
+        return cell;
+    }
+    MKTextButtonCell *cell = [MKTextButtonCell initCellWithTableView:tableView];
+    cell.dataModel = self.section4List[indexPath.row];
     cell.delegate = self;
     return cell;
 }
@@ -170,6 +183,24 @@ MKBXSRemoteReminderCellDelegate>
     }
 }
 
+#pragma mark - MKTextButtonCellDelegate
+/// 右侧按钮点击触发的回调事件
+/// @param index 当前cell所在的index
+/// @param dataListIndex 点击按钮选中的dataList里面的index
+/// @param value dataList[dataListIndex]
+- (void)mk_loraTextButtonCellSelected:(NSInteger)index
+                        dataListIndex:(NSInteger)dataListIndex
+                                value:(NSString *)value {
+    if (index == 0) {
+        //Ringing frequency
+        self.dataModel.ringingFre = dataListIndex;
+        
+        MKTextButtonCellModel *cellModel = self.section4List[0];
+        cellModel.dataListIndex = dataListIndex;
+        return;
+    }
+}
+
 #pragma mark - MKBXSRemoteReminderCellDelegate
 - (void)bxs_remindButtonPressed:(NSInteger)index {
     if (index == 0) {
@@ -183,6 +214,19 @@ MKBXSRemoteReminderCellDelegate>
 }
 
 #pragma mark - interface
+- (void)readDatasFromDevice {
+    [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
+    @weakify(self);
+    [self.dataModel readDataWithSucBlock:^{
+        @strongify(self);
+        [[MKHudManager share] hide];
+        [self loadSectionDatas];
+    } failedBlock:^(NSError * _Nonnull error) {
+        @strongify(self);
+        [[MKHudManager share] hide];
+        [self.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
+}
 
 - (void)reminderLED {
     if (!ValidStr(self.dataModel.ledBlinkingTime) || [self.dataModel.ledBlinkingTime integerValue] < 1 || [self.dataModel.ledBlinkingTime integerValue] > 600) {
@@ -216,13 +260,13 @@ MKBXSRemoteReminderCellDelegate>
         return ;
     }
     [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
-    [MKBXSInterface bxs_configRemoteReminderBuzzerNotiParams:[self.dataModel.ledBlinkingTime integerValue]
-                                            blinkingInterval:[self.dataModel.ledBlinkingInterval integerValue]
-                                                    sucBlock:^{
+    @weakify(self);
+    [self.dataModel configBuzzerDataWithSucBlock:^{
+        @strongify(self);
         [[MKHudManager share] hide];
         [self.view showCentralToast:@"Success"];
-    }
-                                                 failedBlock:^(NSError * _Nonnull error) {
+    } failedBlock:^(NSError * _Nonnull error) {
+        @strongify(self);
         [[MKHudManager share] hide];
         [self.view showCentralToast:error.userInfo[@"errorInfo"]];
     }];
@@ -234,8 +278,9 @@ MKBXSRemoteReminderCellDelegate>
     [self loadSection1Datas];
     [self loadSection2Datas];
     [self loadSection3Datas];
+    [self loadSection4Datas];
     
-    for (NSInteger i = 0; i < 4; i ++) {
+    for (NSInteger i = 0; i < 5; i ++) {
         MKTableSectionLineHeaderModel *headerModel = [[MKTableSectionLineHeaderModel alloc] init];
         [self.headerList addObject:headerModel];
     }
@@ -301,6 +346,15 @@ MKBXSRemoteReminderCellDelegate>
     [self.section3List addObject:cellModel2];
 }
 
+- (void)loadSection4Datas {
+    MKTextButtonCellModel *cellModel = [[MKTextButtonCellModel alloc] init];
+    cellModel.index = 0;
+    cellModel.msg = @"Ringing frequency";
+    cellModel.dataList = @[@"4000 Hz",@"4500 Hz"];
+    cellModel.dataListIndex = self.dataModel.ringingFre;
+    [self.section4List addObject:cellModel];
+}
+
 #pragma mark - UI
 - (void)loadSubViews {
     self.defaultTitle = @"Remote reminder";
@@ -352,6 +406,13 @@ MKBXSRemoteReminderCellDelegate>
         _section3List = [NSMutableArray array];
     }
     return _section3List;
+}
+
+- (NSMutableArray *)section4List {
+    if (!_section4List) {
+        _section4List = [NSMutableArray array];
+    }
+    return _section4List;
 }
 
 - (NSMutableArray *)headerList {

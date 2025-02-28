@@ -15,7 +15,7 @@
 #import "MKMacroDefines.h"
 
 #import "MKBXScanBeaconCell.h"
-#import "MKBXScanTLMCell.h"
+#import "MKBXSScanTLMCell.h"
 #import "MKBXScanUIDCell.h"
 #import "MKBXScanURLCell.h"
 
@@ -105,9 +105,9 @@ static const char *frameTypeKey = "frameTypeKey";
     if ([beacon isKindOfClass:MKBXSTLMBeacon.class]) {
         //TLM
         MKBXSTLMBeacon *tempModel = (MKBXSTLMBeacon *)beacon;
-        MKBXScanTLMCellModel *cellModel = [[MKBXScanTLMCellModel alloc] init];
+        MKBXSScanTLMCellModel *cellModel = [[MKBXSScanTLMCellModel alloc] init];
         cellModel.version = [NSString stringWithFormat:@"%@",tempModel.version];
-        cellModel.mvPerbit = [NSString stringWithFormat:@"%@",tempModel.mvPerbit];
+        cellModel.mvPerbit = [tempModel.mvPerbit integerValue];
         cellModel.temperature = [NSString stringWithFormat:@"%@",tempModel.temperature];
         cellModel.advertiseCount = [NSString stringWithFormat:@"%@",tempModel.advertiseCount];
         cellModel.deciSecondsSinceBoot = [NSString stringWithFormat:@"%@",tempModel.deciSecondsSinceBoot];
@@ -163,6 +163,7 @@ static const char *frameTypeKey = "frameTypeKey";
     deviceModel.lastScanDate = [[NSDate date] timeIntervalSince1970] * 1000;
     deviceModel.connectEnable = beacon.connectEnable;
     deviceModel.peripheral = beacon.peripheral;
+    deviceModel.otaMode = (beacon.frameType == MKBXSOTAFrameType);
     if (beacon.frameType == MKBXSSensorInfoFrameType) {
         //如果是传感器帧
         MKBXSSensorInfoBeacon *tempInfoModel = (MKBXSSensorInfoBeacon *)beacon;
@@ -191,6 +192,7 @@ static const char *frameTypeKey = "frameTypeKey";
 + (void)updateInfoCellModel:(MKBXSScanInfoCellModel *)exsitModel beaconData:(MKBXSBaseBeacon *)beacon {
     exsitModel.connectEnable = beacon.connectEnable;
     exsitModel.peripheral = beacon.peripheral;
+    exsitModel.otaMode = (beacon.frameType == MKBXSOTAFrameType);
     exsitModel.rssi = [NSString stringWithFormat:@"%ld",(long)[beacon.rssi integerValue]];
     if (exsitModel.lastScanDate > 0) {
         NSTimeInterval space = [[NSDate date] timeIntervalSince1970] * 1000 - exsitModel.lastScanDate;
@@ -229,7 +231,7 @@ static const char *frameTypeKey = "frameTypeKey";
             return;
         }
         if ([NSStringFromClass(tempModel.class) isEqualToString:NSStringFromClass(model.class)] &&
-            ([model isKindOfClass:MKBXScanTLMCellModel.class] || [model isKindOfClass:MKBXSScanSensorInfoCellModel.class])) {
+            ([model isKindOfClass:MKBXSScanTLMCellModel.class] || [model isKindOfClass:MKBXSScanSensorInfoCellModel.class])) {
             //TLM、Tag需要替换
             tempModel.index = model.index;
             [exsitModel.advertiseList replaceObjectAtIndex:model.index withObject:tempModel];
@@ -268,9 +270,9 @@ static const char *frameTypeKey = "frameTypeKey";
         cell.dataModel = dataModel;
         return cell;
     }
-    if ([dataModel isKindOfClass:MKBXScanTLMCellModel.class]){
+    if ([dataModel isKindOfClass:MKBXSScanTLMCellModel.class]){
         //TLM
-        MKBXScanTLMCell *cell = [MKBXScanTLMCell initCellWithTableView:tableView];
+        MKBXSScanTLMCell *cell = [MKBXSScanTLMCell initCellWithTableView:tableView];
         cell.dataModel = dataModel;
         return cell;
     }
@@ -299,7 +301,7 @@ static const char *frameTypeKey = "frameTypeKey";
         //URL
         return 70.f;
     }
-    if ([dataModel isKindOfClass:MKBXScanTLMCellModel.class]){
+    if ([dataModel isKindOfClass:MKBXSScanTLMCellModel.class]){
         //TLM
         return 110.f;
     }
@@ -325,7 +327,7 @@ static const char *frameTypeKey = "frameTypeKey";
         //URL
         return 1;
     }
-    if ([dataModel isKindOfClass:NSClassFromString(@"MKBXScanTLMCellModel")]) {
+    if ([dataModel isKindOfClass:NSClassFromString(@"MKBXSScanTLMCellModel")]) {
         //TLM
         return 2;
     }

@@ -61,6 +61,12 @@ TODO: Add long description of the pod here.
   
   s.subspec 'Expand' do |ss|
     
+    ss.subspec 'ExcelManager' do |sss|
+      
+      sss.source_files = 'MKBXPSeriesSlathf/Classes/Expand/ExcelManager/**'
+    
+    end
+    
     ss.subspec 'View' do |sss|
       
       sss.subspec 'ExportDataHeaderView' do |ssss|

@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol MKBXSScanDeviceInfoCellDelegate <NSObject>
 
-- (void)mk_bxs_connectPeripheral:(CBPeripheral *)peripheral;
+- (void)mk_bxs_connectPeripheral:(MKBXSScanInfoCellModel *)dataModel;
 
 @end
 

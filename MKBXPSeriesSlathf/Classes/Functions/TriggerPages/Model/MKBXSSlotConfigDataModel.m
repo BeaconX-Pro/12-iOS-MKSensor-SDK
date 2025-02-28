@@ -26,6 +26,18 @@
 #pragma mark - public method
 - (void)readWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock {
     dispatch_async(self.readQueue, ^{
+        if (![self readHallSensorState]) {
+            [self operationFailedBlockWithMsg:@"Read Hall Error" block:failedBlock];
+            return;
+        }
+        if (![self readResetByButton]) {
+            [self operationFailedBlockWithMsg:@"Read Reset By Button Error" block:failedBlock];
+            return;
+        }
+        if (![self readSensorType]) {
+            [self operationFailedBlockWithMsg:@"Read Sensor Type Error" block:failedBlock];
+            return;
+        }
         if (![self readSlotDatas]) {
             [self operationFailedBlockWithMsg:@"Read Slot Datas Error" block:failedBlock];
             return;
@@ -88,6 +100,45 @@
 }
 
 #pragma mark - interface
+- (BOOL)readHallSensorState {
+    __block BOOL success = NO;
+    [MKBXSInterface bxs_readHallSensorStatusWithSucBlock:^(id  _Nonnull returnData) {
+        success = YES;
+        self.hallStatus = [returnData[@"result"][@"isOn"] boolValue];
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
+- (BOOL)readResetByButton {
+    __block BOOL success = NO;
+    [MKBXSInterface bxs_readResetDeviceByButtonStatusWithSucBlock:^(id  _Nonnull returnData) {
+        success = YES;
+        self.resetByButton = [returnData[@"result"][@"isOn"] boolValue];
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
+- (BOOL)readSensorType {
+    __block BOOL success = NO;
+    [MKBXSInterface bxs_readSensorTypeWithSucBlock:^(id  _Nonnull returnData) {
+        success = YES;
+        self.asix = [returnData[@"result"][@"axis"] integerValue];
+        self.th = [returnData[@"result"][@"tempHumidity"] integerValue];
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
 
 - (BOOL)readSlotDatas {
     __block BOOL success = NO;

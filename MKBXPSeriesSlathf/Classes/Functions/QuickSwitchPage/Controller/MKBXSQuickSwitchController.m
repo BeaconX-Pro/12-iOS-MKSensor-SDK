@@ -379,11 +379,11 @@ MKBXQuickSwitchCellDelegate>
     cellModel6.isOn = self.dataModel.turnOffByButton;
     [self.dataList addObject:cellModel6];
     
-    MKBXQuickSwitchCellModel *cellModel7 = [[MKBXQuickSwitchCellModel alloc] init];
-    cellModel7.index = 6;
-    cellModel7.titleMsg = @"Direction finding (CTE)";
-    cellModel7.isOn = self.dataModel.direction;
-    [self.dataList addObject:cellModel7];
+//    MKBXQuickSwitchCellModel *cellModel7 = [[MKBXQuickSwitchCellModel alloc] init];
+//    cellModel7.index = 6;
+//    cellModel7.titleMsg = @"Direction finding (CTE)";
+//    cellModel7.isOn = self.dataModel.direction;
+//    [self.dataList addObject:cellModel7];
         
     [self.collectionView reloadData];
 }

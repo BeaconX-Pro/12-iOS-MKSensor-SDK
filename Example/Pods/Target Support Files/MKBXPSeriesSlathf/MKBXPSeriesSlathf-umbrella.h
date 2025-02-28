@@ -12,6 +12,7 @@
 
 #import "CTMediator+MKBXSAdd.h"
 #import "MKBXSConnectManager.h"
+#import "MKBXSExcelManager.h"
 #import "MKBXSExportDataHeaderView.h"
 #import "MKBXSFilterHistoryDataView.h"
 #import "MKBXSHistoryDataMaskView.h"
@@ -48,6 +49,7 @@
 #import "MKBXSScanDeviceInfoCell.h"
 #import "MKBXSScanFilterView.h"
 #import "MKBXSScanSensorInfoCell.h"
+#import "MKBXSScanTLMCell.h"
 #import "MKBXSSensorConfigController.h"
 #import "MKBXSSensorConfigModel.h"
 #import "MKBXSSettingController.h"

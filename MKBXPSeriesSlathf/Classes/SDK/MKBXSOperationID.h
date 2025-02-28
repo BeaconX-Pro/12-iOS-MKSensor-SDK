@@ -57,6 +57,7 @@ typedef NS_ENUM(NSInteger, mk_bxs_taskOperationID) {
     mk_bxs_taskReadTHSamplingRateOperation,         //读取温湿度采样率
     mk_bxs_taskReadHTRecordTotalNumbersOperation,   //读取温湿度历史数据总条数
     mk_bxs_taskReadSensorTypeOperation,             //读取传感器型号
+    mk_bxs_taskReadRemoteReminderBuzzerFrequencyOperation,  //读取蜂鸣器频率
     mk_bxs_taskReadTriggerLEDIndicatorStatusOperation,  //读取触发led提醒状态
     mk_bxs_taskReadHallTriggerCountOperation,       //读取霍尔传感器触发次数
     mk_bxs_taskReadMotionTriggerCountOperation,    //读取移动触发次数
@@ -122,6 +123,7 @@ typedef NS_ENUM(NSInteger, mk_bxs_taskOperationID) {
     mk_bxs_taskConfigRemoteReminderLEDNotiParamsOperation,  //配置远程控制LED
     mk_bxs_taskClearMotionTriggerCountOperation,        //清除移动触发次数
     mk_bxs_taskConfigRemoteReminderBuzzerNotiParamsOperation,   //配置远程蜂鸣器
+    mk_bxs_taskConfigRemoteReminderBuzzerFrequencyOperation,    //配置蜂鸣器频率
     mk_bxs_taskConfigTriggerLEDIndicatorStatusOperation,    //配置触发led提醒状态
     mk_bxs_taskConfigBatteryResetOperation,             //配置电池容量
     mk_bxs_taskConfigBatteryADVModeOperation,           //配置电量百分比/电压值

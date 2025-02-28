@@ -50,10 +50,10 @@
             [self operationFailedBlockWithMsg:@"Read Turn off Beacon by button Error" block:failedBlock];
             return;
         }
-        if (![self readDirectionFinding]) {
-            [self operationFailedBlockWithMsg:@"Read Direction finding Error" block:failedBlock];
-            return;
-        }
+//        if (![self readDirectionFinding]) {
+//            [self operationFailedBlockWithMsg:@"Read Direction finding Error" block:failedBlock];
+//            return;
+//        }
         
         moko_dispatch_main_safe(^{
             if (sucBlock) {

@@ -91,6 +91,11 @@ typedef NS_ENUM(NSInteger, mk_bxs_slotDataType) {
     mk_bxs_slotDataType_slotData,
 };
 
+typedef NS_ENUM(NSInteger, mk_bxs_buzzerRingingFrequencyType) {
+    mk_bxs_buzzerRingingFrequencyType_normal,       //4000Hz
+    mk_bxs_buzzerRingingFrequencyType_higher,       //4500Hz
+};
+
 @protocol mk_bxs_slotAdvContentParam <NSObject>
 
 /// 20ms~65535ms

@@ -97,6 +97,10 @@
             beacon = [[MKBXSProductionTestBeacon alloc] initWithAdvertiseData:advData];
             beacon.advertiseData = advData;
             break;
+        case MKBXSOTAFrameType:
+            beacon = [[MKBXSOTABeacon alloc] init];
+            beacon.advertiseData = advData;
+            break;
         default:
             return nil;
     }
@@ -401,6 +405,18 @@
         [tempMac substringWithRange:NSMakeRange(8, 2)],
         [tempMac substringWithRange:NSMakeRange(10, 2)]];
         self.macAddress = macAddress;
+    }
+    return self;
+}
+
+@end
+
+
+@implementation MKBXSOTABeacon
+
+- (MKBXSOTABeacon *)initWithAdvertiseData:(NSData *)advData {
+    if (self = [super init]) {
+        
     }
     return self;
 }

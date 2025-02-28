@@ -98,6 +98,22 @@ static dispatch_once_t onceToken;
                                              RSSI:(NSNumber *)RSSI {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
 //        NSLog(@"%@",advertisementData);
+        if ([advertisementData[CBAdvertisementDataLocalNameKey] isEqualToString:@"MK_OTA"]) {
+            //OTA广播帧
+            MKBXSOTABeacon *beaconModel = [[MKBXSOTABeacon alloc] init];
+            beaconModel.frameType = MKBXSOTAFrameType;
+            beaconModel.identifier = peripheral.identifier.UUIDString;
+            beaconModel.rssi = RSSI;
+            beaconModel.peripheral = peripheral;
+            beaconModel.deviceName = advertisementData[CBAdvertisementDataLocalNameKey];
+            beaconModel.connectEnable = [advertisementData[CBAdvertisementDataIsConnectable] boolValue];
+            if ([self.delegate respondsToSelector:@selector(mk_bxs_receiveBeacon:)]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.delegate mk_bxs_receiveBeacon:@[beaconModel]];
+                });
+            }
+            return;
+        }
         NSArray *deviceList = [MKBXSBaseBeacon parseAdvData:advertisementData];
         for (NSInteger i = 0; i < deviceList.count; i ++) {
             MKBXSBaseBeacon *beaconModel = deviceList[i];
@@ -262,7 +278,8 @@ static dispatch_once_t onceToken;
     [[MKBLEBaseCentralManager shared] scanForPeripheralsWithServices:@[[CBUUID UUIDWithString:@"FEAA"],
                                                                        [CBUUID UUIDWithString:@"FEAB"],
                                                                        [CBUUID UUIDWithString:@"EA01"],
-                                                                       [CBUUID UUIDWithString:@"EB01"]]
+                                                                       [CBUUID UUIDWithString:@"EB01"],
+                                                                       [CBUUID UUIDWithString:@"EAFF"]]
                                                              options:nil];
 }
 

@@ -526,6 +526,17 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)bxs_readSensorTypeWithSucBlock:(void (^)(id returnData))sucBlock
                            failedBlock:(void (^)(NSError *error))failedBlock;
 
+/// Remote Buzzer reminder ringing frequency.
+/*
+ @{
+    @"frequency":@"0",      //@"0":4000Hz   @"1":4500Hz
+ }
+ */
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)bxs_readRemoteReminderBuzzerFrequencyWithSucBlock:(void (^)(id returnData))sucBlock
+                                              failedBlock:(void (^)(NSError *error))failedBlock;
+
 /// Read the trigger LED indicator light reminder status.
 /*
  @{

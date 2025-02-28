@@ -424,6 +424,14 @@ NS_ASSUME_NONNULL_BEGIN
                                         sucBlock:(void (^)(void))sucBlock
                                      failedBlock:(void (^)(NSError *error))failedBlock;
 
+/// Remote Buzzer reminder ringing frequency.
+/// @param frequency frequency.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)bxs_configRemoteReminderBuzzerFrequency:(mk_bxs_buzzerRingingFrequencyType)frequency
+                                       sucBlock:(void (^)(void))sucBlock
+                                    failedBlock:(void (^)(NSError *error))failedBlock;
+
 /// Battery Reset.
 /// @param sucBlock Success callback
 /// @param failedBlock Failure callback
