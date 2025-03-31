@@ -305,7 +305,7 @@ MKBXSFilterHistoryDataViewDelegate>
             return;
         }
         [[MKBXSCentralManager shared] notifyRecordTHData:YES];
-        [self startparseTimer];
+        [self startParseTimer];
         [self startDisplayTimer];
     } failedBlock:^(NSError * _Nonnull error) {
         [[MKHudManager share] hide];
@@ -314,7 +314,7 @@ MKBXSFilterHistoryDataViewDelegate>
 }
 
 #pragma mark - private method
-- (void)startparseTimer {
+- (void)startParseTimer {
     self.parseTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,dispatch_get_global_queue(0, 0));
     dispatch_source_set_timer(self.parseTimer, dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC),  0.3 * NSEC_PER_SEC, 0);
     @weakify(self);
