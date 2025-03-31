@@ -464,6 +464,30 @@
     return [NSString stringWithFormat:@"%@%@%@%@",advInterval,advDuration,rssi,txPower];
 }
 
++ (NSString *)temperatureToHexString:(NSInteger)temperature {
+    // 1. 处理符号和范围
+    uint8_t highByte = 0x00;
+    uint8_t lowByte;
+    
+    if (temperature >= -128 && temperature <= 127) {
+        // 使用 int8_t 存储（-128~127）
+        lowByte = (uint8_t)(int8_t)temperature;
+        highByte = (temperature < 0) ? 0xFF : 0x00;
+    } else if (temperature >= 128 && temperature <= 150) {
+        // 超出 int8_t 正范围，按无符号处理
+        lowByte = (uint8_t)temperature;
+        highByte = 0x00;
+    } else {
+        // 超出范围，强制截断（按业务需求调整）
+        lowByte = (temperature < 0) ? 0x80 : 0x7F;
+        highByte = (temperature < 0) ? 0xFF : 0x00;
+    }
+    
+    // 2. 组合成十六进制字符串（大写，补零）
+    NSString *hexString = [NSString stringWithFormat:@"%02X%02X", highByte, lowByte];
+    return hexString;
+}
+
 #pragma mark - private method
 + (NSString *)fetchUrlTypeString:(mk_bxs_urlHeaderType)urlType {
     switch (urlType) {

@@ -158,7 +158,7 @@
     }
     if (self.triggerType == 1) {
         //湿度触发
-        self.humidity = [returnData[@"result"][@"temperature"] integerValue];
+        self.humidity = [returnData[@"result"][@"humidity"] integerValue];
         self.humidityEvent = [returnData[@"result"][@"event"] integerValue];
         return;
     }

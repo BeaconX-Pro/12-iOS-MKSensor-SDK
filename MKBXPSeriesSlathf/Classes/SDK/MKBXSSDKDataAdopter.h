@@ -39,6 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString *)fetchSlotTriggerdAdvParamsCmd:(id <mk_bxs_slotTriggeredAdvContentParam>)param;
 
++ (NSString *)temperatureToHexString:(NSInteger)temperature;
+
 @end
 
 NS_ASSUME_NONNULL_END

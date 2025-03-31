@@ -115,6 +115,11 @@ MKNormalSliderCellDelegate>
         MKTextFieldCellModel *cellModel = self.section5List[indexPath.row];
         return [cellModel cellHeightWithContentWidth:kViewWidth];
     }
+    if (indexPath.section == 6) {
+        //Lock Event Occurs ADV Duration
+        MKTextSwitchCellModel *cellModel = self.section6List[indexPath.row];
+        return [cellModel cellHeightWithContentWidth:kViewWidth];
+    }
     if (indexPath.section == 7) {
         //Locked ADV duration
         MKTextSwitchCellModel *cellModel = self.section7List[indexPath.row];
@@ -175,8 +180,8 @@ MKNormalSliderCellDelegate>
         return ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2 ? self.section5List.count : 0);
     }
     if (section == 6) {
-        //Locked ADV function
-        return self.section6List.count;
+        //Locked ADV function移动触发不展示
+        return ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2 ? 0 : self.section6List.count);
     }
     if (section == 7) {
         //Locked ADV duration
@@ -256,8 +261,13 @@ MKNormalSliderCellDelegate>
         [MKBXSTriggerParamManager shared].stepOneModel.lockedAdvIsOn = isOn;
         MKTextSwitchCellModel *cellModel = self.section6List[0];
         cellModel.isOn = isOn;
+        if (isOn) {
+            cellModel.noteMsg = @"*Lock Event Occurs ADV Duration: If the device quickly returns to a state where the triggering condition is no longer met after initially satisfying the triggering condition, it can only broadcast for a short duration, or might not broadcast at all. The Locked ADV function ensures that, in such cases, the set post-trigger broadcast duration is fully executed, regardless of changes in the triggering condition.Note: If the Event Occurs Total adv duration is set to 0, the Lock post -trigger adv duration will default to a locked broadcast of 5 seconds.";
+        }else {
+            cellModel.noteMsg = @"";
+        }
         
-        [self.tableView mk_reloadSection:7 withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView mk_reloadSection:6 withRowAnimation:UITableViewRowAnimationNone];
         return;
     }
 }
@@ -539,6 +549,10 @@ MKNormalSliderCellDelegate>
     cellModel.index = 1;
     cellModel.msg = @"Locked ADV function";
     cellModel.isOn = [MKBXSTriggerParamManager shared].stepOneModel.lockedAdvIsOn;
+    if ([MKBXSTriggerParamManager shared].stepOneModel.lockedAdvIsOn) {
+        cellModel.noteMsg = @"*Lock Event Occurs ADV Duration: If the device quickly returns to a state where the triggering condition is no longer met after initially satisfying the triggering condition, it can only broadcast for a short duration, or might not broadcast at all. The Locked ADV function ensures that, in such cases, the set post-trigger broadcast duration is fully executed, regardless of changes in the triggering condition.\n\n Note: If the Event Occurs Total adv duration is set to 0, the Lock post -trigger adv duration will default to a locked broadcast of 5 seconds.";
+    }
+    cellModel.noteMsgColor = RGBCOLOR(201, 90, 49);
     [self.section6List addObject:cellModel];
 }
 

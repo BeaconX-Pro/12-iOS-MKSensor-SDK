@@ -195,10 +195,7 @@
     }
     NSString *indexValue = [MKBLEBaseSDKAdopter fetchHexValue:slotIndex byteLen:1];
     NSString *eventHex = (event == 0 ? @"10" : @"11");
-    NSString *tempHex = [MKBLEBaseSDKAdopter hexStringFromSignedNumber:temperature];
-    if (tempHex.length == 2) {
-        tempHex = [@"00" stringByAppendingString:tempHex];
-    }
+    NSString *tempHex = [MKBXSSDKDataAdopter temperatureToHexString:temperature];
     NSString *lockState = (lockedADV ? @"01" : @"00");
     NSString *staticPeriod = [MKBLEBaseSDKAdopter fetchHexValue:0 byteLen:2];
     NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@%@%@%@",@"ea013108",indexValue,@"01",eventHex,tempHex,lockState,staticPeriod];
@@ -764,7 +761,7 @@
     }
     NSString *time = [MKBLEBaseSDKAdopter fetchHexValue:(blinkingTime * 10) byteLen:2];
     NSString *interval = [MKBLEBaseSDKAdopter fetchHexValue:(blinkingInterval * 100) byteLen:2];
-    NSString *commandString = [NSString stringWithFormat:@"%@%@%@",@"ea01610502",interval,time];
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@",@"ea01610503",interval,time];
     [self configDataWithTaskID:mk_bxs_taskConfigRemoteReminderLEDNotiParamsOperation
                           data:commandString
                       sucBlock:sucBlock

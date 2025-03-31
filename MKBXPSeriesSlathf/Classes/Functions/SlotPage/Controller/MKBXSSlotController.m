@@ -172,7 +172,7 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         
-        _tableView.tableFooterView = [self tableFooterView];
+//        _tableView.tableFooterView = [self tableFooterView];
     }
     return _tableView;
 }
