@@ -49,7 +49,6 @@ static const char *bxs_customNotifySuccessKey = "bxs_customNotifySuccessKey";
             }else if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"AA05"]]) {
                 objc_setAssociatedObject(self, &bxs_hallSensorKey, characteristic, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             }else if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"AA06"]]) {
-                [self setNotifyValue:YES forCharacteristic:characteristic];
                 objc_setAssociatedObject(self, &bxs_temperatureHumidityKey, characteristic, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             }else if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"AA09"]]) {
                 objc_setAssociatedObject(self, &bxs_recordTHKey, characteristic, OBJC_ASSOCIATION_RETAIN_NONATOMIC);

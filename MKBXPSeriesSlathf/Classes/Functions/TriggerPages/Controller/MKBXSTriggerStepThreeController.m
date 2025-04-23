@@ -274,6 +274,10 @@ MKBXSSlotParamCellDelegate>
         [self.view showCentralToast:@"Params Error"];
         return;
     }
+    if (![MKBXSTriggerParamManager shared].stepThreeModel.powerModeIsOn) {
+        [MKBXSTriggerParamManager shared].stepThreeModel.standbyDuration = @"0";
+        [MKBXSTriggerParamManager shared].stepThreeModel.advDuration = @"1";
+    }
     @weakify(self);
     MKAlertViewAction *confirmAction = [[MKAlertViewAction alloc] initWithTitle:@"OK" handler:^{
         @strongify(self);

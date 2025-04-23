@@ -43,6 +43,11 @@
             return;
         }
         
+        if (![self readResetByButton]) {
+            [self operationFailedBlockWithMsg:@"Read Reset By Button Error" block:failedBlock];
+            return;
+        }
+        
         if (![self readTriggerDatas]) {
             [self operationFailedBlockWithMsg:@"Read Trigger Datas Error" block:failedBlock];
             return;
@@ -119,6 +124,19 @@
         dispatch_semaphore_signal(self.semaphore);
     }];
 
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
+- (BOOL)readResetByButton {
+    __block BOOL success = NO;
+    [MKBXSInterface bxs_readResetDeviceByButtonStatusWithSucBlock:^(id  _Nonnull returnData) {
+        success = YES;
+        self.resetByButton = [returnData[@"result"][@"isOn"] boolValue];
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
     dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
     return success;
 }
@@ -233,7 +251,7 @@
 #pragma mark - 霍尔参数
 - (BOOL)configHallTriggerParams {
     __block BOOL success = NO;
-    [MKBXSInterface bxs_configHallTriggerParams:self.index triggerEvent:self.motionEvent lockedADV:self.lockedAdvIsOn sucBlock:^{
+    [MKBXSInterface bxs_configHallTriggerParams:self.index triggerEvent:self.hallEvent lockedADV:self.lockedAdvIsOn sucBlock:^{
         success = YES;
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {

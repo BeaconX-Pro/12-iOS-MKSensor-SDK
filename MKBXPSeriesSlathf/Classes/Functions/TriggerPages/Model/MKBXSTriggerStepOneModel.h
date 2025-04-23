@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// YES:打开了霍尔开关机   NO:关闭了霍尔开关机
 @property (nonatomic, assign)BOOL hallStatus;
 
+@property (nonatomic, assign)BOOL resetByButton;
+
 @property (nonatomic, assign)BOOL trigger;
 
 /// 0:Temperature 1:Humidity 2:Motion detection 3:Door magnetic detection

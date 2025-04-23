@@ -419,12 +419,10 @@ MKNormalSliderCellDelegate>
 }
 
 - (NSArray *)loadTriggerTypeList {
-    if ([MKBXSTriggerParamManager shared].stepOneModel.hallStatus) {
-        //打开了霍尔开关机不显示霍尔触发
-        return @[@"Temperature detect",@"Humidity detect",@"Motion detect"];
+    if (![MKBXSTriggerParamManager shared].stepOneModel.hallStatus && ![MKBXSTriggerParamManager shared].stepOneModel.resetByButton) {
+        return @[@"Temperature detect",@"Humidity detect",@"Motion detect",@"magnetic detect"];
     }
-    //霍尔开关机关闭则显示霍尔触发
-    return @[@"Temperature detect",@"Humidity detect",@"Motion detect",@"magnetic detect"];
+    return @[@"Temperature detect",@"Humidity detect",@"Motion detect"];
 }
 
 - (NSArray *)loadTriggerEventList {

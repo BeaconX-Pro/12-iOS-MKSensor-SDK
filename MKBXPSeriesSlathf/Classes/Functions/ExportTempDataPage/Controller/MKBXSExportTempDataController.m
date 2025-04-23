@@ -79,6 +79,10 @@ MKBXSFilterHistoryDataViewDelegate>
 
 @property (nonatomic, copy)NSString *textMsg;
 
+@property (nonatomic, assign)NSInteger totalCount;
+
+@property (nonatomic, assign)NSInteger parseIndex;
+
 @end
 
 @implementation MKBXSExportTempDataController
@@ -146,6 +150,8 @@ MKBXSFilterHistoryDataViewDelegate>
     }
     [[MKBXSCentralManager shared] notifyRecordTHData:NO];
     self.receiveComplete = NO;
+    self.totalCount = 0;
+    self.parseIndex = 0;
     if (self.parseTimer) {
         dispatch_cancel(self.parseTimer);
     }
@@ -233,10 +239,10 @@ MKBXSFilterHistoryDataViewDelegate>
     NSString *content = note.userInfo[@"content"];
     NSInteger total = [MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(6, 4)];
     NSInteger index = [MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(10, 4)];
+    self.totalCount = total;
     [self.contentList addObject:content];
     if (total == (index + 1)) {
         [[MKBXSCentralManager shared] notifyRecordTHData:NO];
-        self.receiveComplete = YES;
         return;
     }
 }
@@ -287,6 +293,8 @@ MKBXSFilterHistoryDataViewDelegate>
 - (void)readTotalNumbers {
     [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
     self.receiveComplete = NO;
+    self.totalCount = 0;
+    self.parseIndex = 0;
     [MKBXSInterface bxs_readHTRecordTotalNumbersWithSucBlock:^(id  _Nonnull returnData) {
         [[MKHudManager share] hide];
         [self.maskView showWithView:self.view];
@@ -300,7 +308,7 @@ MKBXSFilterHistoryDataViewDelegate>
             return;
         }
         [[MKBXSCentralManager shared] notifyRecordTHData:YES];
-        [self startparseTimer];
+        [self startParseTimer];
         [self startDisplayTimer];
     } failedBlock:^(NSError * _Nonnull error) {
         [[MKHudManager share] hide];
@@ -309,20 +317,19 @@ MKBXSFilterHistoryDataViewDelegate>
 }
 
 #pragma mark - private method
-- (void)startparseTimer {
+- (void)startParseTimer {
     self.parseTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,dispatch_get_global_queue(0, 0));
     dispatch_source_set_timer(self.parseTimer, dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC),  0.3 * NSEC_PER_SEC, 0);
     @weakify(self);
     dispatch_source_set_event_handler(self.parseTimer, ^{
         @strongify(self);
-        if (self.receiveComplete && self.contentList.count == 0) {
+        if (self.receiveComplete) {
             //数据接收完毕并且已经解析完毕
             moko_dispatch_main_safe(^{
                 dispatch_cancel(self.parseTimer);
                 [self.topView resetAllStatus];
                 [self performSelector:@selector(dismissMaskView) withObject:nil afterDelay:2.f];
             });
-            return;
         }
         moko_dispatch_main_safe(^{
             [self processNotifyDatas];
@@ -338,10 +345,9 @@ MKBXSFilterHistoryDataViewDelegate>
     @weakify(self);
     dispatch_source_set_event_handler(self.displayTimer, ^{
         @strongify(self);
-        if (self.receiveComplete && self.contentList.count == 0) {
+        if (self.receiveComplete) {
             //数据接收完毕并且已经解析完毕
             dispatch_cancel(self.displayTimer);
-            return;
         }
         moko_dispatch_main_safe(^{
             self.textView.text = self.textMsg;
@@ -363,16 +369,19 @@ MKBXSFilterHistoryDataViewDelegate>
 }
 
 - (void)processNotifyDatas {
-    if (self.contentList.count == 0) {
+    if (self.parseIndex >= self.contentList.count) {
         return;
     }
-    NSString *content = self.contentList.firstObject;
+    NSString *content = self.contentList[self.parseIndex];
     NSString *text = [self parseTemperatureHumidityData:[content substringFromIndex:16]];
-    
-    [self.contentList removeObjectAtIndex:0];
-    
+        
     self.textMsg = [self.textMsg stringByAppendingString:text];
     [self.maskView updateCurrentNumber:[NSString stringWithFormat:@"%ld",(long)self.dataList.count]];
+    
+    self.parseIndex ++;
+    if (self.parseIndex == self.totalCount) {
+        self.receiveComplete = YES;
+    }
 }
 
 - (void)dismissMaskView {
