@@ -10,19 +10,24 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MKBXSTriggerStepOneModel : NSObject
-
-/// YES:打开了霍尔开关机   NO:关闭了霍尔开关机
-@property (nonatomic, assign)BOOL hallStatus;
-
-@property (nonatomic, assign)BOOL resetByButton;
-
-@property (nonatomic, assign)BOOL trigger;
+@interface MKBXSTriggerTypeModel : NSObject
 
 /// 0:Temperature 1:Humidity 2:Motion detection 3:Door magnetic detection
 @property (nonatomic, assign)NSInteger triggerType;
 
+/// 当前选中的triggerType，根据传感器类型和霍尔、按键开关机状态不同，该值意义也不同
+@property (nonatomic, assign)NSInteger triggerIndex;
 
+@property (nonatomic, copy)NSString *triggerMsg;
+
+@end
+
+@interface MKBXSTriggerStepOneModel : NSObject
+
+@property (nonatomic, assign)BOOL trigger;
+
+/// 当前选中的triggerIndex，根据传感器类型和霍尔、按键开关机状态不同，该值意义也不同
+@property (nonatomic, assign)NSInteger triggerIndex;
 
 //温度触发参数
 
@@ -61,6 +66,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign)BOOL lockedAdvIsOn;
 
 - (instancetype)initWithSlotIndex:(NSInteger)index;
+
+- (NSArray *)fetchTriggerTypeList;
+
+/// 获取当前触发类型
+/// 0:温度触发  1:湿度触发  2:移动触发  3:霍尔触发
+- (NSInteger)fetchTriggerType;
 
 
 - (void)readWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock;

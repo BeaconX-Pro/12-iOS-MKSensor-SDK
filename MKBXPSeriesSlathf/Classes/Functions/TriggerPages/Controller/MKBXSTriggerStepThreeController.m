@@ -265,7 +265,7 @@ MKBXSSlotParamCellDelegate>
 #pragma mark - event method
 - (void)doneButtonPressed {
     if ([MKBXSTriggerParamManager shared].stepOneModel.trigger
-        && [MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2
+        && [[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 2
         && [MKBXSTriggerParamManager shared].stepOneModel.motionEvent == 1) {
         //第一步移动触发，并且是Device remains stationary触发方式
         [MKBXSTriggerParamManager shared].stepThreeModel.advDuration = [MKBXSTriggerParamManager shared].stepOneModel.motionVerificationPeriod;
@@ -449,7 +449,7 @@ MKBXSSlotParamCellDelegate>
     cellModel.powerModeIsOn = [MKBXSTriggerParamManager shared].stepThreeModel.powerModeIsOn;
     
     if ([MKBXSTriggerParamManager shared].stepOneModel.trigger
-        && [MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2
+        && [[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 2
         && [MKBXSTriggerParamManager shared].stepOneModel.motionEvent == 1) {
         //第一步移动触发，并且是Device remains stationary触发方式
         cellModel.powerModeButtonEnabled = NO;

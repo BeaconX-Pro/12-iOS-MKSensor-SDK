@@ -42,19 +42,19 @@ static dispatch_once_t onceToken;
 }
 
 - (NSString *)fetchStepThreeAlert {
-    if (self.stepOneModel.triggerType == 0) {
+    if ([self.stepOneModel fetchTriggerType] == 0) {
         //温度触发
         return [self fetchTemperatureTriggerMsg];
     }
-    if (self.stepOneModel.triggerType == 1) {
+    if ([self.stepOneModel fetchTriggerType] == 1) {
         //湿度触发
         return [self fetchHumidityTriggerMsg];
     }
-    if (self.stepOneModel.triggerType == 2) {
+    if ([self.stepOneModel fetchTriggerType] == 2) {
         //移动触发
         return [self fetchMotionTriggerMsg];
     }
-    if (self.stepOneModel.triggerType == 3) {
+    if ([self.stepOneModel fetchTriggerType] == 3) {
         //霍尔触发
         return [self fetchHallTriggerMsg];
     }
@@ -428,7 +428,7 @@ static dispatch_once_t onceToken;
         //Device start moving
         if (!self.stepThreeModel.trigger) {
             //关闭触发前广播
-            if ([self.stepTwoModel.advInterval integerValue] > 0) {
+            if ([self.stepTwoModel.advDuration integerValue] > 0) {
                 return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device moves, and stop advertising immediately after device keep stationary for %@s",self.stepTwoModel.advDuration,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.stepOneModel.motionVerificationPeriod];
             }
             return [NSString stringWithFormat:@"*The Beacon will start advertising for %@s at the interval of %@ms after device moves, and stop advertising immediately after device keep stationary for %@s",self.stepOneModel.motionVerificationPeriod,[self fetchIntervalMsgValue:self.stepTwoModel.advInterval],self.stepOneModel.motionVerificationPeriod];

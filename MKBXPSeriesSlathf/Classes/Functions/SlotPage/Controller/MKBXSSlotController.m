@@ -18,6 +18,8 @@
 #import "MKNormalTextCell.h"
 #import "MKCustomUIAdopter.h"
 
+#import "MKBXSConnectManager.h"
+
 #import "MKBXSCentralManager.h"
 #import "MKBXSInterface.h"
 
@@ -68,6 +70,10 @@
         BOOL trigger = ![returnData[@"result"][@"triggerType"] isEqualToString:@"00"];
         if (trigger) {
             //开启了触发
+            if ([MKBXSConnectManager shared].accStatus == 0 && [MKBXSConnectManager shared].thStatus == 0 && ([MKBXSConnectManager shared].resetByButton || [MKBXSConnectManager shared].hallStatus)) {
+                [self.view showCentralToast:@"Current device doesn't has sensor!"];
+                return;
+            }
             MKBXSTriggerStepOneController *vc = [[MKBXSTriggerStepOneController alloc] init];
             vc.slotIndex = indexPath.row;
             [self.navigationController pushViewController:vc animated:YES];

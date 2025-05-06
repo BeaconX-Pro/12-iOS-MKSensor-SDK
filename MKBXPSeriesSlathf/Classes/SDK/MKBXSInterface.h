@@ -515,7 +515,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
     @{
     @"axis":@"0",  //@"0":No three-axis sensor    @"1":Lis2DH/Lis3DH @"2":STK8328
-    @"tempHumidity":@"0",   //@"0":No temperature and humidity sensor   @"1":SHT30/SHT31    @"2":SHT40  @"3":STS40
+    @"tempHumidity":@"0",   //@"0":No temperature and humidity sensor   @"1":SHT30/SHT31    @"2":SHT40  @"3":STS40 @"4":SHT43
     @"lightSensor":@"0",    //@"0":No light sensor  @"1":SMD0805-20
     @"pir":@"0",            //@"0":No PIR sensor    @"1":BL612
     @"tof":@"0",            //@"0":No TOF sensor    @"1":VL53K3CXV0DH

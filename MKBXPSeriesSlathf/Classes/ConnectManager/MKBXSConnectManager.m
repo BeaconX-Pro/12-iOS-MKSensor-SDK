@@ -57,6 +57,22 @@
             [self operationFailedMsg:dic[@"msg"] completeBlock:failedBlock];
             return ;
         }
+        
+        if (![self readHallSensorStatus]) {
+            [self operationFailedMsg:@"Read Hall Sensor Error" completeBlock:failedBlock];
+            return;
+        }
+        
+        if (![self readResetByButton]) {
+            [self operationFailedMsg:@"Read Reset By Button Error" completeBlock:failedBlock];
+            return;
+        }
+        
+        if (![self readSensorType]) {
+            [self operationFailedMsg:@"Read sensor type Error" completeBlock:failedBlock];
+            return;
+        }
+        
         moko_dispatch_main_safe(^{
             if (sucBlock) {
                 sucBlock();
@@ -115,6 +131,47 @@
 //    }];
 //    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
 //    return success;
+}
+
+- (BOOL)readHallSensorStatus {
+    __block BOOL success = NO;
+    [MKBXSInterface bxs_readHallSensorStatusWithSucBlock:^(id  _Nonnull returnData) {
+        success = YES;
+        self.hallStatus = [returnData[@"result"][@"isOn"] boolValue];
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
+- (BOOL)readResetByButton {
+    __block BOOL success = NO;
+    [MKBXSInterface bxs_readResetDeviceByButtonStatusWithSucBlock:^(id  _Nonnull returnData) {
+        success = YES;
+        self.resetByButton = [returnData[@"result"][@"isOn"] boolValue];
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
+- (BOOL)readSensorType {
+    __block BOOL success = NO;
+    [MKBXSInterface bxs_readSensorTypeWithSucBlock:^(id  _Nonnull returnData) {
+        success = YES;
+        self.accStatus = [returnData[@"result"][@"axis"] integerValue];
+        self.thStatus = [returnData[@"result"][@"tempHumidity"] integerValue];
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
 }
 
 #pragma mark - private method

@@ -14,6 +14,11 @@
 #import "MKBXSInterface+MKBXSConfig.h"
 #import "MKBXSSDKDataAdopter.h"
 
+#import "MKBXSConnectManager.h"
+
+@implementation MKBXSTriggerTypeModel
+@end
+
 @interface MKBXSTriggerStepOneModel ()
 
 @property (nonatomic, assign)NSInteger index;
@@ -22,6 +27,11 @@
 
 @property (nonatomic, strong)dispatch_semaphore_t semaphore;
 
+@property (nonatomic, strong)NSMutableArray <MKBXSTriggerTypeModel *>*triggerTypeList;
+
+/// 0:温度触发  1:湿度触发  2:移动触发  3:霍尔触发
+@property (nonatomic, assign)NSInteger currentTriggerType;
+
 @end
 
 @implementation MKBXSTriggerStepOneModel
@@ -29,24 +39,35 @@
 - (instancetype)initWithSlotIndex:(NSInteger)index {
     if (self = [self init]) {
         self.index = index;
-        
+        [self loadTriggerTypeList];
     }
     return self;
 }
 
 #pragma mark - public method
+- (NSArray *)fetchTriggerTypeList {
+    NSMutableArray *list = [NSMutableArray array];
+    for (NSInteger i = 0; i < self.triggerTypeList.count; i ++) {
+        MKBXSTriggerTypeModel *model = self.triggerTypeList[i];
+        [list addObject:model.triggerMsg];
+    }
+    return list;
+}
+
+- (NSInteger)fetchTriggerType {
+    NSInteger index = 0;
+    for (NSInteger i = 0; i < self.triggerTypeList.count; i ++) {
+        MKBXSTriggerTypeModel *model = self.triggerTypeList[i];
+        if (model.triggerIndex == self.triggerIndex) {
+            index = model.triggerType;
+            break;
+        }
+    }
+    return index;
+}
+
 - (void)readWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock {
     dispatch_async(self.readQueue, ^{
-        
-        if (![self readHallSensorStatus]) {
-            [self operationFailedBlockWithMsg:@"Read Hall Sensor Error" block:failedBlock];
-            return;
-        }
-        
-        if (![self readResetByButton]) {
-            [self operationFailedBlockWithMsg:@"Read Reset By Button Error" block:failedBlock];
-            return;
-        }
         
         if (![self readTriggerDatas]) {
             [self operationFailedBlockWithMsg:@"Read Trigger Datas Error" block:failedBlock];
@@ -79,25 +100,25 @@
             });
             return;
         }
-        if (self.triggerType == 0) {
+        if ([self fetchTriggerType] == 0) {
             //温度触发
             if (![self configTemperatureTriggerParams]) {
                 [self operationFailedBlockWithMsg:@"Config Trigger Temperature Params Error" block:failedBlock];
                 return;
             }
-        }else if (self.triggerType == 1) {
+        }else if ([self fetchTriggerType] == 1) {
             //湿度触发
             if (![self configHumidityTriggerParams]) {
                 [self operationFailedBlockWithMsg:@"Config Trigger Humidity Params Error" block:failedBlock];
                 return;
             }
-        }else if (self.triggerType == 2) {
+        }else if ([self fetchTriggerType] == 2) {
             //移动触发
             if (![self configMotionDetectionTriggerParams]) {
                 [self operationFailedBlockWithMsg:@"Config Trigger Motion Detection Params Error" block:failedBlock];
                 return;
             }
-        }else if (self.triggerType == 3) {
+        }else if ([self fetchTriggerType] == 3) {
             //霍尔触发
             if (![self configHallTriggerParams]) {
                 [self operationFailedBlockWithMsg:@"Config Trigger Hall Params Error" block:failedBlock];
@@ -114,38 +135,13 @@
 }
 
 #pragma mark - interface
-- (BOOL)readHallSensorStatus {
-    __block BOOL success = NO;
-    [MKBXSInterface bxs_readHallSensorStatusWithSucBlock:^(id  _Nonnull returnData) {
-        success = YES;
-        self.hallStatus = [returnData[@"result"][@"isOn"] boolValue];
-        dispatch_semaphore_signal(self.semaphore);
-    } failedBlock:^(NSError * _Nonnull error) {
-        dispatch_semaphore_signal(self.semaphore);
-    }];
-
-    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-    return success;
-}
-
-- (BOOL)readResetByButton {
-    __block BOOL success = NO;
-    [MKBXSInterface bxs_readResetDeviceByButtonStatusWithSucBlock:^(id  _Nonnull returnData) {
-        success = YES;
-        self.resetByButton = [returnData[@"result"][@"isOn"] boolValue];
-        dispatch_semaphore_signal(self.semaphore);
-    } failedBlock:^(NSError * _Nonnull error) {
-        dispatch_semaphore_signal(self.semaphore);
-    }];
-    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-    return success;
-}
 
 - (BOOL)readTriggerDatas {
     __block BOOL success = NO;
     [MKBXSInterface bxs_readSlotTriggerDataWithIndex:self.index sucBlock:^(id  _Nonnull returnData) {
         success = YES;
         [self updateParams:returnData];
+        [self updateTriggerIndex];
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
         dispatch_semaphore_signal(self.semaphore);
@@ -161,35 +157,65 @@
     }
     self.trigger = ([returnData[@"result"][@"triggerType"] integerValue] > 0);
     if (!self.trigger) {
-        self.triggerType = 2;
-        self.motionEvent = 0;
-        self.motionVerificationPeriod = @"30";
-        return;
+        if ([MKBXSConnectManager shared].accStatus > 0) {
+            //存在移动触发
+            self.currentTriggerType = 2;
+            self.motionEvent = 0;
+            self.motionVerificationPeriod = @"30";
+            return;
+        }
+        //不存在三轴传感器
+        if ([MKBXSConnectManager shared].thStatus > 0) {
+            //存在温湿度传感器
+            //显示温度触发
+            self.currentTriggerType = 0;
+            self.temperature = 0;
+            self.tempEvent = 0;
+            return;
+        }
+        //不存在移动和温度
+        if (![MKBXSConnectManager shared].hallStatus && ![MKBXSConnectManager shared].resetByButton) {
+            //显示门磁
+            self.currentTriggerType = 3;
+            self.hallEvent = 0;
+            return;
+        }
+        return;;
     }
-    self.triggerType = ([returnData[@"result"][@"triggerType"] integerValue] - 1);
+    self.currentTriggerType = ([returnData[@"result"][@"triggerType"] integerValue] - 1);
     self.lockedAdvIsOn = [returnData[@"result"][@"lockedAdv"] boolValue];
-    if (self.triggerType == 0) {
+    if (self.currentTriggerType == 0) {
         //温度触发
         self.temperature = [returnData[@"result"][@"temperature"] integerValue];
         self.tempEvent = [returnData[@"result"][@"event"] integerValue];
         return;
     }
-    if (self.triggerType == 1) {
+    if (self.currentTriggerType == 1) {
         //湿度触发
         self.humidity = [returnData[@"result"][@"humidity"] integerValue];
         self.humidityEvent = [returnData[@"result"][@"event"] integerValue];
         return;
     }
-    if (self.triggerType == 2) {
+    if (self.currentTriggerType == 2) {
         //移动触发
         self.motionEvent = [returnData[@"result"][@"event"] integerValue];
         self.motionVerificationPeriod = returnData[@"result"][@"period"];
         return;
     }
-    if (self.triggerType == 3) {
+    if (self.currentTriggerType == 3) {
         //霍尔触发
         self.hallEvent = [returnData[@"result"][@"event"] integerValue];
         return;
+    }
+}
+
+- (void)updateTriggerIndex {
+    for (NSInteger i = 0; i < self.triggerTypeList.count; i ++) {
+        MKBXSTriggerTypeModel *model = self.triggerTypeList[i];
+        if (model.triggerType == self.currentTriggerType) {
+            self.triggerIndex = model.triggerIndex;
+            break;
+        }
     }
 }
 
@@ -266,7 +292,7 @@
 
 - (BOOL)validParams {
     
-    if (self.triggerType == 2) {
+    if ([self fetchTriggerType] == 2) {
         //移动触发
         if (self.motionEvent < 0 || self.motionEvent > 1 || !ValidStr(self.motionVerificationPeriod) || [self.motionVerificationPeriod integerValue] < 1 || [self.motionVerificationPeriod integerValue] > 65535) {
             return NO;
@@ -274,6 +300,41 @@
     }
     
     return YES;
+}
+
+- (void)loadTriggerTypeList {
+    if ([MKBXSConnectManager shared].thStatus > 0) {
+        MKBXSTriggerTypeModel *temperatureModel = [[MKBXSTriggerTypeModel alloc] init];
+        temperatureModel.triggerMsg = @"Temperature detect";
+        temperatureModel.triggerType = 0;
+        [self.triggerTypeList addObject:temperatureModel];
+        
+        if ([MKBXSConnectManager shared].thStatus != 3) {
+            //thStatus == 3:温度传感器，1/2/4为温湿度
+            MKBXSTriggerTypeModel *humidityModel = [[MKBXSTriggerTypeModel alloc] init];
+            humidityModel.triggerMsg = @"Humidity detect";
+            humidityModel.triggerType = 1;
+            [self.triggerTypeList addObject:humidityModel];
+        }
+    }
+    
+    if ([MKBXSConnectManager shared].accStatus > 0) {
+        MKBXSTriggerTypeModel *motionModel = [[MKBXSTriggerTypeModel alloc] init];
+        motionModel.triggerMsg = @"Motion detect";
+        motionModel.triggerType = 2;
+        [self.triggerTypeList addObject:motionModel];
+    }
+    
+    if (![MKBXSConnectManager shared].hallStatus && ![MKBXSConnectManager shared].resetByButton) {
+        MKBXSTriggerTypeModel *magneticModel = [[MKBXSTriggerTypeModel alloc] init];
+        magneticModel.triggerMsg = @"magnetic detect";
+        magneticModel.triggerType = 3;
+        [self.triggerTypeList addObject:magneticModel];
+    }
+    for (NSInteger i = 0; i < self.triggerTypeList.count; i ++) {
+        MKBXSTriggerTypeModel *model = self.triggerTypeList[i];
+        model.triggerIndex = i;
+    }
 }
 
 - (void)operationFailedBlockWithMsg:(NSString *)msg block:(void (^)(NSError *error))block {
@@ -298,6 +359,13 @@
         _readQueue = dispatch_queue_create("triggerParamsQueue", DISPATCH_QUEUE_SERIAL);
     }
     return _readQueue;
+}
+
+- (NSMutableArray<MKBXSTriggerTypeModel *> *)triggerTypeList {
+    if (!_triggerTypeList) {
+        _triggerTypeList = [NSMutableArray array];
+    }
+    return _triggerTypeList;
 }
 
 @end

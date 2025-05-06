@@ -25,6 +25,8 @@
 #import "MKCustomUIAdopter.h"
 #import "MKTableSectionLineHeader.h"
 
+#import "MKBXSConnectManager.h"
+
 
 #import "MKBXSTriggerParamManager.h"
 
@@ -167,21 +169,21 @@ MKNormalSliderCellDelegate>
     if (section == 3) {
         //温度触发
         //Temperature threshold
-        return ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 0 ? self.section3List.count : 0);
+        return ([[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 0 ? self.section3List.count : 0);
     }
     if (section == 4) {
         //湿度触发
         //Humidity threshold
-        return ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 1 ? self.section4List.count : 0);
+        return ([[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 1 ? self.section4List.count : 0);
     }
     if (section == 5) {
         //移动触发
         //Static verify period
-        return ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2 ? self.section5List.count : 0);
+        return ([[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 2 ? self.section5List.count : 0);
     }
     if (section == 6) {
         //Locked ADV function移动触发不展示
-        return ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2 ? 0 : self.section6List.count);
+        return ([[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 2 ? 0 : self.section6List.count);
     }
     if (section == 7) {
         //Locked ADV duration
@@ -282,7 +284,7 @@ MKNormalSliderCellDelegate>
                                 value:(NSString *)value {
     if (index == 0) {
         //Trigger type
-        [MKBXSTriggerParamManager shared].stepOneModel.triggerType = dataListIndex;
+        [MKBXSTriggerParamManager shared].stepOneModel.triggerIndex = dataListIndex;
         MKTextButtonCellModel *cellModel1 = self.section1List[0];
         cellModel1.dataListIndex = dataListIndex;
         
@@ -297,19 +299,19 @@ MKNormalSliderCellDelegate>
         //Trigger event
         MKTextButtonCellModel *cellModel = self.section2List[0];
         cellModel.dataListIndex = dataListIndex;
-        if ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 0) {
+        if ([[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 0) {
             //当前是温度触发
             [MKBXSTriggerParamManager shared].stepOneModel.tempEvent = dataListIndex;
             return;
-        }else if ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 1) {
+        }else if ([[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 1) {
             //当前是湿度触发
             [MKBXSTriggerParamManager shared].stepOneModel.humidityEvent = dataListIndex;
             return;
-        }else if ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2) {
+        }else if ([[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 2) {
             //当前是移动触发
             [MKBXSTriggerParamManager shared].stepOneModel.motionEvent = dataListIndex;
             return;
-        }else if ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 3) {
+        }else if ([[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 3) {
             //当前是霍尔触发
             [MKBXSTriggerParamManager shared].stepOneModel.hallEvent = dataListIndex;
             return;
@@ -384,7 +386,7 @@ MKNormalSliderCellDelegate>
 //            return;
 //        }
 //    }
-    if ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2) {
+    if ([[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 2) {
         //移动触发
         if ([MKBXSTriggerParamManager shared].stepOneModel.motionEvent < 0 || [MKBXSTriggerParamManager shared].stepOneModel.motionEvent > 1 || !ValidStr([MKBXSTriggerParamManager shared].stepOneModel.motionVerificationPeriod) || [[MKBXSTriggerParamManager shared].stepOneModel.motionVerificationPeriod integerValue] < 1 || [[MKBXSTriggerParamManager shared].stepOneModel.motionVerificationPeriod integerValue] > 65535) {
             [self.view showCentralToast:@"Params Error"];
@@ -418,24 +420,17 @@ MKNormalSliderCellDelegate>
     [self popToViewControllerWithClassName:@"MKBXSSlotController"];
 }
 
-- (NSArray *)loadTriggerTypeList {
-    if (![MKBXSTriggerParamManager shared].stepOneModel.hallStatus && ![MKBXSTriggerParamManager shared].stepOneModel.resetByButton) {
-        return @[@"Temperature detect",@"Humidity detect",@"Motion detect",@"magnetic detect"];
-    }
-    return @[@"Temperature detect",@"Humidity detect",@"Motion detect"];
-}
-
 - (NSArray *)loadTriggerEventList {
-    if ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 0) {
+    if ([[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 0) {
         //当前是温度触发
         return @[@"Temperature above",@"Temperature below"];
-    }else if ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 1) {
+    }else if ([[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 1) {
         //当前是湿度触发
         return @[@"Humidity above",@"Humidiby below"];
-    }else if ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2) {
+    }else if ([[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 2) {
         //当前是移动触发
         return @[@"Device start moving",@"Device keep static"];
-    }else if ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 3) {
+    }else if ([[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 3) {
         //当前是霍尔触发
         return @[@"Door open",@"Door close"];
     }
@@ -443,16 +438,16 @@ MKNormalSliderCellDelegate>
 }
 
 - (NSInteger)loadTriggerEventIndex {
-    if ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 0) {
+    if ([[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 0) {
         //当前是温度触发
         return [MKBXSTriggerParamManager shared].stepOneModel.tempEvent;
-    }else if ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 1) {
+    }else if ([[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 1) {
         //当前是湿度触发
         return [MKBXSTriggerParamManager shared].stepOneModel.humidityEvent;
-    }else if ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2) {
+    }else if ([[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 2) {
         //当前是移动触发
         return [MKBXSTriggerParamManager shared].stepOneModel.motionEvent;
-    }else if ([MKBXSTriggerParamManager shared].stepOneModel.triggerType == 3) {
+    }else if ([[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 3) {
         //当前是霍尔触发
         return [MKBXSTriggerParamManager shared].stepOneModel.hallEvent;
     }
@@ -490,8 +485,8 @@ MKNormalSliderCellDelegate>
     MKTextButtonCellModel *cellModel = [[MKTextButtonCellModel alloc] init];
     cellModel.index = 0;
     cellModel.msg = @"Trigger type";
-    cellModel.dataList = [self loadTriggerTypeList];
-    cellModel.dataListIndex = [MKBXSTriggerParamManager shared].stepOneModel.triggerType;
+    cellModel.dataList = [[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerTypeList];
+    cellModel.dataListIndex = [MKBXSTriggerParamManager shared].stepOneModel.triggerIndex;
     cellModel.buttonLabelFont = MKFont(12.f);
     [self.section1List addObject:cellModel];
 }

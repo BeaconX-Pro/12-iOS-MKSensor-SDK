@@ -238,7 +238,7 @@ MKBXSTriggerSlotParamCellDelegate>
         return;
     }
     if ([MKBXSTriggerParamManager shared].stepOneModel.trigger
-        && [MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2
+        && [[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 2
         && [MKBXSTriggerParamManager shared].stepOneModel.motionEvent == 0) {
         //第一步移动触发，并且是Device start moving触发方式
         if ([[MKBXSTriggerParamManager shared].stepTwoModel.advDuration integerValue] > [[MKBXSTriggerParamManager shared].stepOneModel.motionVerificationPeriod integerValue]) {
@@ -412,7 +412,7 @@ MKBXSTriggerSlotParamCellDelegate>
     cellModel.interval = [MKBXSTriggerParamManager shared].stepTwoModel.advInterval;
     cellModel.advDuration = [MKBXSTriggerParamManager shared].stepTwoModel.advDuration;
     if ([MKBXSTriggerParamManager shared].stepOneModel.trigger
-        && [MKBXSTriggerParamManager shared].stepOneModel.triggerType == 2
+        && [[MKBXSTriggerParamManager shared].stepOneModel fetchTriggerType] == 2
         && [MKBXSTriggerParamManager shared].stepOneModel.motionEvent == 0) {
         //第一步移动触发，并且是Device start moving触发方式
         cellModel.needChangeAdvDurationRange = YES;

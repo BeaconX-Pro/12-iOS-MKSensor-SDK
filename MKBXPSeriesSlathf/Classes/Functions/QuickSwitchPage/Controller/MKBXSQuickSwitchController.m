@@ -260,6 +260,7 @@ MKBXQuickSwitchCellDelegate>
         self.dataModel.resetByButton = isOn;
         MKBXQuickSwitchCellModel *cellModel = self.dataList[4];
         cellModel.isOn = isOn;
+        [MKBXSConnectManager shared].resetByButton = isOn;
         [self.view showCentralToast:@"Success!"];
     } failedBlock:^(NSError * _Nonnull error) {
         [[MKHudManager share] hide];
@@ -300,6 +301,7 @@ MKBXQuickSwitchCellDelegate>
         self.dataModel.turnOffByButton = isOn;
         MKBXQuickSwitchCellModel *cellModel = self.dataList[5];
         cellModel.isOn = isOn;
+        [MKBXSConnectManager shared].hallStatus = isOn;
         [self.view showCentralToast:@"Success!"];
     } failedBlock:^(NSError * _Nonnull error) {
         [[MKHudManager share] hide];

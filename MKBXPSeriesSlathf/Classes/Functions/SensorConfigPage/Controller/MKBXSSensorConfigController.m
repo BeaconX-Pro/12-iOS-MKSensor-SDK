@@ -16,7 +16,9 @@
 #import "MKHudManager.h"
 #import "MKNormalTextCell.h"
 
-#import "MKBXSSensorConfigModel.h"
+#import "MKBXSConnectManager.h"
+
+//#import "MKBXSSensorConfigModel.h"
 
 #import "MKBXSAccelerationController.h"
 #import "MKBXSHallSensorConfigController.h"
@@ -29,7 +31,7 @@
 
 @property (nonatomic, strong)NSMutableArray *dataList;
 
-@property (nonatomic, strong)MKBXSSensorConfigModel *dataModel;
+//@property (nonatomic, strong)MKBXSSensorConfigModel *dataModel;
 
 @end
 
@@ -42,7 +44,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
-    [self readDatasFromDevice];
+    [self loadSectionDatas];
+//    [self readDatasFromDevice];
 }
 
 #pragma mark - UITableViewDelegate
@@ -90,23 +93,23 @@
 }
 
 #pragma mark - interface
-- (void)readDatasFromDevice {
-    [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
-    @weakify(self);
-    [self.dataModel readDataWithSucBlock:^{
-        @strongify(self);
-        [[MKHudManager share] hide];
-        [self loadSectionDatas];
-    } failedBlock:^(NSError * _Nonnull error) {
-        @strongify(self);
-        [[MKHudManager share] hide];
-        [self.view showCentralToast:error.userInfo[@"errorInfo"]];
-    }];
-}
+//- (void)readDatasFromDevice {
+//    [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
+//    @weakify(self);
+//    [self.dataModel readDataWithSucBlock:^{
+//        @strongify(self);
+//        [[MKHudManager share] hide];
+//        [self loadSectionDatas];
+//    } failedBlock:^(NSError * _Nonnull error) {
+//        @strongify(self);
+//        [[MKHudManager share] hide];
+//        [self.view showCentralToast:error.userInfo[@"errorInfo"]];
+//    }];
+//}
 
 #pragma mark - loadSectionDatas
 - (void)loadSectionDatas {
-    if (self.dataModel.asix > 0) {
+    if ([MKBXSConnectManager shared].accStatus > 0) {
         MKNormalTextCellModel *cellModel1 = [[MKNormalTextCellModel alloc] init];
         cellModel1.leftMsg = @"3-axis accelerometer";
         cellModel1.showRightIcon = YES;
@@ -114,7 +117,7 @@
         [self.dataList addObject:cellModel1];
     }
     
-    if (!self.dataModel.hallStatus && !self.dataModel.resetByButton) {
+    if (![MKBXSConnectManager shared].hallStatus && ![MKBXSConnectManager shared].resetByButton) {
         MKNormalTextCellModel *cellModel2 = [[MKNormalTextCellModel alloc] init];
         cellModel2.leftMsg = @"Hall sensor";
         cellModel2.showRightIcon = YES;
@@ -123,7 +126,7 @@
     }
     
     
-    if (self.dataModel.th == 1 || self.dataModel.th == 2) {
+    if ([MKBXSConnectManager shared].thStatus == 1 || [MKBXSConnectManager shared].thStatus == 2 || [MKBXSConnectManager shared].thStatus == 4) {
         //温湿度
         MKNormalTextCellModel *cellModel3 = [[MKNormalTextCellModel alloc] init];
         cellModel3.leftMsg = @"Temperature & Humidity";
@@ -132,7 +135,7 @@
         [self.dataList addObject:cellModel3];
     }
     
-    if (self.dataModel.th == 3) {
+    if ([MKBXSConnectManager shared].thStatus == 3) {
         //温度
         MKNormalTextCellModel *cellModel3 = [[MKNormalTextCellModel alloc] init];
         cellModel3.leftMsg = @"Temperature";
@@ -174,11 +177,11 @@
     return _dataList;
 }
 
-- (MKBXSSensorConfigModel *)dataModel {
-    if (!_dataModel) {
-        _dataModel = [[MKBXSSensorConfigModel alloc] init];
-    }
-    return _dataModel;
-}
+//- (MKBXSSensorConfigModel *)dataModel {
+//    if (!_dataModel) {
+//        _dataModel = [[MKBXSSensorConfigModel alloc] init];
+//    }
+//    return _dataModel;
+//}
 
 @end

@@ -19,6 +19,18 @@ NS_ASSUME_NONNULL_BEGIN
 /// 是否需要密码连接
 @property (nonatomic, assign)BOOL needPassword;
 
+/// YES:打开了霍尔开关机   NO:关闭了霍尔开关机
+@property (nonatomic, assign)BOOL hallStatus;
+
+/// 按键关机状态
+@property (nonatomic, assign)BOOL resetByButton;
+
+/// 0:No three-axis sensor 1:Lis2DH/Lis3DH 2:STK8328
+@property (nonatomic, assign)NSInteger accStatus;
+
+/// @"0":No temperature and humidity sensor   @"1":SHT30/SHT31(温湿度)    @"2":SHT40(温湿度)   @"3":STS40(温度)  @"4":SHT43(温湿度) 
+@property (nonatomic, assign)NSInteger thStatus;
+
 + (MKBXSConnectManager *)shared;
 
 /// 连接设备
