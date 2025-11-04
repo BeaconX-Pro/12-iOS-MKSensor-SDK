@@ -28,7 +28,7 @@ PODS:
   - CircleProgressBar (0.32)
   - CTMediator (48)
   - HHTransition (3.1.2)
-  - libxlsxwriter (1.2.1)
+  - libxlsxwriter (1.2.3)
   - Masonry (1.1.0)
   - MJRefresh (3.7.9)
   - MKBaseBleModule (1.1.4)
@@ -72,163 +72,163 @@ PODS:
     - libxlsxwriter
     - MKBaseModuleLibrary/Defines
     - SSZipArchive
-  - MKBeaconXCustomUI (1.0.7):
+  - MKBeaconXCustomUI (1.0.10):
     - MKBaseModuleLibrary
-    - MKBeaconXCustomUI/Defines (= 1.0.7)
-    - MKBeaconXCustomUI/DeviceInfoPage (= 1.0.7)
-    - MKBeaconXCustomUI/QuickSwitchCell (= 1.0.7)
-    - MKBeaconXCustomUI/ScanUI (= 1.0.7)
-    - MKBeaconXCustomUI/SlotAdopter (= 1.0.7)
-    - MKBeaconXCustomUI/SlotConfig (= 1.0.7)
+    - MKBeaconXCustomUI/Defines (= 1.0.10)
+    - MKBeaconXCustomUI/DeviceInfoPage (= 1.0.10)
+    - MKBeaconXCustomUI/QuickSwitchCell (= 1.0.10)
+    - MKBeaconXCustomUI/ScanUI (= 1.0.10)
+    - MKBeaconXCustomUI/SlotAdopter (= 1.0.10)
+    - MKBeaconXCustomUI/SlotConfig (= 1.0.10)
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/Defines (1.0.7):
+  - MKBeaconXCustomUI/Defines (1.0.10):
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/DeviceInfoPage (1.0.7):
+  - MKBeaconXCustomUI/DeviceInfoPage (1.0.10):
     - MKBaseModuleLibrary
-    - MKBeaconXCustomUI/DeviceInfoPage/Controller (= 1.0.7)
-    - MKBeaconXCustomUI/DeviceInfoPage/Protocol (= 1.0.7)
+    - MKBeaconXCustomUI/DeviceInfoPage/Controller (= 1.0.10)
+    - MKBeaconXCustomUI/DeviceInfoPage/Protocol (= 1.0.10)
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/DeviceInfoPage/Controller (1.0.7):
+  - MKBeaconXCustomUI/DeviceInfoPage/Controller (1.0.10):
     - MKBaseModuleLibrary
     - MKBeaconXCustomUI/DeviceInfoPage/Protocol
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/DeviceInfoPage/Protocol (1.0.7):
+  - MKBeaconXCustomUI/DeviceInfoPage/Protocol (1.0.10):
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/QuickSwitchCell (1.0.7):
+  - MKBeaconXCustomUI/QuickSwitchCell (1.0.10):
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/ScanUI (1.0.7):
+  - MKBeaconXCustomUI/ScanUI (1.0.10):
     - MKBaseModuleLibrary
-    - MKBeaconXCustomUI/ScanUI/Adopter (= 1.0.7)
-    - MKBeaconXCustomUI/ScanUI/ScanCell (= 1.0.7)
-    - MKBeaconXCustomUI/ScanUI/ScanFilterView (= 1.0.7)
-    - MKBeaconXCustomUI/ScanUI/ScanSearchButton (= 1.0.7)
+    - MKBeaconXCustomUI/ScanUI/Adopter (= 1.0.10)
+    - MKBeaconXCustomUI/ScanUI/ScanCell (= 1.0.10)
+    - MKBeaconXCustomUI/ScanUI/ScanFilterView (= 1.0.10)
+    - MKBeaconXCustomUI/ScanUI/ScanSearchButton (= 1.0.10)
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/ScanUI/Adopter (1.0.7):
+  - MKBeaconXCustomUI/ScanUI/Adopter (1.0.10):
     - MKBaseModuleLibrary
     - MKBeaconXCustomUI/ScanUI/ScanCell
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/ScanUI/ScanCell (1.0.7):
+  - MKBeaconXCustomUI/ScanUI/ScanCell (1.0.10):
     - MKBaseModuleLibrary
-    - MKBeaconXCustomUI/ScanUI/ScanCell/ScanBeaconCell (= 1.0.7)
-    - MKBeaconXCustomUI/ScanUI/ScanCell/ScanHTCell (= 1.0.7)
-    - MKBeaconXCustomUI/ScanUI/ScanCell/ScanInfoCell (= 1.0.7)
-    - MKBeaconXCustomUI/ScanUI/ScanCell/ScanThreeASensorCell (= 1.0.7)
-    - MKBeaconXCustomUI/ScanUI/ScanCell/ScanTLMCell (= 1.0.7)
-    - MKBeaconXCustomUI/ScanUI/ScanCell/ScanUIDCell (= 1.0.7)
-    - MKBeaconXCustomUI/ScanUI/ScanCell/ScanURLCell (= 1.0.7)
+    - MKBeaconXCustomUI/ScanUI/ScanCell/ScanBeaconCell (= 1.0.10)
+    - MKBeaconXCustomUI/ScanUI/ScanCell/ScanHTCell (= 1.0.10)
+    - MKBeaconXCustomUI/ScanUI/ScanCell/ScanInfoCell (= 1.0.10)
+    - MKBeaconXCustomUI/ScanUI/ScanCell/ScanThreeASensorCell (= 1.0.10)
+    - MKBeaconXCustomUI/ScanUI/ScanCell/ScanTLMCell (= 1.0.10)
+    - MKBeaconXCustomUI/ScanUI/ScanCell/ScanUIDCell (= 1.0.10)
+    - MKBeaconXCustomUI/ScanUI/ScanCell/ScanURLCell (= 1.0.10)
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/ScanUI/ScanCell/ScanBeaconCell (1.0.7):
-    - MKBaseModuleLibrary
-    - MKCustomUIModule
-    - MLInputDodger
-  - MKBeaconXCustomUI/ScanUI/ScanCell/ScanHTCell (1.0.7):
+  - MKBeaconXCustomUI/ScanUI/ScanCell/ScanBeaconCell (1.0.10):
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/ScanUI/ScanCell/ScanInfoCell (1.0.7):
+  - MKBeaconXCustomUI/ScanUI/ScanCell/ScanHTCell (1.0.10):
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/ScanUI/ScanCell/ScanThreeASensorCell (1.0.7):
+  - MKBeaconXCustomUI/ScanUI/ScanCell/ScanInfoCell (1.0.10):
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/ScanUI/ScanCell/ScanTLMCell (1.0.7):
+  - MKBeaconXCustomUI/ScanUI/ScanCell/ScanThreeASensorCell (1.0.10):
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/ScanUI/ScanCell/ScanUIDCell (1.0.7):
+  - MKBeaconXCustomUI/ScanUI/ScanCell/ScanTLMCell (1.0.10):
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/ScanUI/ScanCell/ScanURLCell (1.0.7):
+  - MKBeaconXCustomUI/ScanUI/ScanCell/ScanUIDCell (1.0.10):
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/ScanUI/ScanFilterView (1.0.7):
+  - MKBeaconXCustomUI/ScanUI/ScanCell/ScanURLCell (1.0.10):
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/ScanUI/ScanSearchButton (1.0.7):
+  - MKBeaconXCustomUI/ScanUI/ScanFilterView (1.0.10):
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/SlotAdopter (1.0.7):
+  - MKBeaconXCustomUI/ScanUI/ScanSearchButton (1.0.10):
     - MKBaseModuleLibrary
-    - MKBeaconXCustomUI/Defines
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/SlotConfig (1.0.7):
-    - MKBaseModuleLibrary
-    - MKBeaconXCustomUI/SlotConfig/FrameTypePickView (= 1.0.7)
-    - MKBeaconXCustomUI/SlotConfig/Protocol (= 1.0.7)
-    - MKBeaconXCustomUI/SlotConfig/SlotConfigCell (= 1.0.7)
-    - MKBeaconXCustomUI/SlotConfig/TriggerCell (= 1.0.7)
-    - MKBeaconXCustomUI/SlotConfig/TriggerView (= 1.0.7)
-    - MKCustomUIModule
-    - MLInputDodger
-  - MKBeaconXCustomUI/SlotConfig/FrameTypePickView (1.0.7):
+  - MKBeaconXCustomUI/SlotAdopter (1.0.10):
     - MKBaseModuleLibrary
     - MKBeaconXCustomUI/Defines
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/SlotConfig/Protocol (1.0.7):
+  - MKBeaconXCustomUI/SlotConfig (1.0.10):
+    - MKBaseModuleLibrary
+    - MKBeaconXCustomUI/SlotConfig/FrameTypePickView (= 1.0.10)
+    - MKBeaconXCustomUI/SlotConfig/Protocol (= 1.0.10)
+    - MKBeaconXCustomUI/SlotConfig/SlotConfigCell (= 1.0.10)
+    - MKBeaconXCustomUI/SlotConfig/TriggerCell (= 1.0.10)
+    - MKBeaconXCustomUI/SlotConfig/TriggerView (= 1.0.10)
+    - MKCustomUIModule
+    - MLInputDodger
+  - MKBeaconXCustomUI/SlotConfig/FrameTypePickView (1.0.10):
+    - MKBaseModuleLibrary
+    - MKBeaconXCustomUI/Defines
+    - MKCustomUIModule
+    - MLInputDodger
+  - MKBeaconXCustomUI/SlotConfig/Protocol (1.0.10):
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/SlotConfig/SlotConfigCell (1.0.7):
-    - MKBaseModuleLibrary
-    - MKBeaconXCustomUI/SlotAdopter
-    - MKBeaconXCustomUI/SlotConfig/Protocol
-    - MKBeaconXCustomUI/SlotConfig/SlotConfigCell/BeaconCell (= 1.0.7)
-    - MKBeaconXCustomUI/SlotConfig/SlotConfigCell/DeviceInfoCell (= 1.0.7)
-    - MKBeaconXCustomUI/SlotConfig/SlotConfigCell/UIDCell (= 1.0.7)
-    - MKBeaconXCustomUI/SlotConfig/SlotConfigCell/URLCell (= 1.0.7)
-    - MKCustomUIModule
-    - MLInputDodger
-  - MKBeaconXCustomUI/SlotConfig/SlotConfigCell/BeaconCell (1.0.7):
-    - MKBaseModuleLibrary
-    - MKBeaconXCustomUI/SlotAdopter
-    - MKBeaconXCustomUI/SlotConfig/Protocol
-    - MKCustomUIModule
-    - MLInputDodger
-  - MKBeaconXCustomUI/SlotConfig/SlotConfigCell/DeviceInfoCell (1.0.7):
+  - MKBeaconXCustomUI/SlotConfig/SlotConfigCell (1.0.10):
     - MKBaseModuleLibrary
     - MKBeaconXCustomUI/SlotAdopter
     - MKBeaconXCustomUI/SlotConfig/Protocol
+    - MKBeaconXCustomUI/SlotConfig/SlotConfigCell/BeaconCell (= 1.0.10)
+    - MKBeaconXCustomUI/SlotConfig/SlotConfigCell/DeviceInfoCell (= 1.0.10)
+    - MKBeaconXCustomUI/SlotConfig/SlotConfigCell/UIDCell (= 1.0.10)
+    - MKBeaconXCustomUI/SlotConfig/SlotConfigCell/URLCell (= 1.0.10)
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/SlotConfig/SlotConfigCell/UIDCell (1.0.7):
-    - MKBaseModuleLibrary
-    - MKBeaconXCustomUI/SlotAdopter
-    - MKBeaconXCustomUI/SlotConfig/Protocol
-    - MKCustomUIModule
-    - MLInputDodger
-  - MKBeaconXCustomUI/SlotConfig/SlotConfigCell/URLCell (1.0.7):
+  - MKBeaconXCustomUI/SlotConfig/SlotConfigCell/BeaconCell (1.0.10):
     - MKBaseModuleLibrary
     - MKBeaconXCustomUI/SlotAdopter
     - MKBeaconXCustomUI/SlotConfig/Protocol
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/SlotConfig/TriggerCell (1.0.7):
+  - MKBeaconXCustomUI/SlotConfig/SlotConfigCell/DeviceInfoCell (1.0.10):
+    - MKBaseModuleLibrary
+    - MKBeaconXCustomUI/SlotAdopter
+    - MKBeaconXCustomUI/SlotConfig/Protocol
+    - MKCustomUIModule
+    - MLInputDodger
+  - MKBeaconXCustomUI/SlotConfig/SlotConfigCell/UIDCell (1.0.10):
+    - MKBaseModuleLibrary
+    - MKBeaconXCustomUI/SlotAdopter
+    - MKBeaconXCustomUI/SlotConfig/Protocol
+    - MKCustomUIModule
+    - MLInputDodger
+  - MKBeaconXCustomUI/SlotConfig/SlotConfigCell/URLCell (1.0.10):
+    - MKBaseModuleLibrary
+    - MKBeaconXCustomUI/SlotAdopter
+    - MKBeaconXCustomUI/SlotConfig/Protocol
+    - MKCustomUIModule
+    - MLInputDodger
+  - MKBeaconXCustomUI/SlotConfig/TriggerCell (1.0.10):
     - MKBaseModuleLibrary
     - MKBeaconXCustomUI/SlotConfig/Protocol
     - MKBeaconXCustomUI/SlotConfig/TriggerView
     - MKCustomUIModule
     - MLInputDodger
-  - MKBeaconXCustomUI/SlotConfig/TriggerView (1.0.7):
+  - MKBeaconXCustomUI/SlotConfig/TriggerView (1.0.10):
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MLInputDodger
@@ -282,6 +282,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/AboutPage (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/AccelerationPage (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/DeviceInfoPage (= 0.0.1)
@@ -312,6 +313,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/AboutPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -322,6 +324,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -331,6 +334,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/AccelerationPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/AccelerationPage/Model (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/AccelerationPage/View (= 0.0.1)
@@ -343,6 +347,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/AccelerationPage/Model
     - MKBXPSeriesSlathf/Functions/AccelerationPage/View
     - MKBXPSeriesSlathf/SDK
@@ -354,6 +359,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -363,6 +369,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -372,6 +379,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/DeviceInfoPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/DeviceInfoPage/Model (= 0.0.1)
     - MKBXPSeriesSlathf/SDK
@@ -383,6 +391,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/DeviceInfoPage/Model
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -393,6 +402,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -402,6 +412,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/ExportHTDataPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/ExportHTDataPage/View (= 0.0.1)
     - MKBXPSeriesSlathf/SDK
@@ -413,6 +424,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/ExportHTDataPage/View
     - MKBXPSeriesSlathf/Functions/FilterHTHistoryPage/Controller
     - MKBXPSeriesSlathf/SDK
@@ -424,6 +436,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -433,6 +446,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/ExportTempDataPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/ExportTempDataPage/View (= 0.0.1)
     - MKBXPSeriesSlathf/SDK
@@ -444,6 +458,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/ExportTempDataPage/View
     - MKBXPSeriesSlathf/Functions/FilterTempHistoryPage/Controller
     - MKBXPSeriesSlathf/SDK
@@ -455,6 +470,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -464,6 +480,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/FilterHallHistoryPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/FilterHallHistoryPage/View (= 0.0.1)
     - MKBXPSeriesSlathf/SDK
@@ -475,6 +492,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/FilterHallHistoryPage/View
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -485,6 +503,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -494,6 +513,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/FilterHTHistoryPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/FilterHTHistoryPage/View (= 0.0.1)
     - MKBXPSeriesSlathf/SDK
@@ -505,6 +525,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/FilterHTHistoryPage/View
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -515,6 +536,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -524,6 +546,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/FilterTempHistoryPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/FilterTempHistoryPage/View (= 0.0.1)
     - MKBXPSeriesSlathf/SDK
@@ -535,6 +558,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/FilterTempHistoryPage/View
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -545,6 +569,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -554,6 +579,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/HallSensorPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/HallSensorPage/Model (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/HallSensorPage/View (= 0.0.1)
@@ -566,6 +592,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/HallSensorPage/Model
     - MKBXPSeriesSlathf/Functions/HallSensorPage/View
     - MKBXPSeriesSlathf/SDK
@@ -577,6 +604,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -586,6 +614,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -595,6 +624,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/OptionsPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/OptionsPage/View (= 0.0.1)
     - MKBXPSeriesSlathf/SDK
@@ -606,6 +636,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/OptionsPage/View
     - MKBXPSeriesSlathf/Functions/ScanPage/Controller
     - MKBXPSeriesSlathf/SDK
@@ -617,6 +648,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -626,6 +658,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/QuickSwitchPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/QuickSwitchPage/Model (= 0.0.1)
     - MKBXPSeriesSlathf/SDK
@@ -637,6 +670,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/QuickSwitchPage/Model
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -647,6 +681,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -656,6 +691,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/RemoteReminderPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/RemoteReminderPage/Model (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/RemoteReminderPage/View (= 0.0.1)
@@ -668,6 +704,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/RemoteReminderPage/Model
     - MKBXPSeriesSlathf/Functions/RemoteReminderPage/View
     - MKBXPSeriesSlathf/SDK
@@ -679,6 +716,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -688,6 +726,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -697,6 +736,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/ScanPage/Adopter (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/ScanPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/ScanPage/Model (= 0.0.1)
@@ -710,6 +750,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/ScanPage/Model
     - MKBXPSeriesSlathf/Functions/ScanPage/View
     - MKBXPSeriesSlathf/SDK
@@ -721,6 +762,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/AboutPage/Controller
     - MKBXPSeriesSlathf/Functions/ScanPage/Adopter
     - MKBXPSeriesSlathf/Functions/ScanPage/Model
@@ -735,6 +777,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -744,6 +787,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/ScanPage/Model
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -754,6 +798,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/SensorConfigPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/SensorConfigPage/Model (= 0.0.1)
     - MKBXPSeriesSlathf/SDK
@@ -765,6 +810,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/AccelerationPage
     - MKBXPSeriesSlathf/Functions/HallSensorPage
     - MKBXPSeriesSlathf/Functions/SensorConfigPage/Model
@@ -779,6 +825,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -788,6 +835,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/SettingPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/SettingPage/Model (= 0.0.1)
     - MKBXPSeriesSlathf/SDK
@@ -799,6 +847,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/QuickSwitchPage/Controller
     - MKBXPSeriesSlathf/Functions/RemoteReminderPage/Controller
     - MKBXPSeriesSlathf/Functions/SensorConfigPage/Controller
@@ -813,6 +862,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -822,6 +872,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/SlotPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/SlotPage/Model (= 0.0.1)
     - MKBXPSeriesSlathf/SDK
@@ -833,6 +884,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/SlotPage/Model
     - MKBXPSeriesSlathf/Functions/TriggerPages
     - MKBXPSeriesSlathf/SDK
@@ -844,6 +896,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -853,6 +906,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/TabBarPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -863,6 +917,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/DeviceInfoPage/Controller
     - MKBXPSeriesSlathf/Functions/SettingPage/Controller
     - MKBXPSeriesSlathf/Functions/SlotPage/Controller
@@ -875,6 +930,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/TempSensorPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/TempSensorPage/Model (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/TempSensorPage/View (= 0.0.1)
@@ -887,6 +943,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/TempSensorPage/Model
     - MKBXPSeriesSlathf/Functions/TempSensorPage/View
     - MKBXPSeriesSlathf/SDK
@@ -898,6 +955,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -907,6 +965,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -916,6 +975,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/THSensorPage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/THSensorPage/Model (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/THSensorPage/View (= 0.0.1)
@@ -928,6 +988,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/THSensorPage/Model
     - MKBXPSeriesSlathf/Functions/THSensorPage/View
     - MKBXPSeriesSlathf/SDK
@@ -939,6 +1000,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -948,6 +1010,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -957,6 +1020,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/TriggerPages/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/TriggerPages/Defines (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/TriggerPages/Manager (= 0.0.1)
@@ -971,6 +1035,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/TriggerPages/Defines
     - MKBXPSeriesSlathf/Functions/TriggerPages/Manager
     - MKBXPSeriesSlathf/Functions/TriggerPages/Model
@@ -984,6 +1049,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -993,6 +1059,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/TriggerPages/Model
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -1003,6 +1070,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/TriggerPages/Defines
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -1013,6 +1081,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/TriggerPages/Defines
     - MKBXPSeriesSlathf/Functions/TriggerPages/View/SlotBeaconCell (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/TriggerPages/View/SlotFramePickView (= 0.0.1)
@@ -1030,6 +1099,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/TriggerPages/Defines
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -1040,6 +1110,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/TriggerPages/Defines
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -1050,6 +1121,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/TriggerPages/Defines
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -1060,6 +1132,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/TriggerPages/Defines
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -1070,6 +1143,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/TriggerPages/Defines
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -1080,6 +1154,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/TriggerPages/Defines
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -1090,6 +1165,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/TriggerPages/Defines
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -1100,6 +1176,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/UpdatePage/Controller (= 0.0.1)
     - MKBXPSeriesSlathf/Functions/UpdatePage/Model (= 0.0.1)
     - MKBXPSeriesSlathf/SDK
@@ -1111,6 +1188,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/Functions/UpdatePage/Model
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
@@ -1121,6 +1199,7 @@ PODS:
     - MKBeaconXCustomUI
     - MKBXPSeriesSlathf/ConnectManager
     - MKBXPSeriesSlathf/CTMediator
+    - MKBXPSeriesSlathf/Expand
     - MKBXPSeriesSlathf/SDK
     - MKCustomUIModule
     - MLInputDodger
@@ -1499,7 +1578,7 @@ DEPENDENCIES:
   - MKBXPSeriesSlathf (from `../`)
 
 SPEC REPOS:
-  https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git:
+  trunk:
     - BRPickerView
     - CircleProgressBar
     - CTMediator
@@ -1525,19 +1604,19 @@ SPEC CHECKSUMS:
   CircleProgressBar: 3920079be5224b62b3d9ed6eeb23ac01c835b681
   CTMediator: 3f3578b525b3a46a7a2f92a99922ec40363f4269
   HHTransition: 67c1bc632c4838e4eb28f07b9be1b927362ae07d
-  libxlsxwriter: 58b8454485fa0936de8a8bce3df7bac9dce7730e
+  libxlsxwriter: 834aff5689f255383092157b9c0e0d9710b8efcd
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MJRefresh: ff9e531227924c84ce459338414550a05d2aea78
   MKBaseBleModule: 15aa067c4e408a473e025b1a768ebce00a7e5949
   MKBaseModuleLibrary: 2b79bcae588c755588413fbb643b510253271b23
-  MKBeaconXCustomUI: 3cdea4a52442d432b2ebacd78460a890e7e644b6
-  MKBXPSeriesSlathf: 7b0a87c54d4d2ca7033d2e16e604128fa3f06bb8
+  MKBeaconXCustomUI: 23e048b00d8caa8b3599bbb70bbe933804c4d361
+  MKBXPSeriesSlathf: f10475eebd7ad0fe64d7385676cea570f9583b6c
   MKCustomUIModule: 8426eba1d3178b06d92741d31da32502920fb8fa
   MLInputDodger: 79a0e420a80d0d3bba122bf2639603cc76609ba8
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   Toast: 1f5ea13423a1e6674c4abdac5be53587ae481c4e
   WRNavigationBar: 10bfdf96addf14d640d07c2ef08a029c18d8af10
 
-PODFILE CHECKSUM: b5089e733de63f770829bc2c78defd065b83fbed
+PODFILE CHECKSUM: 9a122a682c9398cf597c39baa1a13567e21ce45d
 
-COCOAPODS: 1.16.1
+COCOAPODS: 1.16.2

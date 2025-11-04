@@ -427,6 +427,7 @@ TODO: Add long description of the pod here.
     ss.dependency 'MKBXPSeriesSlathf/ConnectManager'
     ss.dependency 'MKBXPSeriesSlathf/SDK'
     ss.dependency 'MKBXPSeriesSlathf/CTMediator'
+    ss.dependency 'MKBXPSeriesSlathf/Expand'
     
     ss.dependency 'MKBaseModuleLibrary'
     ss.dependency 'MKCustomUIModule'

@@ -401,8 +401,8 @@
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
         NSString *timestamp = [dateFormatter stringFromDate:date];
         
-        NSInteger tempTemp = [[MKBLEBaseSDKAdopter signedHexTurnString:[content substringWithRange:NSMakeRange(8, 4)]] integerValue];
-        NSInteger tempHui = [MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(12, 4)];
+        NSInteger tempTemp = [[MKBLEBaseSDKAdopter signedHexTurnString:[subContent substringWithRange:NSMakeRange(8, 4)]] integerValue];
+        NSInteger tempHui = [MKBLEBaseSDKAdopter getDecimalWithHex:subContent range:NSMakeRange(12, 4)];
         NSString *temperature = [NSString stringWithFormat:@"%.1f",(tempTemp * 0.1)];
         NSString *humidity = [NSString stringWithFormat:@"%.1f",(tempHui * 0.1)];
         NSDictionary *htData = @{
